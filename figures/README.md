@@ -1,60 +1,81 @@
 # Figures
 
-Standards for every figure that appears in a paper. The standardization
-mechanism is the shared style file `paper.mplstyle` (configuration, not code) plus
-the rules and checklist below. The code that actually draws each figure lives in
-the project repo, not here.
+Standard for every figure in a paper, tuned for **Econometrica**. Figures are
+drawn in **pgfplots**, compiled `standalone` to **vector PDF**, and included with
+`\includegraphics`. The shared style lives in `bc20-ecta.tex`; a worked example
+is `example_fig10_ecta.tex`. The code that produces the *coordinates* (from data)
+lives in the project repo, not here.
 
-## How to use
+A matplotlib preview style (`paper.mplstyle`) is provided for quick looks only —
+the manuscript figure is always the pgfplots PDF.
 
-Apply the style once, then plot as usual and save vector PDF:
+## Pipeline
 
-```python
-import matplotlib.pyplot as plt
-plt.style.use(".../figures/paper.mplstyle")   # the only standardizing step
+```latex
+% preamble
+\input{bc20-ecta.tex}        % loads pgfplots, colours, the bc20ecta style + curve styles
 
-fig, ax = plt.subplots()
-ax.plot(x, y, marker="o", label="gamma=0.5")
-ax.set_xlabel("tau")
-ax.set_ylabel("Volume")
-ax.legend()
-fig.savefig("figures/fig3_volume.pdf")        # vector PDF
+% a figure (standalone -> fig_knife_edge.pdf), included in the paper:
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.49\textwidth]{figures/fig_knife_edge.pdf}
+  \caption{Revelation deficit $1-R^2$ versus signal precision $\tau$ for
+           $\gamma\in\{0.5,1,4\}$; only CARA achieves full revelation.
+           $K=3$, $W=1$, $G=15$.}
+  \label{fig:knife-edge}
+\end{figure}
 ```
 
-No helper library is required. A `save_figure()` wrapper (one call to emit
-PDF + PNG + pgfplots) is optional convenience and, if you want it, belongs in the
-project repo.
+Two-panel figures use `subfigure` at `0.49\textwidth` each, side by side.
 
 ## Standard
 
-- **Format.** Vector **PDF** in the manuscript. PNG (300 dpi) only for slides or
-  previews. Optionally native `pgfplots .tex` when you want figure fonts to match
-  the document exactly.
-- **Size.** Set the real physical size (default `8 x 5.2 in`). Do not let LaTeX
-  rescale the image, or font sizes drift. Nothing smaller than ~8 pt after
-  placement on the page.
-- **Fonts.** Serif with Computer Modern mathtext, to match the manuscript body
-  (set in the style file).
-- **Color.** Okabe-Ito colorblind-safe cycle (in the style file). For parameter
-  sweeps (e.g. gamma, tau) an ordered sequential palette is allowed, but it must
-  stay colorblind-distinguishable **and** vary line style or marker so the figure
-  still reads in grayscale.
-- **Lines / markers.** linewidth 1.6, marker size 5 (style file defaults).
-- **Grid.** Light dotted (style file default).
-- **Legend.** Inside, upper right, light frame; label every series.
-- **Axes.** Axis labels carry units; top and right spines off; no chartjunk.
-- **Caption.** Written in LaTeX, not baked into the image. Self-contained: state
-  what the reader should conclude, define every symbol, and give the parameter
-  values.
-- **Naming.** `figN_shortname.pdf` matching the LaTeX float label `fig:shortname`.
-- **Reproducible.** Every figure is produced by a committed script in the project
-  repo. Never hand-edit the output.
+- **Format / size.** Vector **PDF** from `standalone` pgfplots; **8 cm square**
+  axes (`width=8cm, height=8cm`); included at `0.49\textwidth`. Never let LaTeX
+  rescale a raster.
+- **Fonts.** Document serif (Computer Modern) — automatic with pgfplots; the
+  figure text then matches the body exactly.
+- **Curve styles (grayscale-safe).** Use the four named styles from
+  `bc20-ecta.tex`, in order — each pairs a colour with a distinct dash so the
+  figure reads in B&W:
+  1. `bcone`  — green, solid, very thick
+  2. `bctwo`  — red, dashed, very thick
+  3. `bcthree`— blue, dotted, very thick
+  4. `bccara` — black, dash-dotted, ultra thick (CARA / baseline at 0)
+- **Interpolation.** **Linear, no `smooth`.** A Bézier through sparse points
+  bows between data and rounds off real features. Only use `smooth` with ≥40
+  dense points.
+- **No in-axis `title=`.** Descriptive text goes in the LaTeX `\caption`, not
+  inside the axes. Axes get `xlabel`/`ylabel` only.
+- **Legend never sits on a line.** The legend has no frame and no fill
+  (`draw=none, fill=none`) so it cannot mask data. Place it in the emptiest
+  corner. **If it still overlaps any curve, widen the axis range (usually raise
+  `ymax`) to open a clear band — never clip a curve or shrink the data.** See
+  `example_fig10_ecta.tex`, where `ymax` is lifted to `0.185` so the north-east
+  legend clears the $\gamma=0.25$ curve.
+- **Caption.** Below the float, self-contained: state the takeaway, define every
+  symbol, and give the parameter values ($K$, $W$, $G$, $\tau$, $\gamma$).
+- **Naming.** `fig_<name>.pdf` matching the float label `fig:<name>`; figures are
+  Arabic-numbered (article/Econometrica convention) — reference via `\ref`.
+- **Reproducible.** Coordinates come from a committed project script, never typed
+  by hand; the figure is never hand-edited after generation.
+- **Colour names.** The palette uses namespaced names (`bcgreen`, `bcred`,
+  `bcblue`) so it never redefines the standard `red`/`green`/`blue`.
+
+## Econometrica note
+
+The manuscript currently compiles as `article` ("Target: Econometrica"). Moving
+to the official `econsocart` class adds the house caption ("FIGURE n —", small
+caps, below) and Roman *table* numbers automatically; the figures above already
+conform.
 
 ## Checklist (before committing a figure)
 
-- [ ] Vector PDF, real physical size, fonts >= 8 pt
-- [ ] Colorblind-safe and legible in grayscale
-- [ ] Axis labels with units; every series labeled in the legend
-- [ ] Generated by a committed project script (reproducible), not hand-edited
-- [ ] Caption is self-contained
-- [ ] Filename matches its LaTeX float label
+- [ ] Vector PDF from pgfplots, 8 cm square, document serif fonts
+- [ ] Curves use the four ordered styles; legible in grayscale
+- [ ] Linear interpolation (no `smooth` unless dense)
+- [ ] No in-axis title; `xlabel`/`ylabel` only
+- [ ] **Legend clears every line** (range widened if needed); `fill=none`
+- [ ] Caption below, self-contained, parameters stated
+- [ ] Coordinates generated by a committed script (reproducible)
+- [ ] Filename `fig_<name>.pdf` matches `\label{fig:<name>}`

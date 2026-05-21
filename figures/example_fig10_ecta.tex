@@ -1,0 +1,22 @@
+% Example figure in the BC20-ECTA standard (1 - R^2 vs number of agents K).
+% Demonstrates: linear interpolation (no `smooth`), the four curve styles, and
+% the legend-clearance rule -- ymax is raised so the north-east legend sits in
+% empty space above every curve rather than on top of the gamma=0.25 line.
+%
+% Build:  pdflatex example_fig10_ecta.tex   (bc20-ecta.tex must be alongside)
+\documentclass[border=2mm]{standalone}
+\input{bc20-ecta.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[bc20ecta,
+  xmin=2.5, xmax=10.5, xtick={3,4,5,6,7,8,9,10},
+  ymin=-0.001, ymax=0.185,
+  xlabel={Number of agents ($K$)}, ylabel={$1-R^2$}]
+\addplot[bcone]   coordinates {(3,0.113)(4,0.131)(5,0.129)(6,0.123)(7,0.118)(8,0.112)(9,0.105)(10,0.099)};
+\addplot[bctwo]   coordinates {(3,0.012)(4,0.010)(5,0.009)(6,0.008)(7,0.007)(8,0.007)(9,0.006)(10,0.006)};
+\addplot[bcthree] coordinates {(3,0.001)(4,0.001)(5,0.001)(6,0.000)(7,0.000)(8,0.000)(9,0.000)(10,0.000)};
+\addplot[bccara]  coordinates {(2.5,0)(10.5,0)};
+\legend{$\gamma = 0.25$, $\gamma = 1$, $\gamma = 4$, CARA}
+\end{axis}
+\end{tikzpicture}
+\end{document}

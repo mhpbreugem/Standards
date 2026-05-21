@@ -1,36 +1,27 @@
-# Standardized figure style for journal submission.
-# Load once at the top of a project's plotting code:
+# PREVIEW ONLY. The manuscript figure standard is pgfplots (see bc20-ecta.tex
+# and README.md). Use this matplotlib style for quick data looks; it mirrors the
+# BC20-ECTA palette and the colour+dash ordering so previews match the paper.
 #   import matplotlib.pyplot as plt
 #   plt.style.use(".../figures/paper.mplstyle")
-# This file is configuration, not code: it only sets defaults.
 
-figure.figsize: 8, 5.2
+figure.figsize: 3.15, 3.15
 savefig.format: pdf
-savefig.dpi:    300
 savefig.bbox:   tight
 
 font.family:      serif
 mathtext.fontset: cm
 font.size:        11
-axes.titlesize:   12
 axes.labelsize:   11
 legend.fontsize:  9
-xtick.labelsize:  10
-ytick.labelsize:  10
 
 axes.linewidth:   0.8
-lines.linewidth:  1.6
-lines.markersize: 5
-
-axes.grid:      True
-grid.linestyle: :
-grid.linewidth: 0.4
-grid.alpha:     0.6
+lines.linewidth:  1.8
 
 axes.spines.top:   False
 axes.spines.right: False
+legend.frameon:    False
 legend.loc:        upper right
-legend.framealpha: 0.9
 
-# Okabe-Ito colorblind-safe color cycle.
-axes.prop_cycle: cycler('color', ['0072B2','D55E00','009E73','CC79A7','E69F00','56B4E9','F0E442','000000'])
+# BC20-ECTA curve order: colour paired with a distinct dash (grayscale-safe).
+# green solid, red dashed, blue dotted, black dash-dot (CARA/baseline).
+axes.prop_cycle: (cycler('color', ['1C5905','B31C1C','00336B','000000']) + cycler('linestyle', ['-','--',':','-.']))
