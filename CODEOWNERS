@@ -1,0 +1,6 @@
+# Owner approval is required for all changes in this repository.
+# Every path is owned by @mhpbreugem, so pull requests automatically request
+# their review. Server-side enforcement requires branch protection on `main`
+# with "Require review from Code Owners" enabled (owner sets this in Settings).
+
+* @mhpbreugem
