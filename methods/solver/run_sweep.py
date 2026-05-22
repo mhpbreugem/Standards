@@ -13,9 +13,11 @@ Workflow:
 
 Idempotent: skips passes whose pickle already exists.
 
+The REZN code/ package is vendored under methods/solver/code/ (self-contained);
+no repo is cloned at runtime.
+
 Environment variables:
   GITHUB_WORKSPACE   repo root (default: cwd)
-  REZN_SRC           path to REZN clone (default: ~/rezn-source, auto-cloned)
   SWEEP_TAU          optional fixed tau override (float)
   SWEEP_PASSES       comma-separated passes to run: A,B,C (default: A,B,C)
 """
@@ -25,7 +27,6 @@ import argparse
 import json
 import os
 import pickle
-import subprocess
 import sys
 import time
 import traceback
@@ -35,24 +36,16 @@ from pathlib import Path
 import numpy as np
 
 # ── Paths ────────────────────────────────────────────────────────────────────────
+# REZN code/ is vendored under methods/solver/code/ — self-contained, no runtime clone.
+# Vendored from github.com/mhpbreugem/REZN @ 7f03509 (2026-05-06).
+HERE      = Path(__file__).resolve().parent   # methods/solver (phi_mp.py, ode_sweep.py, code/)
 REPO      = Path(os.environ.get("GITHUB_WORKSPACE", str(Path.cwd())))
-REZN_SRC  = Path(os.environ.get("REZN_SRC", str(Path.home() / "rezn-source")))
 CKPT      = REPO / "projects/REZN/checkpoints"
 OUT       = REPO / "projects/REZN/overnight"
 OUT.mkdir(parents=True, exist_ok=True)
-SOLVER    = REPO / "projects/REZN/solver_code"
-
-# Auto-clone REZN if missing
-if not REZN_SRC.exists():
-    print(f"[sweep] cloning REZN to {REZN_SRC} ...", flush=True)
-    subprocess.run(
-        ["git", "clone", "--depth", "1",
-         "https://github.com/mhpbreugem/REZN.git", str(REZN_SRC)],
-        check=True,
-    )
+SOLVER    = HERE
 
 sys.path.insert(0, str(SOLVER))
-sys.path.insert(0, str(REZN_SRC))
 
 # ── Logging ──────────────────────────────────────────────────────────────────────
 LOG = OUT / "sweep.log"

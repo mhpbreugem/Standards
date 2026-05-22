@@ -1,7 +1,8 @@
 # REZN solver wrapper
 
-`solve.py` wraps the K=3 staggered halo solver from
-`github.com/mhpbreugem/REZN/code/`.
+`solve.py` wraps the K=3 staggered halo solver. The REZN numerical code is
+vendored under `code/` (this directory) — see `code/` below. The solver is
+**self-contained**: nothing is cloned at runtime.
 
 ## How it works
 
@@ -33,7 +34,18 @@ The REZN code is float64. Legacy task-queue `dps` fields are mapped:
 - `u_full`, `u_grid_inner`, `gamma_vec`, `tau_vec`, `W_vec`
 - `stage_F_inf`, `stage_deficit` — per-stage diagnostics
 
+## Vendored REZN code (`code/`)
+
+The `code/` package is vendored verbatim from
+`github.com/mhpbreugem/REZN/code/` @ `7f03509` (2026-05-06). It is the
+numerical core (`contour_K3_halo`, `halo`, `staggered`, `f128`, `metrics`, and
+their transitive deps `config`, `signals`, `demand`, `contour_K4_halo`, ...).
+The package uses relative imports throughout, so the whole directory is vendored
+as a unit. To refresh it, re-copy `code/` from REZN and bump the commit above —
+do not hand-edit the vendored files.
+
 ## Dependencies
 
-Requires `numpy`, `scipy`, `numba` (for `@njit` kernels in REZN).
-Bootstrap / workflow clones REZN to `~/rezn-source` and sets `REZN_SRC`.
+Requires `numpy`, `scipy`, `mpmath`, `numba` (for `@njit` kernels in the
+vendored `code/`). All are pip libraries pinned in `methods/requirements.txt`;
+no repository is cloned at runtime.

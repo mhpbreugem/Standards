@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 """Quick local test of the RK4 ODE sweep — 7-point gamma grid, pass A only."""
-import os, sys, json, time
+import os, sys, json, time, tempfile
 from pathlib import Path
 from datetime import datetime
 
 import numpy as np
 
-REPO     = Path("/home/user/FIXED-POINT-FACTORY")
-REZN_SRC = Path("/home/user/rezn-src")
-CKPT     = REPO / "projects/REZN/checkpoints"
-OUT      = REPO / "projects/REZN/overnight"
-SOLVER   = REPO / "projects/REZN/solver_code"
+# REZN code/ is vendored under methods/solver/code/ — self-contained, no runtime clone.
+SOLVER   = Path(__file__).resolve().parent   # methods/solver (code/, phi_mp.py, ode_sweep*)
+# The anchor checkpoint is paper data, not part of the methods hub. Point REZN_CKPT_DIR
+# at a directory of converged .npz checkpoints to run this end-to-end.
+CKPT     = Path(os.environ.get(
+    "REZN_CKPT_DIR", "/home/user/FIXED-POINT-FACTORY/projects/REZN/checkpoints"))
+OUT      = Path(os.environ.get("REZN_SWEEP_OUT", tempfile.gettempdir()))
 OUT.mkdir(parents=True, exist_ok=True)
 
 sys.path.insert(0, str(SOLVER))
-sys.path.insert(0, str(REZN_SRC))
 
 from mpmath import mp, mpf
 from phi_mp import phi_K3_smooth_mp

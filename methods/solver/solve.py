@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 """
-solve.py — REZN solver wrapper for fixed-point-factory.
+solve.py — REZN solver wrapper (methods hub).
 
-Wraps the K=3 staggered halo solver from github.com/mhpbreugem/REZN/code/.
+Wraps the K=3 staggered halo solver. The REZN numerical code is vendored
+under methods/solver/code/ (self-contained — nothing is cloned at runtime).
 Reads task params from TASK_QUEUE.json, runs the fixed-point iteration,
 reports live progress, saves a checkpoint, and marks the task done or
 bailed via claim_task.py.
 
-Invoked by .github/workflows/solve-tasks.yml (or core/bootstrap.sh):
-    python3 projects/REZN/solver_code/solve.py \
+Invoked by the runner (runner/bootstrap.sh) or a CI workflow:
+    python3 methods/solver/solve.py \
         --project REZN --task-id g050_t0030 \
         --branch main --worker-id solver-01
-
-Environment:
-    REZN_SRC  path to a clone of github.com/mhpbreugem/REZN
-              (default: ~/rezn-source; auto-cloned if missing)
 """
 from __future__ import annotations
 
 import argparse
 import json
 import math
-import os
 import subprocess
 import sys
 import time
@@ -30,27 +26,19 @@ from pathlib import Path
 import numpy as np
 
 # ---------------------------------------------------------------------------
-# Paths — make core/ importable regardless of cwd
+# Paths — make runner/ and the vendored code/ package importable regardless of cwd
 # ---------------------------------------------------------------------------
-ROOT = Path(__file__).resolve().parents[3]   # fixed-point-factory repo root
-sys.path.insert(0, str(ROOT / "core"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))  # phi_mp.py lives here
+ROOT = Path(__file__).resolve().parents[2]   # hub repo root
+HERE = Path(__file__).resolve().parent       # methods/solver (phi_mp.py + code/ live here)
+sys.path.insert(0, str(ROOT / "runner"))     # progress.py
+sys.path.insert(0, str(HERE))                # phi_mp.py + vendored code/ package
 
 from progress import ProgressReporter  # noqa: E402
 
 # ---------------------------------------------------------------------------
-# Make REZN code/ importable
+# REZN code/ is vendored under methods/solver/code/ — self-contained, no runtime clone.
+# Vendored from github.com/mhpbreugem/REZN @ 7f03509 (2026-05-06).
 # ---------------------------------------------------------------------------
-REZN_SRC = Path(os.environ.get("REZN_SRC", Path.home() / "rezn-source"))
-if not REZN_SRC.exists():
-    print(f"[solve] cloning REZN to {REZN_SRC} ...", flush=True)
-    subprocess.run(
-        ["git", "clone", "--depth", "1",
-         "https://github.com/mhpbreugem/REZN.git", str(REZN_SRC)],
-        check=True,
-    )
-sys.path.insert(0, str(REZN_SRC))
-
 from code.contour_K3_halo import (   # type: ignore
     init_no_learning_K3, phi_K3_halo_smooth,
 )
