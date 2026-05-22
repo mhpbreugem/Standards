@@ -1,13 +1,16 @@
-# Writing — standards for financial-economics papers
+# Research standards, methods & runner
 
-Central, canonical standards for the **writing side** of a paper: figures,
-tables, prose, LaTeX, bibliography, and paper structure. Coding methods are
-out of scope and live in the individual project repos. This repository holds
-documentation plus non-code templates only (no `.py` scripts).
+Central, canonical hub for the author's financial-economics papers. Three things
+live here, each a **single source of truth** that individual papers pull from:
 
-> Repository is being renamed `Standards-and-Methods` -> `Writing` (owner-only
-> step in GitHub Settings). GitHub redirects the old URL, so existing links and
-> clones keep working.
+1. **Writing standards** (`writing/`) — figures, tables, LaTeX, prose, bibliography, structure.
+2. **Methods** (`methods/`) — standardized, latest-version shared code.
+3. **Runner** (`runner/`) — VM/worker coordination for distributed jobs.
+
+> Repository rename pending (owner-only, in Settings). It began as
+> `Standards-and-Methods`, was briefly `Writing`; now that it again spans methods
+> and runner, a broader name fits (e.g. `research-hub` / `research-commons` —
+> owner to choose). GitHub redirects old URLs, so links and clones keep working.
 
 ## Change control — read first
 
@@ -23,26 +26,34 @@ Every change to this repository requires the owner's approval.
   enforcement is branch protection on `main` (owner enables: Settings ->
   Branches -> Require a pull request before merging).
 
-## How to use these standards
+## Repository map
 
-Before producing any paper artifact, read the relevant chapter and apply its
-checklist.
+### `writing/` — paper writing standards
+Before producing a paper artifact, read the matching chapter and apply its checklist.
 
-| Chapter | What it covers | Path |
-|---|---|---|
-| Figures | matplotlib style, formats, color, captions | `figures/` |
-| Tables | booktabs format, significance, generate-don't-type | `tables/` (planned) |
-| LaTeX / math / notation | preamble, macros, symbol conventions | `latex/` (planned) |
-| Paper structure | manuscript repo layout, section order | `paper-structure/` (planned) |
-| Bibliography | citation style, `.bib` conventions | `bibliography/` (planned) |
-| Prose style | financial-economics writing checklist | `prose-style/` (planned) |
+| Chapter | Covers | Path | Status |
+|---|---|---|---|
+| Figures | pgfplots BC20→ECTA style, captions | `writing/figures/` | done |
+| Tables | booktabs / Econometrica, generate-don't-type | `writing/tables/` | planned |
+| LaTeX / notation | preamble, macros, symbol conventions | `writing/latex/` | planned |
+| Paper structure | manuscript repo layout, section order | `writing/paper-structure/` | planned |
+| Bibliography | citation style, `.bib` conventions | `writing/bibliography/` | planned |
+| Prose style | financial-economics writing checklist | `writing/prose-style/` | planned |
 
-## Using these standards from a project repo
+### `methods/` — shared code (source of truth)
+Registry in **`methods/MAP.md`** (read first). Currently `methods/solver/` — REE /
+fixed-point numerical methods. Import these; do not fork private copies.
+
+### `runner/` — VM + worker coordination
+See **`runner/README.md`**. Project-agnostic task-queue framework: claim/done/bail
+with git-race locking, GCP VM bootstrap, heartbeats, supervision.
+
+## Using this hub from a project repo
 
 Add this pointer to the project's own `CLAUDE.md`:
 
-> Quality standards for figures/tables/writing live in
-> `github.com/mhpbreugem/Writing`. Before producing a figure, table, or
-> manuscript text, consult the matching chapter there and apply its checklist.
-> Generation code (matplotlib, pandas) stays in this project; the standards
-> repo holds only the format and templates.
+> Shared standards/methods/runner live in `github.com/mhpbreugem/<repo>`.
+> - **Writing:** before a figure/table/manuscript edit, consult `writing/` and apply the checklist.
+> - **Methods:** import from `methods/` (single source of truth — see `MAP.md`); never keep private edits, back-port instead.
+> - **Distributed runs:** wire this paper's queue/solver onto `runner/` per `runner/README.md`.
+> Paper-specific math, task queues, and glue stay in this project repo.
