@@ -98,25 +98,23 @@ Two-panel figures use `subfigure` at `0.49\textwidth` each, side by side.
 If the y-axis represents a probability, a CDF, a percentage, or any
 other quantity bounded by `[0, 1]` (or by `[0, 100]` for percentages),
 the axis range must stay inside that bound. Do not inflate `ymax`
-above 1 (or above 100) to open headroom for a legend.
+above 1 (or above 100) to open headroom for a legend. The ceiling is
+honest; the headroom is the legend's problem, not the data's.
 
-If the legend overlaps a curve, find space inside the data window:
+When the legend overlaps a curve in a bounded plot:
 
 1. Move the legend to the corner of the plot farthest from the curves'
-   main body. For monotone-increasing curves from `(x_min, 0)` to
-   `(x_max, 1)`, the bottom-right or top-left corner is usually empty
-   enough.
+   main body. For monotone-increasing CDF-like curves, the south-east
+   or north-west corner is usually empty.
 2. If no corner has enough empty space, move the legend outside the
-   axis (above the plot via `legend pos=outer north east` or similar,
-   or below the caption-side via `legend to name` and `\ref`).
+   axis (`legend pos=outer north east` or place it below the plot with
+   `legend style={at={(0.5,-0.18)}, anchor=north, legend columns=N}`).
 3. Only as a last resort, shrink the legend by abbreviating entries
-   (e.g. "Full revelation" → "FR", "Newton--Krylov polish" →
-   "Newton--Krylov") or by splitting the figure into two panels.
+   (e.g. "Full revelation" → "FR") or by splitting the figure into two
+   panels.
 
-The same rule applies to any other quantity with a fixed natural
-ceiling: shares of a population, probabilities, fractions of variance
-explained ($R^2$, $1 - R^2$), and so on. The ceiling is honest; the
-headroom is the legend's problem, not the data's.
+The same rule applies to $R^2$, $1-R^2$, and any other naturally
+bounded quantity.
 
 ### Bar charts
 
