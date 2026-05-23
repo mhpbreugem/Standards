@@ -56,6 +56,28 @@ Two-panel figures use `subfigure` at `0.49\textwidth` each, side by side.
   quantities**) to open a clear band; for bar charts, put value labels above the
   bar (`nodes near coords`) and rotate or abbreviate crowded category ticks.
   **Never clip a curve or bar, and never shrink the data, to make room for text.**
+  - **Minimum clearance.** Every text element must have at least one
+    line-height of clear space between it and any curve, bar, marker,
+    frame, or other text. Mathematical non-intersection is not enough:
+    a label that lands within 1 mm of a curve at the figure's `0.49\textwidth`
+    inclusion size is still a violation. Verify visually at the printed
+    inclusion size, not at the standalone size.
+  - **Zero-height bars.** In grouped bar charts, a bar with value
+    exactly zero leaves its `nodes near coords` label sitting on the
+    axis frame. Omit the bar (and its label) entirely rather than
+    rendering a flat bar of height zero with a label on the frame. The
+    absence of the bar carries the meaning. If the zero value is the
+    punch line of the figure (e.g. a collapse at a knife-edge), say so
+    in the caption.
+  - **Widening recipe (when the y-axis is not bounded).** When the
+    legend overlaps a curve and the y-axis is *not* a bounded quantity
+    (see **Bounded quantities** below):
+      1. First try moving the legend to a sparser corner.
+      2. If still tight, widen the axis range by at least 25% above
+         the data maximum (or below the minimum) so the legend sits in
+         a clearly empty band.
+      3. Never clip a curve, never shrink the data, and never overlap
+         text.
 - **Legend.** No frame and no fill (`draw=none, fill=none`) so it can never mask
   data; place it in the emptiest corner. Per the rule above, if it still overlaps
   any curve, bar, or label, widen the axis range (unbounded $y$ only — for bounded
