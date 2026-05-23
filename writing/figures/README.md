@@ -213,34 +213,40 @@ intensity.
 
 ### Bar charts
 
-Bar charts follow the same colour/style discipline as line charts,
-with two exceptions tied to the geometry of bars.
+Bar charts follow the same colour/style discipline as line charts, with
+two exceptions tied to the geometry of bars.
 
-**Aspect.** The 8 cm square axis applies to single-axis line plots.
-Bar charts with 5 or fewer categories should also be 8 cm square at
-`0.49\textwidth`. Bar charts with 6 or more categories may be wider
---- up to `16 cm × 7 cm` --- and included at full `\textwidth` rather
-than `0.49\textwidth`. The aspect must be chosen so that no category
-tick overlaps its neighbours.
+**Aspect ratio.** The 8 cm square axis applies to line plots. Bar charts
+with 5 or fewer categories should also be 8 cm square at `0.49\textwidth`.
+Bar charts with 6 or more categories may be wider — up to `16 cm × 7 cm`
+— and included at full `\textwidth` rather than `0.49\textwidth`. The
+aspect must be chosen so that no category tick overlaps its neighbours.
 
 **Value labels.** Place value labels above each bar using
-`nodes near coords, nodes near coords align={vertical}`. When the
-bars within a group are close together and the values nearly equal,
-increase the bar separation (`ybar=6pt` to `8pt`, bar width 10pt)
-before reaching for rotated labels. Only rotate labels (90°,
-`anchor=west`) when separation alone fails. Use 3-decimal precision
-with trailing-zero fill so columns of labels align visually:
+`nodes near coords, nodes near coords align={vertical}`. When bars within
+a group are close and the values nearly equal, increase the bar
+separation (`ybar=6pt` to `8pt`, bar width `10pt`) before reaching for
+rotated labels. Only rotate labels (90°, `anchor=west`) when separation
+alone fails. Use 3-decimal precision with trailing-zero fill so labels
+align:
 
     every node near coord/.append style={font=\scriptsize,
       /pgf/number format/precision=3,
       /pgf/number format/fixed,
       /pgf/number format/fixed zerofill}
 
+**Zero-height bars.** In grouped bar charts, a bar with value exactly
+zero leaves its `nodes near coords` label sitting on the axis frame,
+which violates the no-overlap rule. Omit the bar (and its label) entirely
+rather than rendering a flat bar of height zero with a label on the
+frame. The absence of the bar carries the meaning. If the zero value is
+the punch line of the figure (e.g. a collapse at a knife-edge), say so in
+the caption.
+
 **Grouped bars.** For two-group bar charts (e.g. "benchmark vs
-treatment"), use one of the BC20 fill colours plus one neutral
-reference fill (`black!12` is the chosen tan), both at thin draw.
-The reference group always appears to the left of the treatment
-group within each cluster.
+treatment"), use one of the BC20 fill colours plus one neutral reference
+fill (`black!12` is the chosen tan). The reference group always appears
+to the left of the treatment group within each cluster.
 
 ## Econometrica note
 
