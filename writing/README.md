@@ -9,10 +9,10 @@ and apply its checklist. Papers follow these; they do not invent per-paper style
 | Chapter | Covers | Path | Status |
 |---|---|---|---|
 | Figures | pgfplots BC20→ECTA style, captions, legends, bounded axes, log axes, contour bands, bar charts | `figures/` | **done** |
-| Tables | booktabs / Econometrica, generate-don't-type | `tables/` | planned |
+| Tables | booktabs / Econometrica, generate-don't-type | `tables/` | planned (stub) |
+| References | citation style, `.bib` conventions | `references/` | planned (stub) |
+| Paper structure | manuscript repo layout, section order | `paper/` | planned (stub) |
 | LaTeX / notation | preamble, macros, symbol conventions | `latex/` | planned |
-| Paper structure | manuscript repo layout, section order | `paper-structure/` | planned |
-| Bibliography | citation style, `.bib` conventions | `bibliography/` | planned |
 | Prose style | financial-economics writing checklist | `prose-style/` | planned |
 
 ## Rules

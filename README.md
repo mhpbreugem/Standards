@@ -22,11 +22,15 @@ Standards/
 ├── .gitignore           python bytecode
 │
 ├── writing/             PILLAR 1 — paper writing standards
-│   └── figures/         Figures chapter (done)
-│       ├── README.md            the standard + pre-commit checklist
-│       ├── bc20-ecta.tex        shared pgfplots style (colours + curve styles)
-│       ├── example_fig10_ecta.tex   worked example
-│       └── paper.mplstyle       matplotlib preview style (quick looks only)
+│   ├── README.md        pillar index (chapter status table)
+│   ├── figures/         Figures chapter (done)
+│   │   ├── README.md            the standard + pre-commit checklist
+│   │   ├── bc20-ecta.tex        shared pgfplots style (colours + curve styles)
+│   │   ├── example_fig10_ecta.tex   worked example
+│   │   └── paper.mplstyle       matplotlib preview style (quick looks only)
+│   ├── tables/          Tables chapter (planned — stub)
+│   ├── references/      References / bibliography chapter (planned — stub)
+│   └── paper/           Paper-structure chapter (planned — stub)
 │
 ├── methods/             PILLAR 2 — shared numerical code (source of truth)
 │   ├── MAP.md           registry of every method (read first)
@@ -65,10 +69,10 @@ checklist.
 | Chapter | Covers | Path | Status |
 |---|---|---|---|
 | Figures | pgfplots BC20→ECTA style, captions, legends, bounded axes, bar charts | `writing/figures/` | **done** |
-| Tables | booktabs / Econometrica, generate-don't-type | `writing/tables/` | planned |
+| Tables | booktabs / Econometrica, generate-don't-type | `writing/tables/` | planned (stub) |
+| References | citation style, `.bib` conventions | `writing/references/` | planned (stub) |
+| Paper structure | manuscript repo layout, section order | `writing/paper/` | planned (stub) |
 | LaTeX / notation | preamble, macros, symbol conventions | `writing/latex/` | planned |
-| Paper structure | manuscript repo layout, section order | `writing/paper-structure/` | planned |
-| Bibliography | citation style, `.bib` conventions | `writing/bibliography/` | planned |
 | Prose style | financial-economics writing checklist | `writing/prose-style/` | planned |
 
 The Figures chapter targets **Econometrica**: vector-PDF pgfplots, 8 cm square
