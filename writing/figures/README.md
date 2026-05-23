@@ -144,6 +144,31 @@ labelled.
 
 The same rule applies to `ymode=log`.
 
+### Paired sweep panels
+
+When two figures present sweeps in different parameters with the other
+parameters fixed (e.g. one panel sweeps $\tau$ at fixed $\gamma$, the
+other sweeps $\gamma$ at fixed $\tau$), mark the fixed value of the
+other parameter on each panel with a thin gray vertical guide line. The
+guide makes the cross-panel coordination explicit: a reader looking at
+the $\tau$-sweep panel sees exactly which $\tau$ value the partner
+panel's slice corresponds to.
+
+**Style.** Thin and light enough that the data curves dominate:
+
+    \addplot[gray!50, very thin, forget plot]
+      coordinates {(VAL, YMIN) (VAL, YMAX)};
+
+Use `forget plot` so the guide does not appear in the legend. Insert the
+guide as the *first* `\addplot` inside the axis so it sits behind every
+data curve. The same rule applies to horizontal guides on `y`-axis
+sweeps.
+
+**When to use.** Any figure whose data are a slice through a
+higher-dimensional parameter space, when one of the fixed parameters is
+itself the sweep variable of another figure in the paper. Single-figure
+sweeps with no companion need no guide.
+
 ### Bar charts
 
 Bar charts follow the same colour/style discipline as line charts,
