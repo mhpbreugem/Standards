@@ -169,6 +169,48 @@ higher-dimensional parameter space, when one of the fixed parameters is
 itself the sweep variable of another figure in the paper. Single-figure
 sweeps with no companion need no guide.
 
+### Contour plots
+
+Iso-level contour plots have three requirements beyond the standard
+curve discipline.
+
+**Contour spacing.** Choose contour levels so adjacent contours sit
+close enough together to reveal the shape of the underlying function.
+Five levels in a narrow band centred on the value of interest (e.g.
+$p \in \{0.40, 0.45, 0.50, 0.55, 0.60\}$) show the local geometry that
+matters; levels spread across the full range
+($p \in \{0.1, 0.3, 0.5, 0.7, 0.9\}$) show only the overall trend.
+
+**Filled grayscale bands.** Each pair of adjacent contour lines bounds a
+band that gets filled with a grayscale tone. Load the fillbetween
+library:
+
+    \usepgfplotslibrary{fillbetween}
+
+Define five named paths for the five contour curves and fill the four
+interior bands with a symmetric center-dark gradient:
+
+    \addplot[name path=A, draw=none, forget plot] coordinates {...};  % outer
+    \addplot[name path=B, draw=none, forget plot] coordinates {...};
+    \addplot[name path=C, draw=none, forget plot] coordinates {...};  % central
+    \addplot[name path=D, draw=none, forget plot] coordinates {...};
+    \addplot[name path=E, draw=none, forget plot] coordinates {...};  % outer
+
+    \addplot[black!10, forget plot] fill between [of=A and B];
+    \addplot[black!22, forget plot] fill between [of=B and C];
+    \addplot[black!34, forget plot] fill between [of=C and D];
+    \addplot[black!22, forget plot] fill between [of=D and E];
+
+**Lines on top of bands.** Lay the actual contour lines on top of the
+bands so the boundaries remain crisp. Use these five styles:
+
+    central (p=0.50):  black, very thick
+    inner pair:        black, thin, dashed
+    outer pair:        black, thin, dotted
+
+Order the legend by level ($p=0.40, 0.45, \ldots, 0.60$), not by style
+intensity.
+
 ### Bar charts
 
 Bar charts follow the same colour/style discipline as line charts,
