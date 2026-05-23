@@ -52,15 +52,16 @@ Two-panel figures use `subfigure` at `0.49\textwidth` each, side by side.
   annotations, and data/value labels — none may sit on top of another piece of
   text, a curve, a bar, a marker, or the axis frame. Everything must be fully
   legible with clear separation. Fixes, in order of preference: move the element
-  to an empty region; widen the axis range (usually raise `ymax`) to open a clear
-  band; for bar charts, put value labels above the bar (`nodes near coords`) and
-  rotate or abbreviate crowded category ticks. **Never clip a curve or bar, and
-  never shrink the data, to make room for text.**
+  to an empty region; widen the axis range (for unbounded axes; see **Bounded
+  quantities**) to open a clear band; for bar charts, put value labels above the
+  bar (`nodes near coords`) and rotate or abbreviate crowded category ticks.
+  **Never clip a curve or bar, and never shrink the data, to make room for text.**
 - **Legend.** No frame and no fill (`draw=none, fill=none`) so it can never mask
   data; place it in the emptiest corner. Per the rule above, if it still overlaps
-  any curve, bar, or label, widen the axis range rather than move the data. See
-  `example_fig10_ecta.tex`, where `ymax` is lifted to `0.185` so the north-east
-  legend clears the $\gamma=0.25$ curve.
+  any curve, bar, or label, widen the axis range (unbounded $y$ only — for bounded
+  quantities relocate the legend instead; see **Bounded quantities**) rather than
+  move the data. See `example_fig10_ecta.tex`, where `ymax` is lifted to `0.185`
+  so the north-east legend clears the $\gamma=0.25$ curve (an unbounded axis).
 - **Caption.** Below the float, self-contained: state the takeaway, define every
   symbol, and give the parameter values ($K$, $W$, $G$, $\tau$, $\gamma$).
 - **Naming.** `fig_<name>.pdf` matching the float label `fig:<name>`; figures are
@@ -69,6 +70,31 @@ Two-panel figures use `subfigure` at `0.49\textwidth` each, side by side.
   by hand; the figure is never hand-edited after generation.
 - **Colour names.** The palette uses namespaced names (`bcgreen`, `bcred`,
   `bcblue`) so it never redefines the standard `red`/`green`/`blue`.
+
+### Bounded quantities
+
+If the y-axis represents a probability, a CDF, a percentage, or any
+other quantity bounded by `[0, 1]` (or by `[0, 100]` for percentages),
+the axis range must stay inside that bound. Do not inflate `ymax`
+above 1 (or above 100) to open headroom for a legend.
+
+If the legend overlaps a curve, find space inside the data window:
+
+1. Move the legend to the corner of the plot farthest from the curves'
+   main body. For monotone-increasing curves from `(x_min, 0)` to
+   `(x_max, 1)`, the bottom-right or top-left corner is usually empty
+   enough.
+2. If no corner has enough empty space, move the legend outside the
+   axis (above the plot via `legend pos=outer north east` or similar,
+   or below the caption-side via `legend to name` and `\ref`).
+3. Only as a last resort, shrink the legend by abbreviating entries
+   (e.g. "Full revelation" → "FR", "Newton--Krylov polish" →
+   "Newton--Krylov") or by splitting the figure into two panels.
+
+The same rule applies to any other quantity with a fixed natural
+ceiling: shares of a population, probabilities, fractions of variance
+explained ($R^2$, $1 - R^2$), and so on. The ceiling is honest; the
+headroom is the legend's problem, not the data's.
 
 ## Econometrica note
 
