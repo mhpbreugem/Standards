@@ -1,0 +1,6 @@
+# Python dependencies for methods/ (numerical solvers).
+# Pin versions when wiring CI; names listed here for self-containment.
+numpy
+scipy
+mpmath
+numba   # @njit kernels in the REZN code/ package (once vendored)

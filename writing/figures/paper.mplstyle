@@ -1,0 +1,27 @@
+# PREVIEW ONLY. The manuscript figure standard is pgfplots (see bc20-ecta.tex
+# and README.md). Use this matplotlib style for quick data looks; it mirrors the
+# BC20-ECTA palette and the colour+dash ordering so previews match the paper.
+#   import matplotlib.pyplot as plt
+#   plt.style.use(".../figures/paper.mplstyle")
+
+figure.figsize: 3.15, 3.15
+savefig.format: pdf
+savefig.bbox:   tight
+
+font.family:      serif
+mathtext.fontset: cm
+font.size:        11
+axes.labelsize:   11
+legend.fontsize:  9
+
+axes.linewidth:   0.8
+lines.linewidth:  1.8
+
+axes.spines.top:   False
+axes.spines.right: False
+legend.frameon:    False
+legend.loc:        upper right
+
+# BC20-ECTA curve order: colour paired with a distinct dash (grayscale-safe).
+# green solid, red dashed, blue dotted, black dash-dot (CARA/baseline).
+axes.prop_cycle: (cycler('color', ['1C5905','B31C1C','00336B','000000']) + cycler('linestyle', ['-','--',':','-.']))

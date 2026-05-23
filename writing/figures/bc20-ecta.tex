@@ -1,0 +1,29 @@
+% BC20-ECTA pgfplots house style for paper figures.
+% Input in the document PREAMBLE:  \input{bc20-ecta.tex}
+% Then draw with:  \begin{axis}[bc20ecta, ...]
+%   and one style per curve, in this order:  bcone, bctwo, bcthree, bccara.
+%
+% The four curve styles pair a colour with a distinct dash so every figure
+% stays readable in grayscale (Econometrica prints B&W).
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\definecolor{bcgreen}{rgb}{0.11,0.35,0.02}
+\definecolor{bcred}{rgb}{0.70,0.11,0.11}
+\definecolor{bcblue}{rgb}{0.00,0.20,0.42}
+
+\pgfplotsset{
+  bc20ecta/.style={
+    width=8cm, height=8cm,
+    scaled ticks=false,
+    ticklabel style={/pgf/number format/fixed, /pgf/number format/precision=5},
+    % legend has NO frame and NO fill, so it can never mask a curve it sits near.
+    legend style={draw=none, fill=none, font=\footnotesize},
+    legend pos=north east,
+  },
+  bcone/.style  ={bcgreen, solid,      very thick},
+  bctwo/.style  ={bcred,   dashed,     very thick},
+  bcthree/.style={bcblue,  dotted,     very thick},
+  bccara/.style ={black,   dashdotted, ultra thick},
+}
