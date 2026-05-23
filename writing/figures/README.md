@@ -116,6 +116,34 @@ When the legend overlaps a curve in a bounded plot:
 The same rule applies to $R^2$, $1-R^2$, and any other naturally
 bounded quantity.
 
+### Log-axis tick labels
+
+Default pgfplots log-axis behaviour prints ticks as
+$10^{-1}, 10^{0}, 10^{1}$. This is appropriate when the axis spans many
+decades (e.g. a residual norm from `1` to $10^{-14}$) but ugly when the
+axis sits in a "human" range like `0.01` to `1000`. Decimal labels read
+better there.
+
+**Rule.** When all visible tick values of a log axis fall in
+`[0.001, 10000]`, force decimal tick labels:
+
+    \begin{axis}[bc20ecta,
+      xmode=log, log basis x=10,
+      log ticks with fixed point,
+      ...
+
+When the axis spans more than four decades or includes values outside
+`[0.001, 10000]`, leave the default $10^{x}$ notation in place.
+
+**Tick density.** Each major decade of a log axis should carry at least
+3 tick labels. Specify `xtick={...}` explicitly with a
+multiplicatively-spaced sequence (a `1, 2, 5, 10, 20, 50, ...` sequence
+reads cleanly at any zoom level). Default pgfplots places one label per
+decade, which leaves a single-decade axis with only two endpoints
+labelled.
+
+The same rule applies to `ymode=log`.
+
 ### Bar charts
 
 Bar charts follow the same colour/style discipline as line charts,
