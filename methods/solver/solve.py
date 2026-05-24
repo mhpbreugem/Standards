@@ -425,11 +425,12 @@ def main() -> None:
 
     # -----------------------------------------------------------------------
     # Global precision policy (cannot be overridden by solver_params):
-    #   All ree tasks use mpmath Newton at 70-digit working precision,
-    #   targeting ||F|| < 1e-50.
+    #   All fixed points are solved at DOUBLE-DOUBLE working precision
+    #   (~32 significant digits, 2x float64; mpmath dps=32), with a MINIMUM
+    #   convergence threshold of ||F||inf < 1e-20.
     # -----------------------------------------------------------------------
-    MP_DPS   = 70
-    MP_TOL   = "1e-50"
+    MP_DPS   = 32          # double-double-equivalent working precision
+    MP_TOL   = "1e-20"     # minimum convergence threshold
     MP_ITERS = 50
 
     # Per-task solver parameter overrides (task["solver_params"] wins over CLI defaults)
@@ -713,15 +714,15 @@ def main() -> None:
         }
 
         BAIL_THRESHOLD = 1.0e-4
-        DONE_THRESHOLD = 1.0e-50
+        DONE_THRESHOLD = 1.0e-20   # minimum convergence threshold (policy)
         if F_inf_final > BAIL_THRESHOLD:
             claim_bail(args.project, args.task_id, args.branch,
                        f"||F||inf={F_inf_final:.3e} > bail threshold {BAIL_THRESHOLD:.0e}")
             exit_code = 1
         elif F_inf_final > DONE_THRESHOLD:
-            # mp phase made progress but didn't reach 1e-100 (wall timeout)
+            # mp phase made progress but didn't reach the 1e-20 threshold (wall timeout)
             # Upload checkpoint to repo so it survives runner cleanup, then release for retry
-            print(f"[solve] F={F_inf_final:.3e} > 1e-100, uploading checkpoint and releasing",
+            print(f"[solve] F={F_inf_final:.3e} > 1e-20 threshold, uploading checkpoint and releasing",
                   flush=True)
             claim_checkpoint_release(args.project, args.task_id, args.branch, ckpt_rel, result)
             exit_code = 0
