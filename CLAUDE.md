@@ -55,5 +55,6 @@ Add this pointer to the project's own `CLAUDE.md`:
 > Shared standards/methods/runner live in `github.com/mhpbreugem/<repo>`.
 > - **Writing:** before a figure/table/manuscript edit, consult `writing/` and apply the checklist.
 > - **Methods:** import from `methods/` (single source of truth — see `MAP.md`); never keep private edits, back-port instead.
+> - **Precision:** every fixed point must follow `methods/PRECISION_POLICY.md` — double-double precision, accept only at `||F|| < 1e-20` (constants in `methods/solver/precision.py`).
 > - **Distributed runs:** wire this paper's queue/solver onto `runner/` per `runner/README.md`.
 > Paper-specific math, task queues, and glue stay in this project repo.
