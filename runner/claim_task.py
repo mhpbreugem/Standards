@@ -296,7 +296,7 @@ def _api_put(token: str, owner: str, repo: str, path: str,
 
 
 def mark_done(project: str, task_id: str, checkpoint: str | None,
-              result: dict, branch: str | None = None) -> bool:
+              result: dict, branch: str | None = None, upload: bool = True) -> bool:
     """
     Flip task to done and upload checkpoint via GitHub REST API.
 
@@ -314,7 +314,8 @@ def mark_done(project: str, task_id: str, checkpoint: str | None,
     queue_api_path = queue_rel()
 
     # ── Step 1: upload checkpoint before touching the queue ──────────────────
-    if checkpoint:
+    # (skipped when upload=False — e.g. the solution is a directory pushed via git)
+    if checkpoint and upload:
         ok = _upload_checkpoint(token, owner, repo_name, checkpoint,
                                 task_id, branch, max_retries=10)
         if not ok:
@@ -368,6 +369,119 @@ def mark_done(project: str, task_id: str, checkpoint: str | None,
         time.sleep(min(2 ** attempt, 15))
 
     return False
+
+
+# ---------------------------------------------------------------------------
+# REST optimistic-SHA queue ops (robust under N-worker contention; no local git).
+# A worker that dies mid-op leaves no half-state; every op is an atomic PUT.
+# ---------------------------------------------------------------------------
+
+def _rest_queue_op(task_id: str, apply, message: str, branch: str | None = None,
+                   attempts: int = 25) -> str:
+    """GET the queue, apply(task, queue) -> bool, PUT with the file SHA, retry on 409.
+
+    apply returns True (mutated, commit), or False (abort — leave unchanged).
+    Returns: "ok" (PUT landed), "noop" (apply aborted), "fail" (no REST / exhausted).
+    """
+    branch = branch or _current_branch()
+    token = _gh_token()
+    owner, repo_name = _gh_repo()
+    if not token or not owner:
+        return "fail"   # no REST available (e.g. local dry-run / non-github origin)
+    qpath = queue_rel()
+    for attempt in range(attempts):
+        try:
+            meta = _api_get(token, owner, repo_name, qpath, branch)
+        except Exception:
+            time.sleep(min(2 ** attempt, 15)); continue
+        file_sha = meta["sha"]
+        queue = json.loads(_b64.b64decode(meta["content"].replace("\n", "")))
+        task = _find_by_id(queue, task_id)
+        if task is None:
+            return "noop"
+        if apply(task, queue) is False:
+            return "noop"
+        _update_summary(queue)
+        status = _api_put(token, owner, repo_name, qpath, f"{task_id}: {message}",
+                          json.dumps(queue, indent=2).encode(), file_sha, branch)
+        if status in (200, 201):
+            return "ok"
+        if status == 409:
+            time.sleep(random.uniform(0, min(2 ** attempt, 8))); continue
+        time.sleep(min(2 ** attempt, 15))
+    return "fail"
+
+
+def claim_rest(project: str, task_id: str, worker_id: str | None = None,
+               branch: str | None = None) -> bool:
+    """Atomically claim a ready task via REST. True only if the claim landed."""
+    wid = worker_id or _default_worker_id()
+
+    def _apply(task, queue):
+        if task.get("status") != "ready":
+            return False          # already taken / not ready -> claim fails
+        task["status"] = "claimed"
+        task["claimed_by"] = wid
+        task["claimed_at"] = _now()
+        return True
+
+    return _rest_queue_op(task_id, _apply, "claim", branch) == "ok"
+
+
+def mark_skip(project: str, task_id: str, reason: str, branch: str | None = None) -> bool:
+    def _apply(task, queue):
+        if task.get("status") == "skip":
+            return False
+        task["status"] = "skip"
+        task["result"] = {"reason": reason[:120]}
+        task.pop("claimed_by", None)
+        task.pop("claimed_at", None)
+        return True
+
+    return _rest_queue_op(task_id, _apply, "skip", branch) in ("ok", "noop")
+
+
+def release_stale_rest(project: str, max_age_hours: float = 0.25,
+                       branch: str | None = None) -> int:
+    """Release all claims older than max_age_hours via one atomic REST PUT."""
+    branch = branch or _current_branch()
+    token = _gh_token(); owner, repo_name = _gh_repo()
+    if not token or not owner:
+        return -1
+    qpath = queue_rel()
+    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=max_age_hours)
+    for attempt in range(15):
+        try:
+            meta = _api_get(token, owner, repo_name, qpath, branch)
+        except Exception:
+            time.sleep(min(2 ** attempt, 15)); continue
+        queue = json.loads(_b64.b64decode(meta["content"].replace("\n", "")))
+        released = 0
+        for t in queue["tasks"]:
+            if t.get("status") != "claimed":
+                continue
+            ca = t.get("claimed_at")
+            if not ca:
+                continue
+            try:
+                when = datetime.datetime.fromisoformat(ca.rstrip("Z"))
+            except Exception:
+                continue
+            if when < cutoff:
+                t["status"] = "ready"; t.pop("claimed_by", None); t.pop("claimed_at", None)
+                released += 1
+        if released == 0:
+            return 0
+        _update_summary(queue)
+        status = _api_put(token, owner, repo_name, qpath,
+                          f"release {released} stale claim(s)",
+                          json.dumps(queue, indent=2).encode(), meta["sha"], branch)
+        if status in (200, 201):
+            return released
+        if status == 409:
+            time.sleep(random.uniform(0, min(2 ** attempt, 8))); continue
+        time.sleep(min(2 ** attempt, 15))
+    return -1
 
 
 def _update_summary(queue: dict) -> None:
@@ -871,8 +985,12 @@ def main():
             released = release_worker_claims(args.project, args.worker_id, args.branch)
             print(f"released: {released}")
         else:
-            released = release_stale_claims(args.project, args.max_age_hours, args.branch)
-            print(f"released stale: {released}")
+            n = release_stale_rest(args.project, args.max_age_hours, args.branch)
+            if n < 0:   # no REST available -> git fallback
+                released = release_stale_claims(args.project, args.max_age_hours, args.branch)
+                print(f"released stale (git): {released}")
+            else:
+                print(f"released stale (rest): {n}")
 
     elif args.command == "status":
         print_status(args.project)

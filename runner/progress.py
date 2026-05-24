@@ -108,20 +108,26 @@ class ProgressReporter:
         self._thread.start()
 
     def stop(self, delete: bool = True) -> None:
-        """Stop the flusher. If delete=True, remove the progress file."""
+        """Stop the flusher thread and write a final snapshot.
+
+        The remote progress file is left in place (small; the dashboard only reads
+        progress for currently-claimed tasks, so a leftover for a done task is
+        ignored and is overwritten if the task runs again)."""
         self._stop_event.set()
         if self._thread:
             self._thread.join(timeout=15)
             self._thread = None
-        if delete and self.progress_file.exists():
+        try:
+            self._flush()
+        except Exception:
+            pass
+        if delete:
             try:
-                self.progress_file.unlink()
-                self._git_commit_push(
-                    f"progress cleanup {self.task_id} ({self.worker_id})",
-                    delete=True,
-                )
-            except Exception as exc:
-                print(f"[progress] cleanup failed (non-fatal): {exc}", flush=True)
+                p = self.progress_file
+                if p.exists():
+                    p.unlink()
+            except Exception:
+                pass
 
     # ── internals ────────────────────────────────────────────────────────────────────
     def _loop(self) -> None:
@@ -137,41 +143,35 @@ class ProgressReporter:
     def _flush(self) -> None:
         with self._lock:
             snapshot = dict(self._state)
+        content = json.dumps(snapshot, indent=2)
+        # Prefer REST (decoupled from the contended queue branch — its own file, no
+        # local git, so it can't conflict with claim/done commits). Fall back to a
+        # local file when there's no token/origin (e.g. --local dry-run).
         try:
-            self.progress_file.write_text(json.dumps(snapshot, indent=2))
-            self._git_commit_push(
-                f"progress {self.task_id} iter={snapshot.get('iter')} "
-                f"ftol={snapshot.get('ftol')} ({self.worker_id})"
-            )
+            if not self._rest_put(content, snapshot):
+                self.progress_dir.mkdir(parents=True, exist_ok=True)
+                self.progress_file.write_text(content)
         except Exception as exc:
             print(f"[progress] flush failed (non-fatal): {exc}", flush=True)
 
-    def _git_commit_push(self, message: str, delete: bool = False) -> None:
-        rel = f"{self.progress_rel_dir}/{self.task_id}.json"
-        cwd = str(self.repo_root)
-        # Pull first to minimise conflicts
-        subprocess.run(["git", "pull", "--rebase", "origin", self.branch],
-                       cwd=cwd, capture_output=True, timeout=30)
-        if delete:
-            subprocess.run(["git", "rm", "-f", "--ignore-unmatch", rel],
-                           cwd=cwd, capture_output=True)
-        else:
-            subprocess.run(["git", "add", rel], cwd=cwd, capture_output=True)
-        # Anything staged?
-        diff = subprocess.run(["git", "diff", "--cached", "--quiet"],
-                              cwd=cwd, capture_output=True)
-        if diff.returncode == 0:
-            return  # nothing changed
-        subprocess.run(["git", "commit", "-m", message, "--quiet"],
-                       cwd=cwd, capture_output=True)
-        # Push with retries
-        for attempt in range(3):
-            push = subprocess.run(
-                ["git", "push", "origin", self.branch, "--quiet"],
-                cwd=cwd, capture_output=True, timeout=30,
-            )
-            if push.returncode == 0:
-                return
-            subprocess.run(["git", "pull", "--rebase", "origin", self.branch],
-                           cwd=cwd, capture_output=True, timeout=30)
-            time.sleep(2 * (attempt + 1))
+    def _rest_put(self, content: str, snapshot: dict) -> bool:
+        """PUT progress/<task>.json via the GitHub contents API. Returns False if
+        REST isn't available (caller writes locally instead)."""
+        try:
+            from claim_task import _gh_token, _gh_repo, _api_get, _api_put  # noqa: PLC0415
+        except Exception:
+            return False
+        token = _gh_token(); owner, repo = _gh_repo()
+        if not token or not owner:
+            return False
+        path = f"{self.progress_rel_dir}/{self.task_id}.json"
+        sha = None
+        try:
+            sha = _api_get(token, owner, repo, path, self.branch).get("sha")
+        except Exception:
+            sha = None
+        _api_put(token, owner, repo, path,
+                 f"progress {self.task_id} iter={snapshot.get('iter')} "
+                 f"ftol={snapshot.get('ftol')} ({self.worker_id})",
+                 content.encode(), sha, self.branch)
+        return True
