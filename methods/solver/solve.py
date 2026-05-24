@@ -34,6 +34,9 @@ sys.path.insert(0, str(ROOT / "runner"))     # progress.py
 sys.path.insert(0, str(HERE))                # phi_mp.py + vendored code/ package
 
 from progress import ProgressReporter  # noqa: E402
+from precision import (  # noqa: E402  (shared fixed-point precision policy)
+    WORKING_DPS, TOL_STR, DONE_THRESHOLD, BAIL_THRESHOLD,
+)
 
 # ---------------------------------------------------------------------------
 # REZN code/ is vendored under methods/solver/code/ — self-contained, no runtime clone.
@@ -369,7 +372,7 @@ def _run_sym_task(args, task: dict, gamma: float, tau: float) -> None:
             "Vi":        round(econ["Vi"], 6) if not math.isnan(econ["Vi"]) else None,
         }
 
-        BAIL_THRESHOLD = 1e-4
+        # BAIL_THRESHOLD from precision.py (shared policy).
         if F_inf > BAIL_THRESHOLD:
             claim_bail(args.project, args.task_id, args.branch,
                        f"sym ||F||={F_inf:.3e} > {BAIL_THRESHOLD:.0e}")
@@ -424,13 +427,12 @@ def main() -> None:
     W_vec     = np.ones(K,        dtype=np.float64)
 
     # -----------------------------------------------------------------------
-    # Global precision policy (cannot be overridden by solver_params):
-    #   All fixed points are solved at DOUBLE-DOUBLE working precision
-    #   (~32 significant digits, 2x float64; mpmath dps=32), with a MINIMUM
-    #   convergence threshold of ||F||inf < 1e-20.
+    # Precision policy from precision.py (shared, project-agnostic; cannot be
+    # overridden by solver_params): double-double working precision, minimum
+    # convergence threshold ||F||inf < 1e-20.
     # -----------------------------------------------------------------------
-    MP_DPS   = 32          # double-double-equivalent working precision
-    MP_TOL   = "1e-20"     # minimum convergence threshold
+    MP_DPS   = WORKING_DPS
+    MP_TOL   = TOL_STR
     MP_ITERS = 50
 
     # Per-task solver parameter overrides (task["solver_params"] wins over CLI defaults)
@@ -713,8 +715,7 @@ def main() -> None:
             "wall_s":      round(wall_s, 1),
         }
 
-        BAIL_THRESHOLD = 1.0e-4
-        DONE_THRESHOLD = 1.0e-20   # minimum convergence threshold (policy)
+        # BAIL_THRESHOLD / DONE_THRESHOLD come from precision.py (shared policy).
         if F_inf_final > BAIL_THRESHOLD:
             claim_bail(args.project, args.task_id, args.branch,
                        f"||F||inf={F_inf_final:.3e} > bail threshold {BAIL_THRESHOLD:.0e}")

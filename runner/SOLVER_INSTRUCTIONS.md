@@ -133,10 +133,17 @@ General warm-start rules:
 
 ---
 
-## 6. CONVERGENCE QUALITY METRIC
+## 6. PRECISION POLICY (universal) + CONVERGENCE QUALITY METRIC
 
-Each project defines its own convergence metric in `EQUATIONS.md`.
-Write the metric value(s) into the task's `result` field on completion.
+**Precision policy — applies to every fixed point in every project**
+(`../methods/PRECISION_POLICY.md`, constants in `../methods/solver/precision.py`):
+solve at **double-double working precision** (~32 digits, `mpmath dps=32`) and
+mark a task **`done` only when `||F||inf < 1e-20`**; **bail** above `1e-4`;
+otherwise checkpoint + re-queue. This cannot be overridden by `solver_params`.
+
+In addition, each project defines its own **convergence-quality metric** in
+`EQUATIONS.md` (e.g. weighted `1-R2`). Write the metric value(s) — and the residual
+`F_max` as a string — into the task's `result` field on completion.
 
 The metric is used to:
 1. Verify the solution is acceptable (not just technically converged).

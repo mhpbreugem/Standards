@@ -7,12 +7,14 @@ method is, where it lives here, where it came from, and what it still depends on
 
 ## Precision policy
 
-**All fixed points are solved at double-double working precision** (~32 significant
-digits, 2x float64; `mpmath dps=32`), with a **minimum convergence threshold of
-`||F||inf < 1e-20`**. A solution is accepted (`done`) only at or below 1e-20; above
-the bail threshold `1e-4` it bails; in between, the checkpoint is saved and the task
-re-queued. This policy is enforced in `solver/solve.py` (`MP_DPS`, `MP_TOL`,
-`DONE_THRESHOLD`) and cannot be overridden by per-task `solver_params`.
+**Applies to every fixed point in every project.** All fixed points are solved at
+**double-double working precision** (~32 significant digits, 2x float64;
+`mpmath dps=32`), with a **minimum convergence threshold of `||F||inf < 1e-20`**
+(accept `done` at or below 1e-20; bail above 1e-4; otherwise checkpoint + re-queue).
+
+Single source of truth: **`solver/precision.py`** (import the constants/helpers;
+do not hardcode). Full statement: **`PRECISION_POLICY.md`**. Cannot be overridden by
+per-task `solver_params`; changing it is a PR to `precision.py` + `PRECISION_POLICY.md`.
 
 ## solver/ — REE / fixed-point numerical methods
 
