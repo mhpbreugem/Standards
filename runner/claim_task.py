@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
-claim_task.py — Git-race locking for fixed-point-factory task queues.
+claim_task.py — Git-race locking for project task queues.
+
+The queue location is supplied by the consuming project (cross-repo runner):
+set QUEUE_REL=<repo-relative path> or pass --queue-path. The legacy single-repo
+projects/<project>/TASK_QUEUE.json auto-path is no longer supported.
 
 Usage (CLI):
-    python3 core/claim_task.py claim   --project REZN --task-id g400_t1000
-    python3 core/claim_task.py done    --project REZN --task-id g400_t1000 \
-                                       --checkpoint results/full_ree/task3_g400_t1000_mp50.json \
-                                       --result '{"1-R2": 0.012}'
-    python3 core/claim_task.py bail    --project REZN --task-id g400_t1000 \
-                                       --reason "did not converge"
-    python3 core/claim_task.py release --project REZN --worker-id hostname:1234
-    python3 core/claim_task.py status  --project REZN
+    QUEUE_REL=todo/TASK_QUEUE.json \
+        python3 runner/claim_task.py claim  --project MIWN --task-id ree_K3_g0050_t0200
+    python3 runner/claim_task.py done  --project MIWN --task-id ree_K3_g0050_t0200 \
+        --queue-path todo/TASK_QUEUE.json \
+        --checkpoint solutions/pool/ree_K3/v0001/ --result '{"1-R2": 0.012}'
+    python3 runner/claim_task.py status --project MIWN --queue-path todo/TASK_QUEUE.json
 
 Python API:
-    from core.claim_task import find_ready_task, try_claim, mark_done, mark_failed, release_stale_claims
+    from claim_task import find_ready_task, try_claim, mark_done, mark_failed, release_stale_claims
+    # (set os.environ["QUEUE_REL"] first, or call with --queue-path via the CLI)
 """
 
 import argparse
@@ -48,8 +51,25 @@ def repo_root() -> str:
     return root
 
 
+def queue_rel() -> str:
+    """Repo-relative path to the task queue.
+
+    Cross-repo runner: the queue location is supplied by the consuming project via
+    QUEUE_REL (env) or --queue-path (e.g. "todo/TASK_QUEUE.json" in a paper repo).
+    The legacy single-repo projects/<project>/ auto-path is no longer supported.
+    """
+    rel = os.environ.get("QUEUE_REL")
+    if not rel:
+        raise SystemExit(
+            "claim_task: QUEUE_REL not set. Export QUEUE_REL=<repo-relative path to "
+            "TASK_QUEUE.json> or pass --queue-path. The legacy projects/<project>/ "
+            "layout is no longer supported (cross-repo runner — see runner/README.md)."
+        )
+    return rel
+
+
 def queue_path(project: str) -> str:
-    return os.path.join(repo_root(), "projects", project, "TASK_QUEUE.json")
+    return os.path.join(repo_root(), queue_rel())
 
 
 # ---------------------------------------------------------------------------
@@ -291,7 +311,7 @@ def mark_done(project: str, task_id: str, checkpoint: str | None,
     token = _gh_token()
     owner, repo_name = _gh_repo()
     metric_str = _result_summary(result)
-    queue_api_path = f"projects/{project}/TASK_QUEUE.json"
+    queue_api_path = queue_rel()
 
     # ── Step 1: upload checkpoint before touching the queue ──────────────────
     if checkpoint:
@@ -673,7 +693,7 @@ def save_checkpoint_release(project: str, task_id: str, checkpoint: str,
     branch = branch or _current_branch()
     token  = _gh_token()
     owner, repo_name = _gh_repo()
-    queue_api_path = f"projects/{project}/TASK_QUEUE.json"
+    queue_api_path = queue_rel()
 
     # Upload checkpoint first with retries — the file must land before re-queuing
     if checkpoint:
@@ -806,8 +826,14 @@ def main():
     parser.add_argument("--result", help="JSON string")
     parser.add_argument("--reason")
     parser.add_argument("--branch")
+    parser.add_argument("--queue-path",
+                        help="repo-relative path to TASK_QUEUE.json (sets QUEUE_REL; "
+                             "cross-repo runner, e.g. todo/TASK_QUEUE.json)")
     parser.add_argument("--max-age-hours", type=float, default=6.0)
     args = parser.parse_args()
+
+    if args.queue_path:
+        os.environ["QUEUE_REL"] = args.queue_path
 
     if args.command == "claim":
         if not args.task_id:
