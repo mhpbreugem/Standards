@@ -29,6 +29,7 @@ import argparse
 import json
 import os
 import subprocess
+import time
 import sys
 from pathlib import Path
 
@@ -93,7 +94,8 @@ def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int
         "--version", version,
         "--task-id", task["id"],
         "--worker-id", worker_id,
-        "--progress-rel", "todo/progress",   # live progress for the dashboard
+        # NOTE: git-push progress reporting is disabled — it contended with the
+        # done-commit under N workers. Live progress will return via the REST API.
     ]
     print(f"[run_task] solve: {' '.join(cmd)}", flush=True)
     r = subprocess.run(cmd, cwd=str(repo))
@@ -146,24 +148,58 @@ def finish_local(project: str, task_id: str, checkpoint: str, result: dict) -> N
     ct.save_queue(project, q)
 
 
+def _robust_commit(branch: str, mutate, extra_paths=(), message: str = "update",
+                   attempts: int = 25) -> bool:
+    """Land a single-task queue change under N-worker contention.
+
+    The queue (TASK_QUEUE.json) is one file every worker edits, so a plain
+    pull --rebase conflicts and loses the change. Instead, on every attempt we
+    re-sync to origin, re-apply our one change onto the *fresh* queue, add any
+    unique solution files (which never conflict), commit, and push. Retries until
+    it lands — optimistic concurrency via git.
+
+    `mutate()` edits the on-disk queue and returns False if there's nothing to do
+    (e.g. the task is already in the target state).
+    """
+    for i in range(attempts):
+        ct._git("fetch", "origin", branch, check=False)
+        ct._git("reset", "--mixed", f"origin/{branch}", check=False)   # HEAD->origin, keep working files
+        ct._git("checkout", f"origin/{branch}", "--", ct.queue_rel(), check=False)  # fresh queue
+        if mutate() is False:
+            return True
+        ct._git("add", ct.queue_rel(), *extra_paths, check=False)
+        if ct._git("diff", "--cached", "--quiet", check=False).returncode == 0:
+            return True
+        ct._git("commit", "-m", message, check=False)
+        if ct._push(branch):
+            return True
+        time.sleep(1 + (i % 4))
+    return False
+
+
 def finish_git(repo: Path, project: str, task_id: str, checkpoint: str,
                result: dict, branch: str, version_dir: Path) -> bool:
-    """Commit the solution + queue + registry back to the project repo (rebase-retry)."""
-    # Update the queue locally, then stage everything and push.
-    finish_local(project, task_id, checkpoint, result)
-    rels = [
-        os.path.relpath(version_dir, repo),
-        "solutions/REGISTRY.json",
-        ct.queue_rel(),
-    ]
-    ct._git("add", *rels)
-    ct._git("commit", "-m", f"{task_id}: {checkpoint} done")
-    if ct._push(branch):
+    """Commit the (unique) solution dir + flip the task done, robust to contention."""
+    soln_rel = os.path.relpath(version_dir, repo)
+
+    def _mut():
+        q = ct.load_queue(project)
+        t = ct._find_by_id(q, task_id)
+        if t is None or t.get("status") == "done":
+            return False
+        t["status"] = "done"
+        t["checkpoint"] = checkpoint
+        t["result"] = result
+        t["completed_at"] = ct._now()
+        t.pop("claimed_by", None)
+        t.pop("claimed_at", None)
+        ct._unblock_downstream(q)
+        ct._update_summary(q)
+        ct.save_queue(project, q)
         return True
-    # Non-fast-forward: rebase onto origin and re-apply the done transition once.
-    if ct._pull_rebase(branch):
-        return ct._push(branch)
-    return False
+
+    return _robust_commit(branch, _mut, extra_paths=[soln_rel],
+                          message=f"{task_id}: done {checkpoint}")
 
 
 def main() -> int:
@@ -220,17 +256,19 @@ def main() -> int:
     except SystemExit as e:
         reason = str(e)
         print(f"[run_task] solve rejected/failed: {reason}", flush=True)
-        # Park as skip (not bail+requeue) — avoids churn when the driver can't yet
-        # reach the strong-PR branch for this point. A worker moves on.
-        q = ct.load_queue(project); t = ct._find_by_id(q, task["id"])
-        t["status"] = "skip"; t["result"] = {"reason": reason}
-        t.pop("claimed_by", None); t.pop("claimed_at", None)
-        ct._update_summary(q); ct.save_queue(project, q)
-        if not args.local:
-            ct._git("add", ct.queue_rel())
-            ct._git("commit", "-m", f"{task['id']}: skip ({reason[:48]})")
-            if not ct._push(args.branch):
-                ct._pull_rebase(args.branch); ct._push(args.branch)
+        # Park as skip (not bail+requeue) — a worker moves on.
+        def _mut_skip():
+            q = ct.load_queue(project); t = ct._find_by_id(q, task["id"])
+            if t is None or t.get("status") == "skip":
+                return False
+            t["status"] = "skip"; t["result"] = {"reason": reason}
+            t.pop("claimed_by", None); t.pop("claimed_at", None)
+            ct._update_summary(q); ct.save_queue(project, q)
+            return True
+        if args.local:
+            _mut_skip()
+        else:
+            _robust_commit(args.branch, _mut_skip, message=f"{task['id']}: skip ({reason[:40]})")
         return 0
 
     bump_counter(reg_path, task["problem"], version)
