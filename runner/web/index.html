@@ -262,9 +262,9 @@
     try{
       const path='todo/runner.config.json';
       const meta=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`);
-      const cfg=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      const cfg=JSON.parse(decB64(meta.content));
       cfg.workers=n;
-      const body=JSON.stringify({message:`set workers=${n}`,content:btoa(JSON.stringify(cfg,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
+      const body=JSON.stringify({message:`set workers=${n}`,content:encB64(JSON.stringify(cfg,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
       const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`,
         {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
       if(!r.ok)throw new Error(await r.text());
@@ -293,12 +293,12 @@
     try{
       const qpath=`todo/TASK_QUEUE.json`;
       const meta=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}?ref=${BRANCH}`);
-      const q=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      const q=JSON.parse(decB64(meta.content));
       let n=0;
       (q.tasks||[]).forEach(t=>{if(t.status==='bailed'||t.status==='skip'){t.status='ready';delete t.result;n++;}});
       if(!n){setMsg('no bailed/skip tasks',3000);return;}
       q.updated_at=new Date().toISOString();
-      const body=JSON.stringify({message:`reset ${n} bailed/skip → ready`,content:btoa(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
+      const body=JSON.stringify({message:`reset ${n} bailed/skip -> ready`,content:encB64(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
       const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}`,
         {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
       if(!r.ok)throw new Error(await r.text());
@@ -312,7 +312,9 @@
   function apiUrl(p){return`https://api.github.com/repos/${OWNER}/${REPO}/contents/${p}?ref=${BRANCH}`;}
   function authH(){const p=getPat();return p?{Authorization:`token ${p}`}:{};}
   async function fj(url){const r=await fetch(url,{cache:"no-store",headers:authH()});if(!r.ok)throw new Error(r.status);return r.json();}
-  async function apiContent(path){const m=await fj(apiUrl(path));if(m.content)return JSON.parse(atob(m.content.replace(/\n/g,"")));return fj(rawUrl(path));}
+  function encB64(s){const u=new TextEncoder().encode(s);let b='';for(let i=0;i<u.length;i+=0x8000)b+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(b);}
+  function decB64(x){const bin=atob(String(x).replace(/\n/g,''));return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)));}
+  async function apiContent(path){const m=await fj(apiUrl(path));if(m.content)return JSON.parse(decB64(m.content));return fj(rawUrl(path));}
 
   function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
@@ -366,7 +368,7 @@
       const m=await fj(apiUrl(`todo/TASK_QUEUE.json`));
       if(m.sha===_qSha)return;
       _qSha=m.sha;
-      taskData=JSON.parse(atob(m.content.replace(/\n/g,"")));
+      taskData=JSON.parse(decB64(m.content));
     }else{
       taskData=await fj(rawUrl(`todo/TASK_QUEUE.json`));
     }
