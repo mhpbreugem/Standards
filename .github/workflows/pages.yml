@@ -6,7 +6,7 @@ name: Deploy runner dashboard (Pages)
 on:
   push:
     branches: [main]
-    paths: [runner/web/**]
+    paths: [runner/web/**, .github/workflows/pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -27,6 +27,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v4
+        with:
+          enablement: true   # auto-enable Pages (no manual Settings toggle needed)
       - uses: actions/upload-pages-artifact@v3
         with:
           path: runner/web
