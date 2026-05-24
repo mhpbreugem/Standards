@@ -5,6 +5,15 @@ single source of truth**: changes land here first, and papers vendor or submodul
 these methods rather than keeping private copies. Each entry records what the
 method is, where it lives here, where it came from, and what it still depends on.
 
+## Precision policy
+
+**All fixed points are solved at double-double working precision** (~32 significant
+digits, 2x float64; `mpmath dps=32`), with a **minimum convergence threshold of
+`||F||inf < 1e-20`**. A solution is accepted (`done`) only at or below 1e-20; above
+the bail threshold `1e-4` it bails; in between, the checkpoint is saved and the task
+re-queued. This policy is enforced in `solver/solve.py` (`MP_DPS`, `MP_TOL`,
+`DONE_THRESHOLD`) and cannot be overridden by per-task `solver_params`.
+
 ## solver/ — REE / fixed-point numerical methods
 
 | File | Purpose | Self-contained? | Deps |
