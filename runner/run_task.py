@@ -163,13 +163,42 @@ def _push_solution(branch: str, soln_rel: str, message: str, attempts: int = 15)
     return False
 
 
+def _git_queue_commit(branch: str, mutate, message: str, attempts: int = 20) -> bool:
+    """Git fallback for a single-task queue change: re-sync to origin, re-apply the
+    one change onto the fresh queue, commit, push; retry. (Used only if REST fails.)"""
+    for i in range(attempts):
+        ct._git("fetch", "origin", branch, check=False)
+        ct._git("reset", "--mixed", f"origin/{branch}", check=False)
+        ct._git("checkout", f"origin/{branch}", "--", ct.queue_rel(), check=False)
+        if mutate() is False:
+            return True
+        ct._git("add", ct.queue_rel(), check=False)
+        if ct._git("diff", "--cached", "--quiet", check=False).returncode == 0:
+            return True
+        ct._git("commit", "-m", message, check=False)
+        if ct._push(branch):
+            return True
+        time.sleep(1 + (i % 4))
+    return False
+
+
 def finish_git(repo: Path, project: str, task_id: str, checkpoint: str,
                result: dict, branch: str, version_dir: Path) -> bool:
-    """Push the unique solution dir via git, then flip the task done via the REST
-    optimistic-SHA path (robust under N-worker contention — no queue git race)."""
+    """Push the unique solution dir via git, then flip the task done — REST first,
+    git reset-reapply as a fallback so completion lands even if REST is unavailable."""
     soln_rel = os.path.relpath(version_dir, repo)
     _push_solution(branch, soln_rel, f"{task_id}: {checkpoint}")
-    return ct.mark_done(project, task_id, checkpoint, result, branch, upload=False)
+    if ct.mark_done(project, task_id, checkpoint, result, branch, upload=False):
+        return True
+    def _mut():
+        q = ct.load_queue(project); t = ct._find_by_id(q, task_id)
+        if t is None or t.get("status") == "done":
+            return False
+        t["status"] = "done"; t["checkpoint"] = checkpoint; t["result"] = result
+        t["completed_at"] = ct._now(); t.pop("claimed_by", None); t.pop("claimed_at", None)
+        ct._unblock_downstream(q); ct._update_summary(q); ct.save_queue(project, q)
+        return True
+    return _git_queue_commit(branch, _mut, f"{task_id}: done (git)")
 
 
 def main() -> int:
@@ -212,7 +241,8 @@ def main() -> int:
     if args.local:
         claimed = claim_local(project, task["id"], args.worker_id)
     else:
-        claimed = ct.claim_rest(project, task["id"], args.worker_id, args.branch)
+        claimed = (ct.claim_rest(project, task["id"], args.worker_id, args.branch)
+                   or ct.try_claim(project, task["id"], args.worker_id, args.branch))
     if not claimed:
         print(f"[run_task] could not claim {task['id']} (another worker beat us)", flush=True)
         return 1
@@ -237,8 +267,8 @@ def main() -> int:
             return True
         if args.local:
             _mut_skip()
-        else:
-            ct.mark_skip(project, task["id"], reason, args.branch)
+        elif not ct.mark_skip(project, task["id"], reason, args.branch):
+            _git_queue_commit(args.branch, _mut_skip, f"{task['id']}: skip (git)")
         return 0
 
     bump_counter(reg_path, task["problem"], version)
