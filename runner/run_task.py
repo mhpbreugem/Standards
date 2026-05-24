@@ -94,8 +94,7 @@ def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int
         "--version", version,
         "--task-id", task["id"],
         "--worker-id", worker_id,
-        # NOTE: git-push progress reporting is disabled — it contended with the
-        # done-commit under N workers. Live progress will return via the REST API.
+        "--progress-rel", "todo/progress",   # live iter/||F|| via REST (no git contention)
     ]
     print(f"[run_task] solve: {' '.join(cmd)}", flush=True)
     r = subprocess.run(cmd, cwd=str(repo))
@@ -148,26 +147,13 @@ def finish_local(project: str, task_id: str, checkpoint: str, result: dict) -> N
     ct.save_queue(project, q)
 
 
-def _robust_commit(branch: str, mutate, extra_paths=(), message: str = "update",
-                   attempts: int = 25) -> bool:
-    """Land a single-task queue change under N-worker contention.
-
-    The queue (TASK_QUEUE.json) is one file every worker edits, so a plain
-    pull --rebase conflicts and loses the change. Instead, on every attempt we
-    re-sync to origin, re-apply our one change onto the *fresh* queue, add any
-    unique solution files (which never conflict), commit, and push. Retries until
-    it lands — optimistic concurrency via git.
-
-    `mutate()` edits the on-disk queue and returns False if there's nothing to do
-    (e.g. the task is already in the target state).
-    """
+def _push_solution(branch: str, soln_rel: str, message: str, attempts: int = 15) -> bool:
+    """Push just the (unique) solution dir. Never conflicts on content — only needs
+    to catch up to origin's tip — so a re-sync + re-add + push retry suffices."""
     for i in range(attempts):
         ct._git("fetch", "origin", branch, check=False)
-        ct._git("reset", "--mixed", f"origin/{branch}", check=False)   # HEAD->origin, keep working files
-        ct._git("checkout", f"origin/{branch}", "--", ct.queue_rel(), check=False)  # fresh queue
-        if mutate() is False:
-            return True
-        ct._git("add", ct.queue_rel(), *extra_paths, check=False)
+        ct._git("reset", "--mixed", f"origin/{branch}", check=False)  # keep untracked solution files
+        ct._git("add", soln_rel, check=False)
         if ct._git("diff", "--cached", "--quiet", check=False).returncode == 0:
             return True
         ct._git("commit", "-m", message, check=False)
@@ -179,27 +165,11 @@ def _robust_commit(branch: str, mutate, extra_paths=(), message: str = "update",
 
 def finish_git(repo: Path, project: str, task_id: str, checkpoint: str,
                result: dict, branch: str, version_dir: Path) -> bool:
-    """Commit the (unique) solution dir + flip the task done, robust to contention."""
+    """Push the unique solution dir via git, then flip the task done via the REST
+    optimistic-SHA path (robust under N-worker contention — no queue git race)."""
     soln_rel = os.path.relpath(version_dir, repo)
-
-    def _mut():
-        q = ct.load_queue(project)
-        t = ct._find_by_id(q, task_id)
-        if t is None or t.get("status") == "done":
-            return False
-        t["status"] = "done"
-        t["checkpoint"] = checkpoint
-        t["result"] = result
-        t["completed_at"] = ct._now()
-        t.pop("claimed_by", None)
-        t.pop("claimed_at", None)
-        ct._unblock_downstream(q)
-        ct._update_summary(q)
-        ct.save_queue(project, q)
-        return True
-
-    return _robust_commit(branch, _mut, extra_paths=[soln_rel],
-                          message=f"{task_id}: done {checkpoint}")
+    _push_solution(branch, soln_rel, f"{task_id}: {checkpoint}")
+    return ct.mark_done(project, task_id, checkpoint, result, branch, upload=False)
 
 
 def main() -> int:
@@ -242,7 +212,7 @@ def main() -> int:
     if args.local:
         claimed = claim_local(project, task["id"], args.worker_id)
     else:
-        claimed = ct.try_claim(project, task["id"], args.worker_id, args.branch)
+        claimed = ct.claim_rest(project, task["id"], args.worker_id, args.branch)
     if not claimed:
         print(f"[run_task] could not claim {task['id']} (another worker beat us)", flush=True)
         return 1
@@ -268,7 +238,7 @@ def main() -> int:
         if args.local:
             _mut_skip()
         else:
-            _robust_commit(args.branch, _mut_skip, message=f"{task['id']}: skip ({reason[:40]})")
+            ct.mark_skip(project, task["id"], reason, args.branch)
         return 0
 
     bump_counter(reg_path, task["problem"], version)
