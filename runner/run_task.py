@@ -77,7 +77,8 @@ def bump_counter(reg_path: Path, problem: str, version: str) -> None:
     reg_path.write_text(json.dumps(reg, indent=2) + "\n")
 
 
-def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int | None) -> Path:
+def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int | None,
+               max_seconds: float) -> Path:
     """Invoke the project's own numerics/<problem>/solve.py for one (gamma, tau)."""
     entry = spec.get("solver", {}).get("entrypoint", f"numerics/{task['problem']}/solve.py")
     G = g_override if g_override is not None else int(spec.get("solver", {}).get("G", 15))
@@ -88,6 +89,7 @@ def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int
         "--tau", str(task["tau"]),
         "--G", str(G),
         "--u-max", str(u_max),
+        "--max-seconds", str(max_seconds),
         "--version", version,
         "--task-id", task["id"],
     ]
@@ -170,6 +172,8 @@ def main() -> int:
     ap.add_argument("--worker-id", default=os.environ.get("WORKER_ID", "run_task-1"))
     ap.add_argument("--branch", default=os.environ.get("BRANCH", "main"))
     ap.add_argument("--G", type=int, default=None, help="grid override (e.g. small for a dry-run)")
+    ap.add_argument("--max-seconds", type=float, default=90.0,
+                    help="per-solve wall cap passed to the solver (never hangs a worker)")
     ap.add_argument("--local", action="store_true",
                     help="no git/REST: claim+done edit the queue file in place (dry-run)")
     args = ap.parse_args()
@@ -210,18 +214,22 @@ def main() -> int:
     spec = json.loads((repo / problems_dir / task["problem"] / "spec.json").read_text())
     version, reg_path = alloc_version(repo, task["problem"])
     try:
-        vdir = run_solver(repo, spec, task, version, args.G)
+        vdir = run_solver(repo, spec, task, version, args.G, args.max_seconds)
     except SystemExit as e:
         reason = str(e)
-        print(f"[run_task] solve failed: {reason}", flush=True)
-        if args.local:
-            q = ct.load_queue(project); t = ct._find_by_id(q, task["id"])
-            t["status"] = "bailed"; t["result"] = {"reason": reason}
-            t.pop("claimed_by", None); t.pop("claimed_at", None)
-            ct._update_summary(q); ct.save_queue(project, q)
-        else:
-            ct.mark_failed(project, task["id"], reason, args.branch)
-        return 2
+        print(f"[run_task] solve rejected/failed: {reason}", flush=True)
+        # Park as skip (not bail+requeue) — avoids churn when the driver can't yet
+        # reach the strong-PR branch for this point. A worker moves on.
+        q = ct.load_queue(project); t = ct._find_by_id(q, task["id"])
+        t["status"] = "skip"; t["result"] = {"reason": reason}
+        t.pop("claimed_by", None); t.pop("claimed_at", None)
+        ct._update_summary(q); ct.save_queue(project, q)
+        if not args.local:
+            ct._git("add", ct.queue_rel())
+            ct._git("commit", "-m", f"{task['id']}: skip ({reason[:48]})")
+            if not ct._push(args.branch):
+                ct._pull_rebase(args.branch); ct._push(args.branch)
+        return 0
 
     bump_counter(reg_path, task["problem"], version)
     checkpoint = f"solutions/pool/{task['problem']}/{version}/"
