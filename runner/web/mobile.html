@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>fpf</title>
+<title>MIWN runner</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <style>
   :root {
@@ -39,6 +39,12 @@
   }
   .b-go   { background:#1a5e2a; }
   .b-kill { background:#5e1a1a; }
+  .nlabel { font-size:7px; color:#888; flex-shrink:0; margin-left:2px; }
+  #nworkers {
+    font-family: inherit; font-weight: 900; font-size: 13px; color: #fff;
+    background:#1e1e1e; border:1px solid #2a7adf; border-radius:2px;
+    width:30px; text-align:center; padding:1px 0; flex-shrink:0;
+  }
   #pat-input {
     font-family: inherit; font-size: 9.5px;
     background: #1e1e1e; color: #bbb; border: 1px solid #444;
@@ -128,6 +134,8 @@
 
 <div id="bar">
   <span id="brand">MIWN</span>
+  <span class="nlabel">N</span><input id="nworkers" type="number" min="0" max="16"
+    onchange="setWorkers(this.value)" title="target workers always running (writes runner.config.json)">
   <button class="btn b-go"   onclick="launchOne()">+1</button>
   <button class="btn b-kill" onclick="killAll()">&#x2715;&#x2715;</button>
   <button class="btn"        onclick="resetBailed()">&#x21BA;</button>
@@ -199,7 +207,7 @@
 
   function getPat(){return localStorage.getItem('fpf_pat')||'';}
   function savePat(){const v=document.getElementById('pat-input').value.trim();v?localStorage.setItem('fpf_pat',v):localStorage.removeItem('fpf_pat');}
-  window.addEventListener('DOMContentLoaded',()=>{const p=getPat();if(p)document.getElementById('pat-input').value=p;});
+  window.addEventListener('DOMContentLoaded',()=>{const p=getPat();if(p)document.getElementById('pat-input').value=p;loadWorkers();});
 
   function setMsg(t,ms=0){const e=document.getElementById('status-msg');e.textContent=t;if(ms)setTimeout(()=>e.textContent='',ms);}
 
@@ -226,16 +234,43 @@
   });
 
   // ── action buttons ────────────────────────────────────────────────────────
+  // Kick a run now (N workers from config). The schedule also runs it automatically.
   async function launchOne(){
     const pat=getPat();if(!pat){setMsg('PAT required',3000);return;}
     setMsg('…');
     try{
       const res=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/solve.yml/dispatches`,
         {method:'POST',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},
-         body:JSON.stringify({ref:BRANCH,inputs:{workers:'1'}})});
+         body:JSON.stringify({ref:BRANCH})});
       if(!res.ok)throw new Error(res.status);
-      setMsg('✓ +1 agent launched',3000);
+      setMsg('✓ run dispatched',3000);
     }catch(e){setMsg(`✗ ${e.message}`,4000);}
+  }
+
+  // N = target number of workers always running. Reads/writes runner.config.json.
+  async function loadWorkers(){
+    try{
+      const cfg=await apiContent('todo/runner.config.json');
+      const el=document.getElementById('nworkers');
+      if(el&&document.activeElement!==el) el.value=(cfg.workers??2);
+    }catch(e){}
+  }
+  async function setWorkers(v){
+    const n=Math.max(0,Math.min(16,parseInt(v,10)||0));
+    const pat=getPat();if(!pat){setMsg('PAT required for N',3000);return;}
+    setMsg('setting N…');
+    try{
+      const path='todo/runner.config.json';
+      const meta=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`);
+      const cfg=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      cfg.workers=n;
+      const body=JSON.stringify({message:`set workers=${n}`,content:btoa(JSON.stringify(cfg,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
+      const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`,
+        {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
+      if(!r.ok)throw new Error(await r.text());
+      document.getElementById('nworkers').value=n;
+      setMsg(`✓ N=${n} workers`,3000);
+    }catch(e){setMsg(`✗ ${e.message}`,5000);}
   }
 
   async function killAll(){
@@ -260,10 +295,10 @@
       const meta=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}?ref=${BRANCH}`);
       const q=JSON.parse(atob(meta.content.replace(/\n/g,'')));
       let n=0;
-      (q.tasks||[]).forEach(t=>{if(t.status==='bailed'){t.status='ready';delete t.result;n++;}});
-      if(!n){setMsg('no bailed tasks',3000);return;}
+      (q.tasks||[]).forEach(t=>{if(t.status==='bailed'||t.status==='skip'){t.status='ready';delete t.result;n++;}});
+      if(!n){setMsg('no bailed/skip tasks',3000);return;}
       q.updated_at=new Date().toISOString();
-      const body=JSON.stringify({message:`reset ${n} bailed → ready`,content:btoa(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
+      const body=JSON.stringify({message:`reset ${n} bailed/skip → ready`,content:btoa(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
       const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}`,
         {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
       if(!r.ok)throw new Error(await r.text());
