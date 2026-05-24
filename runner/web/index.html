@@ -135,9 +135,10 @@
 <div id="bar">
   <span id="brand">MIWN</span>
   <span class="nlabel">N</span><input id="nworkers" type="number" min="0" max="16"
-    onchange="setWorkers(this.value)" title="target workers always running (writes runner.config.json)">
-  <button class="btn b-go"   onclick="launchOne()">+1</button>
-  <button class="btn b-kill" onclick="killAll()">&#x2715;&#x2715;</button>
+    onchange="setWorkers(this.value)" title="target permanent workers (writes runner.config.json)">
+  <button class="btn b-go"   onclick="bumpWorkers(1)"  title="add a permanent worker (N+1)">+1</button>
+  <button class="btn"        onclick="bumpWorkers(-1)" title="remove one (N-1)">&minus;1</button>
+  <button class="btn b-kill" onclick="stopAll()" title="stop all: N=0 + cancel runs">&#x2715;&#x2715;</button>
   <button class="btn"        onclick="resetBailed()">&#x21BA;</button>
   <button class="btn"        onclick="downloadAll()">&#x2B07;</button>
   <button class="btn"        onclick="loadAll()">&#x27F3;</button>
@@ -234,17 +235,24 @@
   });
 
   // ── action buttons ────────────────────────────────────────────────────────
-  // Kick a run now (N workers from config). The schedule also runs it automatically.
-  async function launchOne(){
-    const pat=getPat();if(!pat){setMsg('PAT required',3000);return;}
-    setMsg('…');
+  // Kick a run now (uses N from config). The schedule also runs it automatically.
+  async function dispatchRun(){
+    const pat=getPat();if(!pat){setMsg('PAT required',3000);return false;}
     try{
       const res=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/solve.yml/dispatches`,
         {method:'POST',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},
          body:JSON.stringify({ref:BRANCH})});
       if(!res.ok)throw new Error(res.status);
-      setMsg('✓ run dispatched',3000);
-    }catch(e){setMsg(`✗ ${e.message}`,4000);}
+      return true;
+    }catch(e){setMsg(`✗ dispatch ${e.message}`,4000);return false;}
+  }
+
+  // +1 / -1: change the permanent target N (and kick a run so it applies promptly).
+  async function bumpWorkers(d){
+    const el=document.getElementById('nworkers');
+    const cur=parseInt(el && el.value,10); const base=Number.isFinite(cur)?cur:2;
+    const ok=await setWorkers(base+d);
+    if(ok) await dispatchRun();
   }
 
   // N = target number of workers always running. Reads/writes runner.config.json.
@@ -257,7 +265,7 @@
   }
   async function setWorkers(v){
     const n=Math.max(0,Math.min(16,parseInt(v,10)||0));
-    const pat=getPat();if(!pat){setMsg('PAT required for N',3000);return;}
+    const pat=getPat();if(!pat){setMsg('PAT required for N',3000);return false;}
     setMsg('setting N…');
     try{
       const path='todo/runner.config.json';
@@ -269,21 +277,30 @@
         {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
       if(!r.ok)throw new Error(await r.text());
       document.getElementById('nworkers').value=n;
-      setMsg(`✓ N=${n} workers`,3000);
-    }catch(e){setMsg(`✗ ${e.message}`,5000);}
+      setMsg(`✓ N=${n} permanent workers`,3000);
+      return true;
+    }catch(e){setMsg(`✗ ${e.message}`,5000);return false;}
   }
 
-  async function killAll(){
-    if(!confirm('Kill all running agents?'))return;
+  async function cancelRuns(){
+    const pat=getPat();if(!pat)return 0;
+    const runs=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/actions/runs?status=in_progress&per_page=50`);
+    const active=(runs.workflow_runs||[]);
+    await Promise.all(active.map(r=>fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${r.id}/cancel`,
+      {method:'POST',headers:{Authorization:`token ${pat}`}})));
+    return active.length;
+  }
+
+  // Stop the pool: set N=0 (so nothing refills) and cancel any in-progress runs.
+  async function stopAll(){
+    if(!confirm('Stop all workers? Sets N=0 and cancels running jobs.'))return;
     const pat=getPat();if(!pat){setMsg('PAT required',3000);return;}
-    setMsg('cancelling…');
+    setMsg('stopping…');
     try{
-      const runs=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/actions/runs?status=in_progress&per_page=50`);
-      const active=(runs.workflow_runs||[]);
-      await Promise.all(active.map(r=>fetch(
-        `https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${r.id}/cancel`,
-        {method:'POST',headers:{Authorization:`token ${pat}`}})));
-      setMsg(`✓ cancelled ${active.length} run(s)`,4000);
+      await setWorkers(0);
+      const k=await cancelRuns();
+      setMsg(`✓ N=0, cancelled ${k} run(s)`,4000);
     }catch(e){setMsg(`✗ ${e.message}`,4000);}
   }
 
