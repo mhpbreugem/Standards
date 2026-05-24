@@ -78,7 +78,7 @@ def bump_counter(reg_path: Path, problem: str, version: str) -> None:
 
 
 def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int | None,
-               max_seconds: float) -> Path:
+               max_seconds: float, worker_id: str) -> Path:
     """Invoke the project's own numerics/<problem>/solve.py for one (gamma, tau)."""
     entry = spec.get("solver", {}).get("entrypoint", f"numerics/{task['problem']}/solve.py")
     G = g_override if g_override is not None else int(spec.get("solver", {}).get("G", 15))
@@ -92,6 +92,8 @@ def run_solver(repo: Path, spec: dict, task: dict, version: str, g_override: int
         "--max-seconds", str(max_seconds),
         "--version", version,
         "--task-id", task["id"],
+        "--worker-id", worker_id,
+        "--progress-rel", "todo/progress",   # live progress for the dashboard
     ]
     print(f"[run_task] solve: {' '.join(cmd)}", flush=True)
     r = subprocess.run(cmd, cwd=str(repo))
@@ -214,7 +216,7 @@ def main() -> int:
     spec = json.loads((repo / problems_dir / task["problem"] / "spec.json").read_text())
     version, reg_path = alloc_version(repo, task["problem"])
     try:
-        vdir = run_solver(repo, spec, task, version, args.G, args.max_seconds)
+        vdir = run_solver(repo, spec, task, version, args.G, args.max_seconds, args.worker_id)
     except SystemExit as e:
         reason = str(e)
         print(f"[run_task] solve rejected/failed: {reason}", flush=True)
