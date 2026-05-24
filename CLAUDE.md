@@ -50,6 +50,10 @@ with git-race locking, GCP VM bootstrap, heartbeats, supervision.
 
 ## Using this hub from a project repo
 
+**Standing up a new project?** Follow **`NEW_PROJECT.md`** — it has the layout, the
+steps, reference templates (`runner/templates/`), and the list of bugs already
+fixed so a new project doesn't reproduce them.
+
 Add this pointer to the project's own `CLAUDE.md`:
 
 > Shared standards/methods/runner live in `github.com/mhpbreugem/<repo>`.
