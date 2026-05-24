@@ -13,6 +13,7 @@ queue, and checkpoints live in each paper's own repo.
 | `bootstrap.sh` | VM startup: install deps, clone repo, start the worker loop |
 | `claim_task.py` | Git-race optimistic locking on `TASK_QUEUE.json`: claim / done / bail / release / status |
 | `run_task.py` | **Cross-repo task driver**: claim → allocate `vNNNN` → run the project's solver → write the solution back |
+| `web/` | **Dashboard** (GitHub Pages): status / workers / mobile UI that reads a project repo's queue, solutions, and figure data via the GitHub API. Pointed at a project via `OWNER`/`REPO`/`BRANCH` at the top of each page (currently `mhpbreugem/MIWN`). Deployed by `.github/workflows/pages.yml` (enable Settings → Pages → Source = GitHub Actions). |
 | `supervisor.py` | Local monitoring: VM health, stale claims, queue status |
 | `heartbeat.sh` | Worker liveness: write a timestamp every 5 min and push |
 | `progress.py` | Structured progress reporting (see `PROGRESS_FORMAT.md`) |
