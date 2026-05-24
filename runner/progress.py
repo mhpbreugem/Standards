@@ -165,13 +165,19 @@ class ProgressReporter:
         if not token or not owner:
             return False
         path = f"{self.progress_rel_dir}/{self.task_id}.json"
-        sha = None
-        try:
-            sha = _api_get(token, owner, repo, path, self.branch).get("sha")
-        except Exception:
+        msg = (f"progress {self.task_id} iter={snapshot.get('iter')} "
+               f"ftol={snapshot.get('ftol')} ({self.worker_id})")
+        for _ in range(3):                      # handle 409/422 (sha race / exists)
             sha = None
-        _api_put(token, owner, repo, path,
-                 f"progress {self.task_id} iter={snapshot.get('iter')} "
-                 f"ftol={snapshot.get('ftol')} ({self.worker_id})",
-                 content.encode(), sha, self.branch)
+            try:
+                sha = _api_get(token, owner, repo, path, self.branch).get("sha")
+            except Exception:
+                sha = None
+            status = _api_put(token, owner, repo, path, msg, content.encode(), sha, self.branch)
+            if status in (200, 201):
+                return True
+            if status in (409, 422):
+                time.sleep(0.5); continue
+            print(f"[progress] PUT {path} -> {status}", flush=True)
+            return True
         return True

@@ -200,8 +200,13 @@ def try_claim(project: str, task_id: str, worker_id: str | None = None,
     if task is None or task["status"] != "ready":
         return False  # already claimed/done by another worker after the pull
 
+    wid = worker_id or _default_worker_id()
+    # One claim per worker: release any other task this worker still holds.
+    for o in queue["tasks"]:
+        if o is not task and o.get("status") == "claimed" and o.get("claimed_by") == wid:
+            o["status"] = "ready"; o.pop("claimed_by", None); o.pop("claimed_at", None)
     task["status"] = "claimed"
-    task["claimed_by"] = worker_id or _default_worker_id()
+    task["claimed_by"] = wid
     task["claimed_at"] = _now()
 
     save_queue(project, queue)
@@ -420,6 +425,11 @@ def claim_rest(project: str, task_id: str, worker_id: str | None = None,
     def _apply(task, queue):
         if task.get("status") != "ready":
             return False          # already taken / not ready -> claim fails
+        # One claim per worker: release any other task this worker still holds
+        # (a stale claim it never finished) back to ready.
+        for o in queue["tasks"]:
+            if o is not task and o.get("status") == "claimed" and o.get("claimed_by") == wid:
+                o["status"] = "ready"; o.pop("claimed_by", None); o.pop("claimed_at", None)
         task["status"] = "claimed"
         task["claimed_by"] = wid
         task["claimed_at"] = _now()
