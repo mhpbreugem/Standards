@@ -413,6 +413,13 @@
 
   const ST2={done:"done",ready:"ready",claimed:"claim",blocked:"block",bailed:"bailed",skip:"skip"};
 
+  // claimed tasks show which worker holds them, e.g. "@2" (from claude-2-<runid>)
+  function workerTag(t,pr){
+    const w=(t&&t.claimed_by)||(pr&&pr.worker_id)||"";
+    const m=w.match(/(?:claude-)?(\d+)/);
+    return m?("@"+m[1]):(w?("@"+w.slice(0,4)):"@?");
+  }
+
   function renderTasks(){
     if(!taskData)return;
     const tasks=taskData.tasks||[];
@@ -454,7 +461,7 @@
       const fPrev=isCl&&hist.length>=2?fmtF(hist[hist.length-2]):"";
       return`<tr${rc}>
         <td>${esc(shortId(t.id))}</td>
-        <td class="st-${ds}">${ST2[ds]||ds.slice(0,4)}</td>
+        <td class="st-${ds}">${ds==="claimed"?workerTag(t,pr):(ST2[ds]||ds.slice(0,4))}</td>
         <td>${fmtKG(t)}</td>
         <td class="dim">${sig4(t.gamma)??""}</td>
         <td class="dim">${sig4(t.tau)??""}</td>
@@ -542,6 +549,22 @@
   pollQueue();pollProgress();
   setInterval(()=>{if(!document.hidden)pollProgress();},PROGRESS_MS);
   setInterval(()=>{if(!document.hidden)pollQueue();},POLL_MS);
+
+  // Keep the pool topped to N while the dashboard is open (uses the stored PAT):
+  // if N>0 and no solve run is active, dispatch one. Server-side the */5 schedule
+  // does the same when the page is closed, so N workers stay alive.
+  async function keepAlive(){
+    const pat=getPat(); if(!pat) return;
+    const N=parseInt(document.getElementById('nworkers')?.value,10)||0;
+    if(N<=0) return;
+    try{
+      const runs=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/solve.yml/runs?per_page=15`);
+      const active=(runs.workflow_runs||[]).filter(r=>r.status!=='completed').length;
+      if(active===0 && await dispatchRun()) setMsg('↻ pool refilled',3000);
+    }catch(e){}
+  }
+  setInterval(()=>{if(!document.hidden)keepAlive();},120000);
+  keepAlive();
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden)return;
     const now=Date.now();
