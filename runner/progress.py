@@ -52,6 +52,7 @@ class ProgressReporter:
         branch: str = "main",
         interval: int = 60,
         repo_root: Optional[Path] = None,
+        progress_rel: Optional[str] = None,
     ):
         self.project = project
         self.task_id = task_id
@@ -59,7 +60,10 @@ class ProgressReporter:
         self.branch = branch
         self.interval = interval
         self.repo_root = Path(repo_root) if repo_root else _repo_root()
-        self.progress_dir = self.repo_root / "projects" / project / "progress"
+        # Cross-repo: a project supplies its own progress dir (e.g. "todo/progress");
+        # legacy monorepo default is projects/<project>/progress.
+        self.progress_rel_dir = progress_rel or f"projects/{project}/progress"
+        self.progress_dir = self.repo_root / self.progress_rel_dir
         self.progress_file = self.progress_dir / f"{task_id}.json"
 
         self._state: dict = {
@@ -143,7 +147,7 @@ class ProgressReporter:
             print(f"[progress] flush failed (non-fatal): {exc}", flush=True)
 
     def _git_commit_push(self, message: str, delete: bool = False) -> None:
-        rel = f"projects/{self.project}/progress/{self.task_id}.json"
+        rel = f"{self.progress_rel_dir}/{self.task_id}.json"
         cwd = str(self.repo_root)
         # Pull first to minimise conflicts
         subprocess.run(["git", "pull", "--rebase", "origin", self.branch],

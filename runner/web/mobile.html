@@ -295,10 +295,15 @@
       const meta=await fj(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}?ref=${BRANCH}`);
       const q=JSON.parse(decB64(meta.content));
       let n=0;
-      (q.tasks||[]).forEach(t=>{if(t.status==='bailed'||t.status==='skip'){t.status='ready';delete t.result;n++;}});
-      if(!n){setMsg('no bailed/skip tasks',3000);return;}
+      const cutoff=Date.now()-15*60*1000;   // claims older than 15 min are orphaned (solve cap ~10 min)
+      (q.tasks||[]).forEach(t=>{
+        if(t.status==='bailed'||t.status==='skip'){t.status='ready';delete t.result;n++;}
+        else if(t.status==='claimed'&&t.claimed_at&&new Date(t.claimed_at).getTime()<cutoff){
+          t.status='ready';delete t.claimed_by;delete t.claimed_at;n++;}
+      });
+      if(!n){setMsg('nothing to reset (no bailed/skip/stale)',3000);return;}
       q.updated_at=new Date().toISOString();
-      const body=JSON.stringify({message:`reset ${n} bailed/skip -> ready`,content:encB64(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
+      const body=JSON.stringify({message:`reset ${n} bailed/skip/stale -> ready`,content:encB64(JSON.stringify(q,null,2)+'\n'),sha:meta.sha,branch:BRANCH});
       const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${qpath}`,
         {method:'PUT',headers:{Authorization:`token ${pat}`,'Content-Type':'application/json'},body});
       if(!r.ok)throw new Error(await r.text());
@@ -457,7 +462,7 @@
     const claimedIds=new Set(claimed.map(t=>t.id));
     for(const id of Object.keys(progressData)){if(!claimedIds.has(id))delete progressData[id];}
     await Promise.all(claimed.map(async t=>{
-      const path=`projects/${PROJECT}/progress/${t.id}.json`;
+      const path=`todo/progress/${t.id}.json`;
       try{
         const d=getPat()?await apiContent(path):await fj(rawUrl(path));
         if(progressData[t.id]?.ftol!=null)_prevFtol[t.id]=progressData[t.id].ftol;
