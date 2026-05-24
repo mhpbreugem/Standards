@@ -61,9 +61,20 @@ recorded under "Source of truth & versions"; do not hand-edit vendored files.
 - **Update protocol:** edit here first; bump the commit/date above; then papers
   pull. Never fork a private copy in a paper repo without back-porting here.
 
+## Cross-repo runner
+
+`runner/run_task.py` drives the solver on an **external project repo** (a paper
+repo that vendors Standards as the `standards/` submodule), reading the project's
+`todo/runner.config.json` for its queue / problems / output pool. Queue location is
+parameterized (`QUEUE_REL` / `--queue-path`); the old single-repo
+`projects/<P>/TASK_QUEUE.json` auto-path is dropped. The in-repo `solver/solve.py`
++ `run_sweep.py` remain the legacy monorepo wrappers (REZN-era) and are not used in
+cross-repo mode. See `../runner/README.md` → "Cross-repo mode".
+
 ## Used by
 
 | Paper | Methods | Runner |
 |-------|---------|--------|
-| REZN — *Inefficient Markets Without Noise* | `solver/` | yes |
+| REZN — *Inefficient Markets Without Noise* | `solver/` | yes (legacy monorepo) |
+| MIWN — *Market Inefficiency Without Noise* | `solver/contour_KN_sym` (symmetric K) via submodule | yes (cross-repo: `runner/run_task.py` + `runner.config.json`) |
 | _(add future papers here)_ | | |
