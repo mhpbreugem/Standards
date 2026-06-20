@@ -29,6 +29,18 @@ per-task `solver_params`; changing it is a PR to `precision.py` + `PRECISION_POL
 | `run_sweep.py` | sweep driver | yes | vendored `code/`, `phi_mp`, `ode_sweep` |
 | `test_rk4_quick.py`, `test_sweep_quick.py` | smoke tests | yes | vendored `code/` (+ a paper anchor `.npz` via `REZN_CKPT_DIR` to run end-to-end) |
 
+## operators/ — REE step operators
+
+Self-contained step-operators that a project plugs into its solver loop, vendored
+as units (relative imports). Independent of `solver/`.
+
+| Module | Purpose | Self-contained? | Deps |
+|--------|---------|-----------------|------|
+| `operators/coarea_h0/` | strict **h=0** co-area step-2 learning operator (`learn`) — the fixed-point-defining map — plus a warm-start-only h>0 kernel (`learn_kernel`); spline/GL/root helpers + `signals` | yes (vendored) | numpy, numba |
+
+The h=0 invariant (never let a bandwidth define the FP) is in
+`operators/coarea_h0/README.md`. Smoke: `cd methods && python -m operators.coarea_h0.smoke`.
+
 ## Self-containment status
 
 The repo is **self-contained**. The REZN numerical core is vendored under
@@ -69,6 +81,11 @@ recorded under "Source of truth & versions"; do not hand-edit vendored files.
   (2026-05-06) on 2026-05-22: the numerical core (`contour_K3_halo`, `halo`,
   `staggered`, `f128`, `metrics`, + transitive deps). Whole package copied
   verbatim; do not hand-edit.
+- `methods/operators/coarea_h0/` back-ported from `mhpbreugem/MIZN`
+  (`src/mizn/step2_learning/` + `signals.py`), whose math is in turn ported verbatim
+  from `mhpbreugem/fixed-point-factory hfree_operator.py` @ `78c27216`. Vendored as a
+  unit; only the relative import path changed (`..signals` → `.signals`). Back-ported
+  so MIZN can be archived.
 - **Update protocol:** edit here first; bump the commit/date above; then papers
   pull. Never fork a private copy in a paper repo without back-porting here.
 
