@@ -3,18 +3,21 @@
 A project is its own repo that vendors this hub as the `standards/` submodule and
 runs the shared runner over its own task queue. Following this gives you the
 **fixed, battle-tested setup** — the gotchas below are already handled, so a new
-project should not reproduce them. Reference templates live in
-`runner/templates/`.
+project should not reproduce them. Reference templates live in `runner/templates/`
+(compute) and `agents/templates/` (the agent fleet).
+
+> **One-liner setup.** Steps 1–9 are exactly what the bootstrap agent automates
+> from *"this is repo xyz, use standards as a setup"* — see `agents/BOOTSTRAP.md`.
 
 ## Layout (mirror MIWN)
 ```
 <project>/
 ├── standards/                      # this hub as a pinned submodule
 ├── numerics/<problem>/{PROBLEM.md, spec.json, solve.py}
-├── todo/{TASK_QUEUE.json, runner.config.json, progress/}
+├── todo/{TASK_QUEUE.json, research-ledger.json, runner.config.json, agents.config.json, progress/}
 ├── solutions/{pool/<problem>/vNNNN/, by-tex/<stem>/, REGISTRY.json}
 ├── scripts/stale.py
-└── .github/workflows/solve.yml
+└── .github/workflows/{solve.yml, agents.yml}
 ```
 
 ## Steps
@@ -31,6 +34,13 @@ project should not reproduce them. Reference templates live in
 7. Dashboard: the UI is `standards/runner/web/`. Point it at your repo by editing
    `OWNER`/`REPO`/`BRANCH` at the top of each `*.html`, and serve it via Pages
    (Settings → Pages → Source = GitHub Actions; the deploy workflow is in the hub).
+8. Agent fleet: copy `agents/templates/{agents.yml→.github/workflows/,
+   agents.config.json→todo/, research-ledger.json→todo/}`. Set `project` in
+   `agents.config.json`; tune each agent's `cron`/`effort`/`autonomy`. Add repo
+   secret `CLAUDE_CODE_OAUTH_TOKEN`. Seed the ledger from `spec.json` (one item per
+   task; per `agents/LEDGER_SCHEMA.md`).
+9. Add the hub pointer to the project's `CLAUDE.md` (the block in this hub's
+   `CLAUDE.md` / README), so every session inherits the rules.
 
 ## What is already handled (do NOT re-implement these — and don't regress them)
 - **Precision policy:** double-double (`dps=32`), accept only at `‖F‖ < 1e-20`.

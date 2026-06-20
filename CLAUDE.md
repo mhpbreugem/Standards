@@ -1,11 +1,13 @@
 # Research standards, methods & runner
 
-Central, canonical hub for the author's financial-economics papers. Three things
+Central, canonical hub for the author's financial-economics papers. Four things
 live here, each a **single source of truth** that individual papers pull from:
 
 1. **Writing standards** (`writing/`) — figures, tables, LaTeX, prose, bibliography, structure.
 2. **Methods** (`methods/`) — standardized, latest-version shared code.
 3. **Runner** (`runner/`) — VM/worker coordination for distributed jobs.
+4. **Agents** (`agents/`) — the agentic research OS: one ledger, a background agent
+   fleet, the dashboard, and the "use standards as a setup" bootstrap.
 
 > Repository rename pending (owner-only, in Settings). It began as
 > `Standards-and-Methods`, was briefly `Writing`; now that it again spans methods
@@ -46,6 +48,14 @@ fixed-point numerical methods. Import these; do not fork private copies.
 ### `runner/` — VM + worker coordination
 See **`runner/README.md`**. Project-agnostic task-queue framework: claim/done/bail
 with git-race locking, GCP VM bootstrap, heartbeats, supervision.
+
+### `agents/` — agentic research OS
+See **`agents/README.md`**. A typed `research-ledger.json` (the single source of
+truth), a fleet of background agents (`fleet/`) gated by the `writing/`/`methods/`
+checklists, the dashboard prompt-pack (`dashboard/`), the tiered autonomy policy
+(`AUTONOMY.md`), and the bootstrap that stands up a new project from
+*"this is repo xyz, use standards as a setup"* (`BOOTSTRAP.md`). It is `runner/`
+generalised: same cron-matrix + git-race locking, now for every workstream.
 
 ## Using this hub from a project repo
 

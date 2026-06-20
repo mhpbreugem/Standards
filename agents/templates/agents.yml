@@ -1,0 +1,88 @@
+# Agent fleet — the heartbeat that keeps background agents alive.
+#
+# Each agent is woken by cron (a dead container just means the next tick spins up a
+# fresh one); it reads todo/research-ledger.json, claims an item of its type with
+# the git-race lock (standards/runner/claim_task.py), works it per its prompt-pack,
+# opens a PR, and updates the ledger. State lives in the ledger, never the session,
+# so a fresh wake-up just resumes. Events (PR/CI) wake agents in between ticks.
+#
+# Copy to .github/workflows/agents.yml and set ANTHROPIC/CLAUDE auth in repo secrets.
+
+name: agents
+
+on:
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: "agent type to run now"
+        default: "compute"
+  schedule:
+    # one line per distinct cron in todo/agents.config.json; github.event.schedule
+    # tells us which fired, so we run exactly the agents due on that tick.
+    - cron: "*/5 * * * *"   # compute
+    - cron: "0 * * * *"     # figure
+    - cron: "0 4 * * *"     # writing-qa
+    - cron: "0 5 * * *"     # proof
+    - cron: "0 6 * * 1"     # literature
+
+concurrency:
+  group: agents
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # Select the agents due on this tick -> dynamic matrix.
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.pick.outputs.matrix }}
+      count: ${{ steps.pick.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: pick
+        env:
+          FIRED_CRON: ${{ github.event.schedule }}
+          DISPATCH: ${{ github.event.inputs.agent }}
+        run: |
+          python3 - >> "$GITHUB_OUTPUT" <<'PY'
+          import json, os
+          cfg = json.load(open("todo/agents.config.json"))["agents"]
+          fired, dispatch = os.environ.get("FIRED_CRON"), os.environ.get("DISPATCH")
+          if dispatch:                       # manual run: just that agent
+              due = [t for t in cfg if t == dispatch]
+          elif fired:                        # scheduled: agents whose cron fired
+              due = [t for t, a in cfg.items() if a.get("cron") == fired]
+          else:
+              due = []
+          inc = [{"type": t, "pack": cfg[t]["pack"], "effort": cfg[t]["effort"],
+                  "autonomy": cfg[t]["autonomy"]} for t in due]
+          print("matrix=" + json.dumps({"include": inc}))
+          print("count=" + str(len(inc)))
+          PY
+
+  run:
+    needs: setup
+    if: ${{ needs.setup.outputs.count != '0' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Invoke Claude Code with this agent's prompt-pack. The action resolves the
+      # abstract `effort` tier to a model; do not pin a model here.
+      - name: Run ${{ matrix.type }} agent
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            You are the ${{ matrix.type }} agent for this project.
+            Load and follow standards/agents/${{ matrix.pack }} exactly.
+            Operate on todo/research-ledger.json: claim one ready item of your type
+            with standards/runner/claim_task.py, do the work, pass its gate, open a
+            PR, and update the ledger. Autonomy tier: ${{ matrix.autonomy }}.

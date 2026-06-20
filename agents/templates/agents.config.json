@@ -1,0 +1,14 @@
+{
+  "project": "YOURPROJECT",
+  "ledger_path": "todo/research-ledger.json",
+  "standards_agents_path": "standards/agents",
+  "agents": {
+    "compute":    { "cron": "*/5 * * * *", "effort": "standard", "autonomy": "auto",       "workers": 2, "pack": "fleet/compute.md" },
+    "figure":     { "cron": "0 * * * *",   "effort": "standard", "autonomy": "auto",       "workers": 1, "pack": "fleet/figure.md" },
+    "literature": { "cron": "0 6 * * 1",   "effort": "deep",     "autonomy": "auto",       "workers": 1, "pack": "fleet/literature.md" },
+    "proof":      { "cron": "0 5 * * *",   "effort": "deep",     "autonomy": "human-gate", "workers": 1, "pack": "fleet/proof.md" },
+    "writing-qa": { "cron": "0 4 * * *",   "effort": "standard", "autonomy": "human-gate", "workers": 1, "pack": "fleet/writing-qa.md" }
+  },
+  "dashboard": { "pack": "dashboard/DASHBOARD.md" },
+  "notes": "effort is an abstract tier (light|standard|deep), resolved to a model by the workflow; autonomy defaults may be overridden per ledger item; cron is the heartbeat, events wake agents in between."
+}

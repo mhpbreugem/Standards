@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "project": "YOURPROJECT",
+  "items": [
+    {
+      "id": "compute-g0.5-tau2-anchor",
+      "type": "compute",
+      "title": "Solve REE fixed point at gamma=0.5, tau=2 (verified anchor)",
+      "status": "ready",
+      "gate": "methods/precision",
+      "autonomy": "auto",
+      "depends_on": [],
+      "deps_satisfy": "all",
+      "owner": null,
+      "claimed_at": null,
+      "completed_at": null,
+      "artifact": null,
+      "result": null,
+      "notes": "anchor: expect 1-R2 ~ 0.085, slope ~ 0.543"
+    },
+    {
+      "id": "figure-fig5-convergence",
+      "type": "figure",
+      "title": "Regenerate fig5_convergence from its pinned pool versions",
+      "status": "blocked",
+      "gate": "writing/figures",
+      "autonomy": "auto",
+      "depends_on": ["compute-g0.5-tau2-anchor"],
+      "deps_satisfy": "all",
+      "owner": null,
+      "claimed_at": null,
+      "completed_at": null,
+      "artifact": null,
+      "result": null,
+      "notes": "pins live in solutions/by-tex/fig5_convergence/lock.json"
+    },
+    {
+      "id": "proof-knife-edge-statement",
+      "type": "proof",
+      "title": "Check the CARA knife-edge lemma against the numerics",
+      "status": "ready",
+      "gate": "writing/proofs",
+      "autonomy": "human-gate",
+      "depends_on": [],
+      "deps_satisfy": "all",
+      "owner": null,
+      "claimed_at": null,
+      "completed_at": null,
+      "artifact": null,
+      "result": null,
+      "notes": "cross-check the 1-R2 -> 0 claim as gamma -> CARA limit"
+    }
+  ]
+}

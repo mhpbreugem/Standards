@@ -6,9 +6,12 @@ kind** — proofs, literature, figures, writing, decisions — and routes each i
 a specialised background AI agent. The researcher gives a few prompts a day in one
 chat (the *dashboard*); the fleet does the rest.
 
-> **Status: design / proposal.** This folder currently holds the design only
-> (`DESIGN.md`, `BOOTSTRAP.md`, and `design/`). No agent runs yet. The build order
-> is in `DESIGN.md`; nothing here changes `methods/`, `runner/`, or `writing/`.
+> **Status: Phase 1 scaffold present.** The contract is real — `LEDGER_SCHEMA.md`,
+> `AUTONOMY.md`, the `dashboard/` and `fleet/` prompt-packs, and `templates/`
+> (config · ledger seed · cron workflow). The two missing gates
+> (`writing/proofs`, `writing/references`) and live wiring on MIWN are next. The
+> design narrative and rollout are in `DESIGN.md`; nothing here edits `methods/`,
+> `runner/`, or `writing/`.
 
 ## The idea in one paragraph
 
@@ -28,9 +31,14 @@ tasks to typed research items. That keeps the build small and rides proven code.
 
 | File | What |
 |---|---|
-| `DESIGN.md` | The full proposal: ledger schema, the fleet, tiered autonomy, liveness, rollout. |
+| `LEDGER_SCHEMA.md` | The typed work-item contract every agent obeys (superset of `runner/TASK_SCHEMA.md`). |
+| `AUTONOMY.md` | The tiered merge policy and the hard escalations. |
+| `dashboard/DASHBOARD.md` | Prompt-pack for this control-room chat. |
+| `fleet/*.md` | One prompt-pack per background agent (compute · figure · literature · proof · writing-qa). |
+| `templates/` | What a project copies: `agents.config.json`, `research-ledger.json` seed, `agents.yml` cron workflow. |
+| `DESIGN.md` | The full narrative: design, rollout, consolidation. |
 | `BOOTSTRAP.md` | The target UX — *"this is repo xyz, use standards as a setup"* — and the steps an agent runs to deliver it. |
-| `design/` | The structure + overview figures (`*.pdf`) and the scripts that regenerate them (`make_*.py`). `miwn_structure.pdf` is the current picture: MIWN is the one live repo; REZN/MIZN/fixed-point-factory are archived. |
+| `design/` | Structure + overview figures (`*.pdf`) and the scripts that regenerate them. `miwn_structure.pdf` is the current picture: MIWN is the one live repo; REZN/MIZN/fixed-point-factory are archived. |
 
 ## Quality gates (where they live)
 
