@@ -6,7 +6,7 @@ against the numerics so analysis and computation stay consistent.
 - **Trigger:** cron (daily) + when a proof source or a depended-on `compute` item
   changes.
 - **Claims:** ledger items `type: proof`, `status: ready`.
-- **Gate:** `writing/proofs` *(to write)* — every step justified, assumptions
+- **Gate:** `writing/proofs` — every step justified, assumptions
   tracked, no leap unaccounted; numerics corroborate the analytic claim.
 - **Tier:** `human-gate` (proofs are high-stakes).
 

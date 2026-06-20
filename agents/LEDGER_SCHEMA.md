@@ -61,8 +61,8 @@ item `done` until it passes:
 |---|---|---|
 | compute | `methods/precision` | `methods/PRECISION_POLICY.md`, `solver/precision.py` (`‖F‖<1e-20` + branch guard) |
 | figure | `writing/figures` | `writing/figures/` |
-| literature | `writing/references` | `writing/references/` *(to write)* |
-| proof | `writing/proofs` | `writing/proofs/` *(to write)* |
+| literature | `writing/references` | `writing/references/` |
+| proof | `writing/proofs` | `writing/proofs/` |
 | writing | `writing/<chapter>` + `make stale` | `writing/`, project `scripts/stale.py` |
 | decision | — | resolved by the researcher, no gate |
 

@@ -114,7 +114,7 @@ Improvements flow back here by PR — never forked ("back-port, don't fork").
 1. **Scaffold the pillar** — `LEDGER_SCHEMA.md`, `AUTONOMY.md`, `dashboard/`. No behaviour.
 2. **Compute agent** — absorbs the manual rerun scripts onto the existing runner; proves the ledger → gate → tiered-merge loop end to end.
 3. **Figure agent** — its gate (`writing/figures`) is already done.
-4. **Write the missing gates** (`writing/proofs`, `writing/references`), then the **literature + proof agents**.
+4. **Gates written** (`writing/proofs`, `writing/references`) ✓ — then wire the **literature + proof agents**.
 5. **Writing/QA agent** + promote the dashboard to a scheduled morning digest.
 6. **Consolidate** — migrate REZN's proofs/manuscript into MIWN, the canonical project repo.
 

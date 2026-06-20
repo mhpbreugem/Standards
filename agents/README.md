@@ -6,12 +6,12 @@ kind** — proofs, literature, figures, writing, decisions — and routes each i
 a specialised background AI agent. The researcher gives a few prompts a day in one
 chat (the *dashboard*); the fleet does the rest.
 
-> **Status: Phase 1 scaffold present.** The contract is real — `LEDGER_SCHEMA.md`,
-> `AUTONOMY.md`, the `dashboard/` and `fleet/` prompt-packs, and `templates/`
-> (config · ledger seed · cron workflow). The two missing gates
-> (`writing/proofs`, `writing/references`) and live wiring on MIWN are next. The
-> design narrative and rollout are in `DESIGN.md`; nothing here edits `methods/`,
-> `runner/`, or `writing/`.
+> **Status: Phase 1 scaffold present; gates done.** The contract is real —
+> `LEDGER_SCHEMA.md`, `AUTONOMY.md`, the `dashboard/` and `fleet/` prompt-packs, and
+> `templates/` (config · ledger seed · cron workflow). All five gates now exist
+> (`writing/figures`, `writing/proofs`, `writing/references`, `methods/precision`,
+> `make stale`). What's left: the first live wiring on MIWN. Design narrative and
+> rollout are in `DESIGN.md`.
 
 ## The idea in one paragraph
 
@@ -49,8 +49,8 @@ checklist. The gates are not new code here — they live in their home pillars:
 |---|---|---|
 | compute | `‖F‖ < 1e-20` + branch guard | `methods/PRECISION_POLICY.md`, `methods/solver/precision.py` |
 | figure | figures checklist | `writing/figures/` (done) |
-| literature | citation / references policy | `writing/references/` (**to write**) |
-| proof | proof-audit checklist | `writing/proofs/` (**to write**) |
+| literature | citation / references policy | `writing/references/` (done) |
+| proof | proof-audit checklist | `writing/proofs/` (done) |
 | writing | prose / latex checklists + `make stale` | `writing/`, project `scripts/stale.py` |
 
 ## Regenerating the figures

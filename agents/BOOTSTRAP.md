@@ -50,7 +50,7 @@ These are already solved in `NEW_PROJECT.md` and must carry over unchanged:
 ## Status
 
 The pieces this agent assembles now exist: `LEDGER_SCHEMA.md`, `AUTONOMY.md`, the
-`fleet/` packs, and `templates/` (config · ledger seed · `agents.yml`). The steps
-above mirror `../NEW_PROJECT.md` (steps 1–9). What remains before the one-liner is
-fully hands-off: the two missing gates (`writing/proofs`, `writing/references`) and
-a first live wiring on MIWN. Until then, a human can run the same steps by hand.
+`fleet/` packs, `templates/` (config · ledger seed · `agents.yml`), and all five
+gates in `writing/` + `methods/`. The steps above mirror `../NEW_PROJECT.md`
+(steps 1–9). What remains before the one-liner is fully hands-off: a first live
+wiring on MIWN. Until then, a human can run the same steps by hand.

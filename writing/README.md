@@ -9,8 +9,9 @@ and apply its checklist. Papers follow these; they do not invent per-paper style
 | Chapter | Covers | Path | Status |
 |---|---|---|---|
 | Figures | pgfplots BC20→ECTA style, captions, legends, bounded axes, log axes, contour bands, bar charts | `figures/` | **done** |
+| Proofs | step-justification + numerical corroboration; proof-agent gate | `proofs/` | **done** |
+| References | author–year, `natbib`, `.bib` conventions; literature-agent gate | `references/` | **done** |
 | Tables | booktabs / Econometrica, generate-don't-type | `tables/` | planned (stub) |
-| References | citation style, `.bib` conventions | `references/` | planned (stub) |
 | Paper structure | manuscript repo layout, section order | `paper/` | planned (stub) |
 | LaTeX / notation | preamble, macros, symbol conventions | `latex/` | planned |
 | Prose style | financial-economics writing checklist | `prose-style/` | planned |
@@ -27,5 +28,6 @@ and apply its checklist. Papers follow these; they do not invent per-paper style
 - **Econometrica target.** The current chapters are tuned for Econometrica; note
   any journal-specific deviation in the chapter itself.
 
-Currently written: **`figures/`** — the BC20→ECTA pgfplots standard. The other
+Currently written: **`figures/`** (BC20→ECTA pgfplots), **`proofs/`** (the
+proof-agent gate), and **`references/`** (the literature-agent gate). The remaining
 chapters are planned; the table above tracks status.

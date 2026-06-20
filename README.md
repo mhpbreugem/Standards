@@ -69,8 +69,9 @@ checklist.
 | Chapter | Covers | Path | Status |
 |---|---|---|---|
 | Figures | pgfplots BC20→ECTA style, captions, legends, bounded axes, bar charts | `writing/figures/` | **done** |
+| Proofs | step-justification + numerical corroboration (proof-agent gate) | `writing/proofs/` | **done** |
+| References | author–year, `natbib`, `.bib` conventions (literature-agent gate) | `writing/references/` | **done** |
 | Tables | booktabs / Econometrica, generate-don't-type | `writing/tables/` | planned (stub) |
-| References | citation style, `.bib` conventions | `writing/references/` | planned (stub) |
 | Paper structure | manuscript repo layout, section order | `writing/paper/` | planned (stub) |
 | LaTeX / notation | preamble, macros, symbol conventions | `writing/latex/` | planned |
 | Prose style | financial-economics writing checklist | `writing/prose-style/` | planned |

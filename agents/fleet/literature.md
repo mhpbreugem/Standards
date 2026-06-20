@@ -5,7 +5,7 @@ work and verifies every citation.
 
 - **Trigger:** cron (weekly) + on-demand from the dashboard.
 - **Claims:** ledger items `type: literature`, `status: ready`.
-- **Gate:** `writing/references` *(to write)* — citation style, `.bib` conventions,
+- **Gate:** `writing/references` — citation style, `.bib` conventions,
   every cite resolves to a real, correctly-attributed source.
 - **Tier:** `auto` (notes/bib only).
 
