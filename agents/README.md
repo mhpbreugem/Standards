@@ -30,7 +30,7 @@ tasks to typed research items. That keeps the build small and rides proven code.
 |---|---|
 | `DESIGN.md` | The full proposal: ledger schema, the fleet, tiered autonomy, liveness, rollout. |
 | `BOOTSTRAP.md` | The target UX — *"this is repo xyz, use standards as a setup"* — and the steps an agent runs to deliver it. |
-| `design/` | The overview figures (`*.pdf`) and the scripts that regenerate them (`make_*.py`). |
+| `design/` | The structure + overview figures (`*.pdf`) and the scripts that regenerate them (`make_*.py`). `miwn_structure.pdf` is the current picture: MIWN is the one live repo; REZN/MIZN/fixed-point-factory are archived. |
 
 ## Quality gates (where they live)
 

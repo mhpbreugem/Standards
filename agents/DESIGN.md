@@ -120,7 +120,9 @@ Improvements flow back here by PR — never forked ("back-port, don't fork").
 
 ## Consolidation target
 
-The work is currently split across REZN (theory/proofs/paper), FIXED-POINT-FACTORY
-(compute), MIZN (solver rebuild), and MIWN (Standards-based paper repo). The plan
-is to **consolidate onto MIWN** — it already uses the submodule model — folding the
-others in as their agents come online.
+**MIWN is the single live project repo.** REZN (theory/proofs/paper), MIZN (solver
+rebuild), and FIXED-POINT-FACTORY (compute) all refer to the same project and are
+**archived** — frozen, read-only history. Their content folds into MIWN: REZN's
+proofs/manuscript and MIZN's strict-h=0 operator move into MIWN (the operator
+back-ports to `methods/`), and the compute farm is already generalised in
+`runner/`. The structure figure is `design/miwn_structure.pdf`.
