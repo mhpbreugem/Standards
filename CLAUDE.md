@@ -14,17 +14,16 @@ live here, each a **single source of truth** that individual papers pull from:
 
 ## Change control — read first
 
-Every change to this repository requires the owner's approval.
+This repository is owned by **@mhpbreugem**, who has granted the AI agent
+**standing permission to commit directly to `main`**.
 
-- The owner is **@mhpbreugem**. Their GitHub login (password + 2FA) is the
-  approval gate.
-- **Never push to or merge `main`.** Do all work on a feature branch and open a
-  pull request for the owner to review and merge.
-- **Do not merge a PR yourself**, even if you have the ability — wait for the
-  owner to merge.
-- `CODEOWNERS` assigns @mhpbreugem as reviewer of all paths. Server-side
-  enforcement is branch protection on `main` (owner enables: Settings ->
-  Branches -> Require a pull request before merging).
+- **Work on `main`. Do not create side/feature branches.** Every change lands on
+  `main` as a small, descriptive commit.
+- **The owner's permission is the gate, and it is standing** — it covers routine
+  changes to this hub. Keep commits small and reversible.
+- **Surface, don't surprise.** Anything large, irreversible, or outside routine
+  maintenance is flagged to the owner before it lands.
+- `CODEOWNERS` records @mhpbreugem as owner of all paths.
 
 ## Repository map
 

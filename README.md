@@ -111,9 +111,10 @@ bail with git-race locking (`claim_task.py`), GCP spot-VM bootstrap
   in `methods/MAP.md`.
 - **Reproducible.** Figure coordinates come from committed project scripts;
   solver outputs are checkpointed; results regenerate from source.
-- **Change control.** Every change goes through a pull request the owner
-  (@mhpbreugem) approves. **Never push to or merge `main`** — work on a feature
-  branch; the owner merges. See `CLAUDE.md` and `CODEOWNERS`.
+- **Change control.** This hub is owned by @mhpbreugem, who has granted the AI
+  agent standing permission to commit **directly to `main`** — **no side
+  branches.** Keep commits small and reversible; flag anything large or
+  irreversible first. See `CLAUDE.md` and `CODEOWNERS`.
 
 ## Using this hub from a project repo
 
