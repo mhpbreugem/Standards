@@ -439,7 +439,12 @@
       const ds=dsMap.get(t.id);
       if(ds==="blocked"&&!fv)return false;
       if(!fv)return true;
+      // match id, status (raw + display), the worker that holds it (claimed_by /
+      // "@N" tag — the relabeled st column), and the grid coords.
       return t.id.toLowerCase().includes(fv)||ds.toLowerCase().includes(fv)||
+             String(t.status||"").toLowerCase().includes(fv)||
+             String(t.claimed_by||"").toLowerCase().includes(fv)||
+             workerTag(t,progressData[t.id]).toLowerCase().includes(fv)||
              String(t.gamma||"").includes(fv)||String(t.tau||"").includes(fv);
     });
     const sorted=[...filtered].sort((a,b)=>{
