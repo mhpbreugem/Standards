@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. M&A — Business Taxes and M&A</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <p class="site-title"><a href="index.html">Business Taxes and M&amp;A</a></p>
+    <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+    <nav aria-label="Course navigation">
+<ul>
+<li><a href="index.html">Intro</a></li>
+<li><a href="1-corporate-valuation.html">1. Corporate Valuation</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#financial-statements">Financial Statements</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#cost-of-capital">Cost of Capital</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#business-valuation">Business Valuation</a></li>
+<li><a href="2-business-taxes.html">2. Business Taxes</a></li>
+<li class="sub"><a href="2-business-taxes.html#business-taxes-nl">Business Taxes in NL</a></li>
+<li class="sub"><a href="2-business-taxes.html#global-taxes-ethics">Global Taxes &amp; Ethics</a></li>
+<li><a href="simulation.html">Simulation</a></li>
+<li><a class="current" href="3-ma.html">3. M&amp;A</a></li>
+<li><a href="solutions.html">Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1AKYgdZJKp82ACM8seIao74kd-YkLXqm6WpsDRqIO0C4/edit?usp=sharing" target="_blank" rel="noopener">Case I MENSAM</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1_UE7YuPjJm_5Q2ULqTCzkEnc_aRzioE3bMQl29XqypU/edit?usp=sharing" target="_blank" rel="noopener">Case II PINGGUO</a></li>
+<li class="group-label">Practice Material</li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1RaQt3MHQhDhOJccQmWXWr123S0y1-EudhYVnQRnYARo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1cI4_pOSx-J7PxYtdnIkaapqxz9mV8I_VAZ8dGdpHpuo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1TQ8Mklstw9So88s5jjLc1GtKm1LRlOWlB0c-oa1F334/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1PbVe_phB4sil8fT47a6y6RoDVMxHSNI5wu9qeYNd1vg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1UvmWn2306PM7io5_K8LZj2IIomTXO_YyPxxfIF4Zumg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1K08Mdif3W6gg2gpkGx_RgpxbOujEmFjGdyx_UzQjQE8/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1BmODT3ycJGjC6gt7Z8aGFt2gMJKeXoQJKlur7vl3bgQ/edit?usp=sharing" target="_blank" rel="noopener">Session 15 notes</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/forms/d/e/1FAIpQLScW44AQgo0uiu3OuEoFyzgQgUxs6cYB4H73xrgadxQdvSxgug/viewform?usp=dialog" target="_blank" rel="noopener">Huntar</a></li>
+<li class="sub"><a class="ext" href="https://forms.gle/ddbmNpf7eZy32ZJ48" target="_blank" rel="noopener">Gauta</a></li>
+</ul>
+    </nav>
+  </aside>
+  <main class="content">
+    <header class="hero">
+      <h1>3. Mergers &amp; Acquisitions</h1>
+      <p>Motives · Synergies · 130 years of merger waves</p>
+    </header>
+    <div class="page-inner">
+<p class="lead">This chapter applies valuation concepts to mergers and acquisitions, focusing on
+how strategy, financing, and ownership affect value creation. Students move from valuing standalone
+firms to assessing combined entities and the financial structure of transactions. This section is
+structured by tracing how mergers have evolved over the past 130 years and how each era reflected
+the economic conditions, financial tools, and regulatory attitudes of its time.</p>
+
+<h3 id="key-takeaways">Key takeaways</h3>
+<ul>
+  <li>Early mergers built industrial monopolies; later waves focused on diversification, financial
+      engineering, or global scale.</li>
+  <li>Credit conditions and financial innovations—trusts, conglomerates, junk bonds, private
+      equity—shaped the size and style of each wave.</li>
+  <li>Regulation moved in cycles as well, from the loose enforcement that allowed U.S. Steel to
+      form, to the modern focus on Big Tech.</li>
+</ul>
+
+<h3 id="major-waves">The major waves</h3>
+<ul>
+  <li><strong>First wave (1890s–1904):</strong> horizontal mergers creating giants like U.S. Steel
+      and Standard Oil during a period of weak antitrust oversight. Ended with the 1904 market
+      crash and stronger enforcement.</li>
+  <li><strong>Second wave (1916–1929):</strong> firms turned to vertical and conglomerate mergers
+      to avoid antitrust risk. Collapsed with the Great Depression.</li>
+  <li><strong>Third wave (1950s–1960s):</strong> the postwar boom fueled large conglomerates (ITT,
+      Litton), later undone by inefficiencies and renewed scrutiny.</li>
+  <li><strong>Fourth wave (1980s):</strong> the junk-bond era drove hostile takeovers and LBOs,
+      including the RJR Nabisco buyout.</li>
+  <li><strong>Fifth wave (1993–2001):</strong> global, strategic mega-mergers such as Exxon–Mobil
+      and Vodafone–Mannesmann. Ended by the dot-com bust.</li>
+  <li><strong>Sixth wave (2003–2007):</strong> cheap credit supported record-size deals and
+      private-equity activity until the financial crisis.</li>
+  <li><strong>Seventh wave (2010s):</strong> technology and data reshaped industries, with platform
+      acquisitions like YouTube and Instagram.</li>
+  <li><strong>2020s:</strong> M&amp;A is now driven by AI, cloud, cybersecurity, and geopolitical
+      realignment, with regulators targeting platform dominance.</li>
+</ul>
+
+<h1 id="motives">3.1. Motives for M&amp;A</h1>
+<h3 id="strategic-motives">Strategic Motives</h3>
+<ul>
+  <li>Market expansion (new geographies/customers; Walmart–Massmart, Facebook–Instagram).</li>
+  <li>Diversification (reduce dependence; Disney–Pixar, Berkshire's broad acquisitions).</li>
+  <li>Vertical integration (control suppliers/distribution; Tesla–Grohmann, Amazon–Whole Foods).</li>
+  <li>Horizontal integration (increase market share, reduce competitors; Marriott–Starwood).</li>
+  <li>Strategic realignment (acquire future-critical capabilities; Google–Android).</li>
+</ul>
+<h3 id="financial-motives">Financial Motives</h3>
+<ul>
+  <li>Synergies (cost scale + revenue cross-selling; Kraft–Heinz, Microsoft–LinkedIn).</li>
+  <li>Undervaluation / timing (buy cheap assets; Buffett buying GEICO etc.).</li>
+  <li>Tax motives (optimize tax burden or use NOLs; the Pfizer–Allergan attempt).</li>
+  <li>Cash deployment (use excess cash productively; Apple's AI/semiconductor buys).</li>
+</ul>
+<h3 id="operational-motives">Operational / Organizational Motives</h3>
+<ul>
+  <li>Efficiency &amp; better management (replace underperforming management; KKR–Toys "R" Us).</li>
+  <li>Talent acquisition (acqui-hiring; Google–DeepMind).</li>
+  <li>Technology/IP access (gain patents/software; Facebook–WhatsApp).</li>
+  <li>Supply chain control (optimize logistics/automation; Amazon–Kiva Systems).</li>
+</ul>
+<h3 id="market-power-motives">Market Power Motives</h3>
+<ul>
+  <li>Reduce competition (increase pricing power; AB InBev–SABMiller).</li>
+  <li>Raise entry barriers (control key assets; Google across mapping/ad-tech).</li>
+  <li>Enhance network effects (merge user bases; Microsoft–Skype).</li>
+</ul>
+<h3 id="defensive-motives">Defensive Motives</h3>
+<ul>
+  <li>Block rival acquisitions (keep assets away from competitors; Google in the mobile ecosystem).</li>
+  <li>Respond to disruption (buy innovators; Walmart–Jet.com).</li>
+  <li>Follow-the-leader (industry consolidation waves; European telecom deals).</li>
+</ul>
+<h3 id="regulatory-motives">Regulatory / Legal Motives</h3>
+<ul>
+  <li>Acquire licenses or permits (AT&amp;T–NextWave spectrum).</li>
+  <li>Bypass local restrictions via local partners (Uber–Careem).</li>
+</ul>
+<h3 id="managerial-motives">Managerial (Non-Value Maximizing) Motives</h3>
+<ul>
+  <li>Empire building (managerial desire for size; AOL–Time Warner).</li>
+  <li>Hubris (overconfidence in post-merger management; HP–Autonomy).</li>
+  <li>Agency motives (compensation tied to firm size encourages acquisitions).</li>
+</ul>
+<h3 id="distress-motives">Distress / Rescue Motives</h3>
+<ul>
+  <li>Turnaround acquisitions (Fiat–Chrysler).</li>
+  <li>Asset stripping (buy → break up → sell valuable units; common in PE carve-outs).</li>
+</ul>
+
+<h1 id="valuing-synergies">3.2. Valuing Synergies</h1>
+<p>Synergies = extra value from combining two firms versus operating separately.</p>
+<ul>
+  <li><strong>Cost synergies:</strong> savings from eliminating duplicate functions, improving
+      operations, or optimizing supply chains.</li>
+  <li><strong>Revenue synergies:</strong> gains from cross-selling, broader distribution, pricing
+      power, or brand leverage.</li>
+</ul>
+<p>Estimate incremental cash flows:</p>
+<ul>
+  <li>Forecast cost savings or revenue gains.</li>
+  <li>Subtract integration costs, restructuring charges, and required investments.</li>
+</ul>
+<p>Discount synergy cash flows using risk-adjusted rates based on certainty.</p>
+<ul>
+  <li>Conduct sensitivity analysis: stress-test timing delays or overestimation of gains.</li>
+</ul>
+<p>Use results to guide:</p>
+<ul>
+  <li>Acquisition premium justification.</li>
+  <li>Negotiation strategy.</li>
+  <li>Post-merger integration planning.</li>
+</ul>
+
+<h1 id="first-wave">3.3. First M&amp;A Wave: The Monopoly Wave (1890–1904)</h1>
+<p><strong>Economic context</strong></p>
+<ul>
+  <li>Rapid industrialization in the United States created national markets for steel, oil,
+      railroads, and consumer goods.</li>
+  <li>Firms sought scale quickly, and mergers became a strategic tool for controlling output,
+      prices, and distribution.</li>
+</ul>
+<p><strong>Regulatory environment</strong></p>
+<ul>
+  <li>The Sherman Antitrust Act was passed in 1890, but early enforcement was weak.</li>
+  <li>Courts allowed the rise of trusts and holding companies, enabling firms to combine without
+      meaningful legal obstacles.</li>
+</ul>
+<p><strong>Nature of mergers</strong></p>
+<ul>
+  <li>Dominated by horizontal mergers—firms buying direct competitors to eliminate rivalry.</li>
+  <li>The primary objective was market dominance rather than efficiency gains.</li>
+</ul>
+<p><strong>Major examples</strong></p>
+<ul>
+  <li><strong>U.S. Steel (1901):</strong> formed through the combination of Carnegie Steel and
+      several rivals; became the world's first billion-dollar corporation.</li>
+  <li><strong>Standard Oil:</strong> consolidated refining, transportation, and distribution to
+      control nearly the entire U.S. oil market.</li>
+  <li><strong>American Tobacco:</strong> rolled up dozens of competitors to dominate cigarette and
+      chewing tobacco sales.</li>
+</ul>
+<p><strong>Outcome and decline</strong></p>
+<ul>
+  <li>Public backlash grew as monopolies set prices, restricted output, and suppressed competition.</li>
+  <li>The 1904 stock market crash exposed the financial vulnerability of over-leveraged trusts.</li>
+  <li>Courts began enforcing antitrust rules more aggressively, bringing the first merger wave to
+      an end.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://forms.gle/2491ukgvNDBe98c29" target="_blank" rel="noopener">Case: U.S. Steel ↗</a></li>
+</ul>
+
+<h1 id="second-wave">3.4. Second M&amp;A Wave: The Oligopoly Wave (1916–1929)</h1>
+<p><strong>Economic context</strong></p>
+<ul>
+  <li>Post–World War I economic expansion in the U.S., with strong growth in manufacturing,
+      automobiles, and consumer goods.</li>
+  <li>Firms faced rising competition and overcapacity, seeking stability through mergers.</li>
+</ul>
+<p><strong>Regulatory environment</strong></p>
+<ul>
+  <li>Antitrust enforcement discouraged large horizontal monopolies.</li>
+  <li>Companies favored vertical and some conglomerate mergers to gain market power while avoiding
+      legal challenges.</li>
+</ul>
+<p><strong>Nature of mergers</strong></p>
+<ul>
+  <li>Focused on vertical combinations (merging with suppliers or distributors).</li>
+  <li>Some conglomerate mergers to diversify across unrelated sectors.</li>
+  <li>Goals: secure supply chains, reduce costs, strengthen market position.</li>
+</ul>
+<p><strong>Major examples</strong></p>
+<ul>
+  <li>Automobile manufacturers acquiring parts suppliers.</li>
+  <li>Food and consumer goods companies merging with distributors.</li>
+</ul>
+<p><strong>Outcome and decline</strong></p>
+<ul>
+  <li>Activity ended with the 1929 stock market crash and the Great Depression.</li>
+  <li>Economic contraction halted most merger activity, concluding the second wave.</li>
+</ul>
+
+<h1 id="third-wave">3.5. Third M&amp;A Wave: The Conglomerate Wave (1950s–1960s)</h1>
+<p><strong>Economic context</strong></p>
+<ul>
+  <li>Post–World War II economic boom in the United States.</li>
+  <li>Rapid industrial growth, rising consumer demand, and expansion of financial markets
+      encouraged firms to diversify.</li>
+  <li>Companies sought stability against cyclical risks and wanted to capitalize on emerging
+      sectors.</li>
+</ul>
+<p><strong>Regulatory environment</strong></p>
+<ul>
+  <li>Antitrust enforcement was relatively relaxed, giving firms room to acquire businesses outside
+      their core industries.</li>
+  <li>Horizontal mergers were still scrutinized, so firms turned to conglomerates to grow without
+      triggering regulatory action.</li>
+</ul>
+<p><strong>Nature of mergers</strong></p>
+<ul>
+  <li>Dominated by conglomerate mergers—companies acquired unrelated businesses.</li>
+  <li>Goal: diversify revenue streams, reduce risk, and leverage managerial expertise.</li>
+  <li>Horizontal and vertical deals occurred but were less common than in previous waves.</li>
+</ul>
+<p><strong>Major examples</strong></p>
+<ul>
+  <li><strong>ITT Corporation:</strong> expanded into insurance, hotels, and manufacturing.</li>
+  <li><strong>Litton Industries:</strong> diversified across electronics, defense, and consumer
+      products.</li>
+</ul>
+<p><strong>Outcome and decline</strong></p>
+<ul>
+  <li>Many conglomerates proved inefficient and difficult to manage.</li>
+  <li>Regulatory pressure and market scrutiny increased in the late 1960s and 1970s.</li>
+  <li>The wave ended as investors questioned whether conglomerate diversification created
+      shareholder value.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfkqPzEhaCmuXN56tQXVDw--qiFIcTkSq9RVlGnDbVKf2yDYg/viewform?usp=publish-editor"
+  target="_blank" rel="noopener">Case: Litton Industries ↗</a></li>
+</ul>
+
+<h1 id="fourth-wave">3.6. Fourth M&amp;A Wave: The Leveraged Buyout &amp; Hostile Takeover Wave (1980s)</h1>
+<h3 id="inefficient-conglomerates">Inefficient Conglomerates: Why Takeovers Took Off</h3>
+<ul>
+  <li>The post-1960s conglomerate boom left many firms bloated, poorly coordinated, and
+      undervalued.</li>
+  <li>Managers had expanded into unrelated industries → weak accountability, cross-subsidization,
+      low profitability.</li>
+  <li>Stock markets in the late 1970s/early 1980s viewed many conglomerates as worth more in pieces
+      than as going concerns (the "conglomerate discount").</li>
+  <li>Corporate governance mechanisms were still weak; boards were often deferential → the market
+      for corporate control filled the gap.</li>
+  <li>Activist investors and raiders (Icahn, Pickens, Goldsmith) targeted firms where:
+    <ul>
+      <li>Asset values exceeded market cap,</li>
+      <li>Management held little equity,</li>
+      <li>Operating divisions could be sold to strategic buyers after acquisition.</li>
+    </ul>
+  </li>
+  <li>Hostile tender offers became a real threat → management defenses escalated (poison pills,
+      staggered boards, white knights).</li>
+</ul>
+<h3 id="junk-bonds">Rise of Junk Bonds: Fuel for the Takeover Machine</h3>
+<p><strong>Why takeovers needed junk bonds</strong></p>
+<ul>
+  <li>Traditional banks were unwilling to lend large amounts for speculative, hostile transactions.</li>
+  <li>The investment-grade bond market was too conservative → would not fund unproven acquirers or
+      highly levered deals.</li>
+  <li>LBOs required massive upfront cash to buy out dispersed shareholders — equity funds alone
+      were insufficient.</li>
+  <li>The market needed risk-tolerant, high-yield debt with flexible covenants and fast execution.</li>
+</ul>
+<p><strong>How the high-yield market emerged</strong></p>
+<ul>
+  <li>Michael Milken at Drexel Burnham Lambert argued that:
+    <ul>
+      <li>Many low-rated firms were misrated—less risky than ratings implied.</li>
+      <li>Diversified portfolios of high-yield bonds produced strong risk-adjusted returns.</li>
+    </ul>
+  </li>
+  <li>Drexel created a new, organized market for high-yield ("junk") bonds:
+    <ul>
+      <li>Placed new issues directly with institutional investors.</li>
+      <li>Underwrote entire financing packages for raiders and emerging LBO shops.</li>
+      <li>Offered unprecedented speed and certainty of execution.</li>
+    </ul>
+  </li>
+  <li>By the mid-1980s, Drexel effectively controlled the junk bond market → enabling deals
+      previously impossible.</li>
+</ul>
+<h3 id="lbo-mechanics">LBO Mechanics &amp; Landmark Deals</h3>
+<p><strong>Typical LBO structure</strong></p>
+<ul>
+  <li>Acquisition financed by very high leverage:
+    <ul>
+      <li>70–90% debt (bank loans + high-yield bonds),</li>
+      <li>Remainder equity from a buyout fund or management.</li>
+    </ul>
+  </li>
+  <li>Debt serviced through:
+    <ul>
+      <li>Cash flows of the target,</li>
+      <li>Asset sales ("financial engineering"),</li>
+      <li>Operational improvements (cost-cutting, divestitures).</li>
+    </ul>
+  </li>
+  <li>Incentives shifted: management equity stakes → strong alignment with value creation.</li>
+</ul>
+<p><strong>Major events and transactions</strong></p>
+<ul>
+  <li>1984–1988: explosion of LBO volume, driven by the Drexel financing pipeline.</li>
+  <li>Famous deals:
+    <ul>
+      <li><strong>Revlon (1985):</strong> hostile bidding war; landmark ruling requiring
+          maximization of shareholder value.</li>
+      <li><strong>Beatrice Foods (1986):</strong> $6.2B buyout by KKR; showcased conglomerate
+          break-ups.</li>
+      <li><strong>RJR Nabisco (1988):</strong> $25B KKR buyout; symbol of the era's excess and the
+          peak of LBO mania.</li>
+    </ul>
+  </li>
+  <li>Emergence of a professional buyout industry: KKR, Forstmann Little, Clayton Dubilier, and
+      others.</li>
+</ul>
+<h3 id="drexel-collapse">Decline of the Wave: Collapse of Drexel &amp; Slowdown of LBOs</h3>
+<p><strong>Regulatory and legal shocks</strong></p>
+<ul>
+  <li>The SEC intensified scrutiny of insider trading, stock manipulation, and bid-rigging on Wall
+      Street.</li>
+  <li>Ivan Boesky was implicated in insider trading (1986) → the investigation extended to Drexel.</li>
+  <li>Michael Milken was indicted (1989) on securities fraud related to:
+    <ul>
+      <li>Market manipulation of high-yield bonds,</li>
+      <li>Illegal support of certain takeover bids,</li>
+      <li>Insider-trading-connected activities with Boesky.</li>
+    </ul>
+  </li>
+  <li>Milken pleaded guilty; Drexel paid huge fines and lost investor confidence.</li>
+</ul>
+<p><strong>Why Drexel failed</strong></p>
+<ul>
+  <li>Collapse of junk-bond prices in 1989–90 → investors fled the market.</li>
+  <li>Drexel's entire business model depended on continuous junk-bond issuance.</li>
+  <li>Regulatory pressure + widening spreads + default fears → liquidity evaporated.</li>
+  <li>1990: Drexel filed for Chapter 11 bankruptcy — a symbolic end of the takeover boom.</li>
+</ul>
+<p><strong>Broader market consequences</strong></p>
+<ul>
+  <li>The junk bond market shrank dramatically; issuance nearly halted.</li>
+  <li>Hostile takeovers declined:
+    <ul>
+      <li>Financing became harder,</li>
+      <li>Boards adopted stronger defenses,</li>
+      <li>Credit conditions tightened.</li>
+    </ul>
+  </li>
+  <li>The early 1990s recession further reduced appetite for highly leveraged deals.</li>
+</ul>
+<h3 id="pe-aftermath">Aftermath: From LBO Shops to Modern Private Equity</h3>
+<ul>
+  <li>Surviving firms professionalized and moved away from the raider image.</li>
+  <li>Name change: "LBO firms" → "Private Equity" (PE) to distance from 1980s excess.</li>
+  <li>Shift from hostile offers to friendly, negotiated buyouts.</li>
+  <li>Institutionalization of capital: pension funds, endowments, insurance companies became LPs.</li>
+  <li>The junk bond market rebounded in the mid-1990s under a safer, more regulated structure.</li>
+  <li>PE firms developed a more systematic value-creation playbook: operational engineering,
+      strategic repositioning, buy-and-build strategies.</li>
+  <li>By the 2000s, PE became a mainstream asset class with global reach, no longer synonymous with
+      corporate raiding.</li>
+</ul>
+
+<h2 id="rjr-nabisco">RJR Nabisco LBO</h2>
+<ul>
+  <li><strong>1985</strong> — R.J. Reynolds merges with Nabisco Brands, forming a large
+      tobacco–food conglomerate with high cash flow but weak strategic fit.</li>
+  <li><strong>Early 1988</strong> — CEO F. Ross Johnson becomes frustrated with the conglomerate
+      structure and explores a management-led buyout.</li>
+  <li><strong>Oct 20, 1988</strong> — Johnson announces a US$75/share MBO, calling his team the
+      "Black Knight."</li>
+  <li><strong>Late Oct 1988</strong> — Shareholders and markets criticize the bid as self-serving,
+      triggering immediate pushback.</li>
+  <li><strong>Late Oct 1988</strong> — Rival bidders including KKR ("White Knight"), Forstmann
+      Little, and First Boston enter the contest.</li>
+  <li><strong>Early Nov 1988</strong> — Bidding intensifies, quickly rising into the US$90–100/share
+      range.</li>
+  <li><strong>Early Nov 1988</strong> — Forstmann Little attacks junk bonds, refusing to use them
+      and calling KKR reckless.</li>
+  <li><strong>Early Nov 1988</strong> — The Black Knight group raises its offer but struggles to
+      lock in firm financing.</li>
+  <li><strong>Mid Nov 1988</strong> — KKR structures an aggressive junk-bond-heavy bid while
+      emphasizing financing certainty.</li>
+  <li><strong>Nov 18–23, 1988</strong> — Final bids submitted; some exceed KKR's price but lack
+      credible funding.</li>
+  <li><strong>Nov 24, 1988</strong> — The board selects KKR's US$109/share offer, valuing equity
+      near US$25B.</li>
+  <li><strong>Early 1989</strong> — The deal closes with ≈US$21.7B debt and ~US$2–3B equity,
+      pushing leverage to ~87%.</li>
+  <li><strong>1989</strong> — Annual interest rises from US$549M to ~US$3.38B, straining operations
+      instantly.</li>
+  <li><strong>1989</strong> — Management launches aggressive cost cuts, plant closures, and
+      operational tightening.</li>
+  <li><strong>1989–1990</strong> — The company sells ≈US$5B of assets to meet debt service
+      requirements.</li>
+  <li><strong>July 1990</strong> — KKR injects ~US$1.7B of new equity to stabilize the overstressed
+      capital structure.</li>
+  <li><strong>March 1991</strong> — A partial IPO sells ~19% equity, reducing leverage and
+      improving credit access.</li>
+  <li><strong>1991–1994</strong> — RJR continues selling businesses, eventually divesting
+      US$25–30B over the decade.</li>
+  <li><strong>1994–1995</strong> — KKR completes its primary exit, retaining only minor residual
+      interests.</li>
+  <li><strong>2000–2004</strong> — Nabisco is sold for US$14.9B; KKR exits fully by 2004 with an
+      overall IRR of ~11–12%.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://www.youtube.com/watch?v=Lpd0R_ZK8n8" target="_blank" rel="noopener">Video: Nabisco LBO ↗</a></li>
+  <li><a href="https://docs.google.com/presentation/d/12O4dOQVlPtTxkicQemnR0UzEx6sRDa5CdcvkiYMLpvM/edit?usp=sharing"
+  target="_blank" rel="noopener">Extra: Hostile Takeovers ↗</a></li>
+  <li><a href="https://forms.gle/fUM4wDqgz3w3B9an7" target="_blank" rel="noopener">Exercise: Poison Pill ↗</a></li>
+  <li><a href="https://forms.gle/p1DiJsgit9FEJgvh7" target="_blank" rel="noopener">Exercise: LBO ↗</a></li>
+</ul>
+
+<h1 id="fifth-wave">3.7. Fifth M&amp;A Wave: Strategic &amp; Globalization Wave (1990s)</h1>
+<h3 id="fifth-context">Economic Context</h3>
+<ul>
+  <li>Strong global economic expansion during the 1990s, especially in the U.S., Europe, and parts
+      of Asia.</li>
+  <li>Rapid globalization opened new markets; firms increasingly sought growth beyond national
+      borders to exploit emerging opportunities.</li>
+  <li>Technological advances, especially in computing, telecommunications, and the internet,
+      created new business models and revenue streams.</li>
+  <li>Stock markets were buoyant; equity valuations were high and capital was abundant,
+      facilitating large-scale acquisitions.</li>
+  <li>Increased international trade and deregulation in industries like telecom, energy, and
+      finance encouraged cross-border mergers.</li>
+  <li>Investors were willing to pay premiums for firms with growth potential rather than current
+      earnings, fueling strategic M&amp;A activity.</li>
+</ul>
+<h3 id="fifth-motives">Motives for M&amp;A</h3>
+<ul>
+  <li><strong>Strategic growth:</strong> companies pursued acquisitions to enter new markets,
+      acquire technology, and expand product offerings.</li>
+  <li><strong>Revenue and cost synergies:</strong> combining firms could increase market share,
+      reduce competition, and exploit economies of scale.</li>
+  <li><strong>Diversification:</strong> mergers allowed firms to hedge against economic cycles in
+      mature domestic markets, spreading risk across sectors or geographies.</li>
+  <li><strong>Technology acquisition:</strong> the rise of the internet and digital platforms
+      created an urgent need to integrate tech capabilities.</li>
+  <li><strong>Market consolidation:</strong> firms targeted rivals to consolidate fragmented
+      industries, strengthen negotiating power with suppliers and customers, and increase pricing
+      power.</li>
+  <li><strong>Cross-border ambitions:</strong> international acquisitions enabled firms to access
+      talent, resources, and regulatory advantages in new regions.</li>
+</ul>
+<h3 id="fifth-structure">Deal Structure and Features</h3>
+<ul>
+  <li>Most deals were friendly rather than hostile, in contrast to the previous LBO wave.</li>
+  <li>Stock-based deals were common, especially in technology acquisitions, as firms used their
+      high market valuations as currency.</li>
+  <li>Valuations often focused on future growth potential rather than historical earnings,
+      reflecting optimism about the internet, telecom, and media sectors.</li>
+  <li>Megadeals became increasingly frequent, with transaction values often exceeding tens of
+      billions of dollars.</li>
+  <li>Synergy assumptions included revenue growth (cross-selling products, expanding the customer
+      base), cost reductions (streamlined operations, shared infrastructure), and technological
+      integration (combining IT systems, platforms, and content).</li>
+  <li>Integration risks were often underestimated, particularly in tech-media combinations where
+      cultural and operational differences were large.</li>
+</ul>
+<h3 id="fifth-examples">Major Examples</h3>
+<ul>
+  <li><strong>Exxon–Mobil (1999):</strong> horizontal merger in the oil industry; created a global
+      energy giant controlling a significant share of oil production and refining capacity.</li>
+  <li><strong>Vodafone–Mannesmann (2000):</strong> cross-border telecom acquisition; provided
+      Vodafone with access to German and European markets, making it a global leader in mobile
+      telephony.</li>
+  <li><strong>AOL–Time Warner (2000):</strong> a landmark vertical/tech-media merger combining
+      AOL's online distribution platform with Time Warner's content assets.
+    <ul>
+      <li>Strategic rationale: combine content and digital reach to create a leading media and
+          internet company.</li>
+      <li>Outcome: post-dot-com crash, the merger suffered massive losses, cultural clashes, and
+          technology integration failures.</li>
+      <li>Goodwill write-downs exceeded $99 billion; the stock lost value rapidly, highlighting the
+          risks of overvalued tech mergers and poor operational integration.</li>
+      <li>Lessons learned: due diligence must consider culture, integration complexity, and
+          realistic growth assumptions; overpaying for anticipated synergies can destroy value.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="fifth-decline">Decline and Lessons</h3>
+<ul>
+  <li>The dot-com bubble burst (2000–2001) ended many high-profile mergers; the overvaluation of
+      tech assets corrected rapidly.</li>
+  <li>Investors lost confidence in large, high-premium strategic acquisitions, particularly in the
+      tech and media sectors.</li>
+  <li>Companies faced massive write-offs, failed integrations, and reputational damage.</li>
+  <li>The AOL–Time Warner case became a cautionary tale, illustrating the perils of excessive
+      optimism and poor planning in cross-sector mergers.</li>
+  <li>After the crash, M&amp;A activity slowed and became more financially disciplined, with a
+      greater focus on realistic synergy capture, due diligence, and integration planning.</li>
+  <li>The wave highlighted that strategic ambitions must be carefully balanced with operational and
+      financial realities; overvalued growth expectations can quickly turn promising deals into
+      value-destroying transactions.</li>
+</ul>
+
+<h1 id="sixth-wave">3.8. Sixth Wave: Private Equity &amp; Mega-Deals Wave (2003–2007)</h1>
+<h3 id="sixth-context">Economic Context</h3>
+<ul>
+  <li>The global economy recovered from the early-2000s recession, fueled by low interest rates,
+      easy credit, and strong corporate earnings.</li>
+  <li>Financial markets were liquid, and credit spreads were tight, encouraging large-scale
+      transactions.</li>
+  <li>Private equity funds grew rapidly, managing record levels of capital and looking for buyout
+      opportunities.</li>
+  <li>The wave was characterized by mega-mergers, often in sectors like telecom, energy, metals,
+      and financial services.</li>
+  <li>Investors were optimistic about synergies, operational improvements, and leveraged returns;
+      cheap debt was a key enabler.</li>
+</ul>
+<h3 id="sixth-motives">Motives for M&amp;A</h3>
+<ul>
+  <li><strong>Scale and market dominance:</strong> large industrial and service companies pursued
+      megadeals to increase global reach.</li>
+  <li><strong>Private equity-driven acquisitions:</strong> PE funds targeted undervalued or
+      underperforming firms for operational improvement and financial engineering.</li>
+  <li><strong>Leverage as a tool:</strong> debt financing was heavily used to enhance equity
+      returns while maintaining control.</li>
+  <li><strong>Operational and financial synergies:</strong> cost reductions, consolidation of
+      overlapping functions, and improved capital structures were primary drivers.</li>
+  <li><strong>Global expansion:</strong> firms sought cross-border acquisitions to access new
+      markets, customers, and resources.</li>
+</ul>
+<h3 id="sixth-structure">Deal Structure and Features</h3>
+<ul>
+  <li>Deals were often leveraged, with debt financing 50–70% of the purchase price.</li>
+  <li>Private equity sponsors focused on controlling cash flows and optimizing capital structure to
+      generate high IRRs.</li>
+  <li>Large public-to-private deals emerged, including iconic takeovers like AT&amp;T–BellSouth
+      (2006) and Mittal–Arcelor (2006).</li>
+  <li>Mega-mergers were sometimes cross-border, combining firms in different countries to create
+      global champions.</li>
+  <li>Deals relied on financial engineering, often assuming that interest tax shields and
+      operational improvements would justify high premiums.</li>
+</ul>
+<h3 id="sixth-examples">Major Examples</h3>
+<ul>
+  <li><strong>AT&amp;T–BellSouth (2006):</strong> consolidated U.S. telecom operations, gaining
+      scale in wireless and broadband markets.</li>
+  <li><strong>Mittal–Arcelor (2006):</strong> created the world's largest steel producer,
+      leveraging operational synergies and geographic reach.</li>
+  <li><strong>Disney–Pixar (2006):</strong> a strategic merger combining Disney's distribution,
+      branding, and financial strength with Pixar's creative capabilities, generating long-term
+      synergies in film production and merchandising.</li>
+  <li><strong>Private equity buyouts:</strong> hundreds of large LBOs occurred, including companies
+      in energy, healthcare, and manufacturing. PE funds improved profitability via cost reduction,
+      management incentives, and debt leverage. Examples include buyouts by KKR, Blackstone, and
+      Carlyle during this period.</li>
+</ul>
+<h3 id="sixth-decline">Decline and Lessons</h3>
+<ul>
+  <li>The wave ended abruptly with the 2007–2008 global financial crisis, triggered by the subprime
+      mortgage collapse.</li>
+  <li>Credit markets froze, making leveraged deals difficult or impossible to finance.</li>
+  <li>Many highly leveraged companies faced liquidity stress, some approaching default.</li>
+  <li>Lessons learned: excessive reliance on debt amplifies risk, and operational improvements may
+      not offset financial vulnerability.</li>
+  <li>The era solidified private equity's role in global M&amp;A, but also highlighted systemic
+      risk when leverage is too aggressive.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://forms.gle/EX1nX36YjdhTPkARA" target="_blank" rel="noopener">Case: Disney – Pixar ↗</a></li>
+</ul>
+
+<h1 id="seventh-wave">3.9. Seventh M&amp;A Wave (2010–2019): The Global Digital Integration Wave</h1>
+<h3 id="seventh-context">Economic and Technological Context</h3>
+<ul>
+  <li>The 2010s marked the consolidation of the global digital economy.</li>
+  <li>Mobile computing, cloud infrastructure, data-driven advertising, and AI-led personalization
+      transformed business models across sectors.</li>
+  <li>Winner-take-most dynamics — driven by network effects, data accumulation, and economies of
+      scale in software — encouraged rapid expansion by dominant platforms.</li>
+  <li>Capital markets reinforced the trend: low interest rates and abundant liquidity made equity
+      financing inexpensive, enabling aggressive acquisition strategies.</li>
+</ul>
+<h3 id="platform-consolidation">Strategic Logic of M&amp;A: Platform Consolidation</h3>
+<ul>
+  <li>Goal: strengthen platform ecosystems rather than acquire traditional "synergies."</li>
+  <li>Big Tech firms — Google, Facebook, Amazon, Apple, Microsoft — pursued deals to:
+    <ul>
+      <li>prevent user migration,</li>
+      <li>secure key technological capabilities,</li>
+      <li>control mobile and cloud channels,</li>
+      <li>and expand their data ecosystems.</li>
+    </ul>
+  </li>
+  <li>A central theme was the battle for mobile attention. As user behavior shifted from desktop to
+      mobile apps, firms that were born on desktop had to acquire mobile-first challengers.</li>
+</ul>
+<h3 id="facebook-instagram">Key Example: Facebook–Instagram (2012)</h3>
+<ul>
+  <li>Instagram had ~30 million users and only 13 employees.</li>
+  <li>Facebook faced declining engagement among younger users and a weak mobile interface.</li>
+  <li>Instagram offered a superior mobile-native photo-sharing experience, high user engagement,
+      and zero revenue but enormous growth potential.</li>
+  <li>Acquired for $1B, widely considered one of the most successful and strategically important
+      tech acquisitions of the decade.</li>
+  <li>It strengthened Facebook's mobile strategy and prevented a direct competitive threat.</li>
+  <li>This type of acquisition — small team, explosive user growth, high strategic risk — became
+      typical of the 7th wave.</li>
+</ul>
+<h3 id="seventh-nature">Nature of M&amp;A Activity</h3>
+<ul>
+  <li>Dominated by digital platform acquisitions, AI capability deals, cloud and SaaS
+      consolidation, and mobile services.</li>
+  <li>Traditional horizontal or vertical synergies mattered far less than user scale, network
+      effects, data accumulation, and ecosystem reinforcement.</li>
+  <li>Many deals were defensive — designed to prevent rivals from capturing users or entering
+      critical technology layers.</li>
+</ul>
+<h3 id="seventh-examples">Examples</h3>
+<ul>
+  <li>Facebook acquiring WhatsApp (2014) for global messaging dominance.</li>
+  <li>Google buying YouTube (2006, but central to 2010s strategy) and later cloud/AI startups.</li>
+  <li>Amazon absorbing robotics, logistics tech, and consumer devices (e.g., Ring).</li>
+  <li>Microsoft purchasing GitHub, LinkedIn, and cloud-native firms to reinforce enterprise
+      ecosystems.</li>
+  <li>Google–Nest (2014) and numerous AI acquisitions: building end-to-end digital ecosystems
+      across home, mobile, and cloud.</li>
+  <li>Verizon–AOL/Yahoo (2015–2017): an attempt to create a digital advertising rival to
+      Google/Facebook (ultimately unsuccessful).</li>
+</ul>
+<h3 id="seventh-decline">Decline of the Wave: Regulatory Pressure &amp; Market Maturity</h3>
+<ul>
+  <li>By the late 2010s:
+    <ul>
+      <li>Antitrust scrutiny intensified, especially around "killer acquisitions" like Instagram
+          and WhatsApp.</li>
+      <li>Regulators questioned whether platform firms were buying emerging competitors before they
+          could challenge incumbents.</li>
+      <li>Market valuations peaked, raising acquisition costs.</li>
+      <li>Many firms reached saturation in user growth, leading to diminishing returns from further
+          consolidation.</li>
+    </ul>
+  </li>
+  <li>The wave ended around 2019–2020 as geopolitical tensions increased, data privacy regulations
+      (GDPR, CCPA) raised compliance costs, and capital markets cooled just before the pandemic
+      shock.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://forms.gle/nqiHFupE1HmhtDcCA" target="_blank" rel="noopener">Case: Orange Tech ↗</a></li>
+</ul>
+
+<h1 id="eighth-wave">3.10. Eighth M&amp;A Wave (2020–now): Digital Infrastructure &amp; Pandemic Resilience</h1>
+<p>The 8th wave focused on enterprise technology, digital infrastructure, healthcare, and
+resilience rather than consumer-tech platforms. COVID-19 and the global shift to remote operations
+pushed firms to acquire capabilities in cloud computing, semiconductors, and biotech.</p>
+<h3 id="eighth-drivers">Key Drivers</h3>
+<ul>
+  <li><strong>Digital transformation:</strong> demand for cloud, cybersecurity, automation.</li>
+  <li><strong>Pandemic shock:</strong> need for telemedicine, diagnostics, logistics, and stable
+      supply chains.</li>
+  <li><strong>Low interest rates:</strong> record private-equity deal activity.</li>
+  <li><strong>Regulatory pressure:</strong> large consumer-tech mergers became harder, shifting
+      deals toward enterprise and industrial targets.</li>
+</ul>
+<h3 id="eighth-examples">Typical Deals &amp; Examples</h3>
+<ul>
+  <li><strong>Salesforce–Slack (2020):</strong> expanded enterprise collaboration tools.</li>
+  <li><strong>AMD–Xilinx (2022):</strong> semiconductor integration for AI/data centers.</li>
+  <li><strong>AstraZeneca–Alexion (2020):</strong> biotech scale in rare diseases.</li>
+  <li><strong>Broadcom–VMware (2022):</strong> hardware + cloud software consolidation.</li>
+  <li>Strong PE activity in software, healthcare, industrial automation.</li>
+</ul>
+<p>This wave emphasized capability building (cloud, chips, biotech) rather than platform dominance.
+Regulatory scrutiny and rising interest rates after 2022 slowed the wave, closing the era and
+paving the way for a potential AI-driven next wave.</p>
+
+<h2 id="morrison-lbo">Morrisons LBO</h2>
+<ul>
+  <li><strong>Early June 2021</strong> — CD&amp;R identifies Morrisons' valuable property portfolio
+      as a key strategic motive and launches an unsolicited bid (~£5.52 bn).</li>
+  <li><strong>June 2021</strong> — Morrisons' board rejects the initial bid; Goldman Sachs advises
+      on valuation, financing risk, and strategic options.</li>
+  <li><strong>Late June 2021</strong> — The early bid process shows potential losses for Goldman
+      Sachs if CD&amp;R's bid fails, due to contingent advisory fees.</li>
+  <li><strong>Early July 2021</strong> — Fortress Investment Group submits a higher bid (~£6.3 bn),
+      challenging CD&amp;R and pressuring shareholders.</li>
+  <li><strong>July 2021</strong> — CD&amp;R positions as the "White Knight" with strong financing;
+      Fortress acts as the "Black Knight" aggressive bidder.</li>
+  <li><strong>July–August 2021</strong> — Goldman Sachs evaluates financing risk, property value,
+      and takeover code compliance while coordinating auction procedures.</li>
+  <li><strong>August 2021</strong> — Fortress raises to ~£6.7 bn; CD&amp;R secures committed debt
+      and equity to maintain bid credibility.</li>
+  <li><strong>Late August 2021</strong> — Goldman Sachs' potential loss is mitigated as CD&amp;R's
+      final bid becomes likely to succeed.</li>
+  <li><strong>September 2021</strong> — Auction rules and the UK takeover code require fair
+      treatment of all bids; Goldman Sachs guides the board through legal and strategic
+      considerations.</li>
+  <li><strong>Early October 2021</strong> — CD&amp;R submits a final ~£7 bn bid (~287p/share),
+      surpassing Fortress; the board favors certainty of financing.</li>
+  <li><strong>27 October 2021</strong> — The acquisition closes; Morrisons delists from the LSE;
+      CD&amp;R gains control of operations and property assets.</li>
+  <li><strong>Late 2021</strong> — The deal is financed with ~£6–7 bn debt; CD&amp;R contributes
+      ~£1–2 bn equity.</li>
+  <li><strong>2022</strong> — High interest and finance costs (~£593m) result in a first
+      full-period pre-tax loss of ~£1.5 bn.</li>
+  <li><strong>2022–2023</strong> — Morrisons implements cost control, operational efficiency, and
+      selective asset/property divestitures to manage debt.</li>
+  <li><strong>2023</strong> — Goldman Sachs earns advisory fees; CD&amp;R monitors operations and
+      property strategy; net debt remains high (~£8.5 bn including leases).</li>
+  <li><strong>Lesson</strong> — Large, property-rich LBOs can unlock asset value, but high leverage
+      amplifies risk; financing certainty, operational execution, and strategic use of property are
+      critical for achieving IRR.</li>
+</ul>
+<ul class="resources">
+  <li><a href="https://www.youtube.com/watch?v=DKYKT4pvYYA" target="_blank" rel="noopener">Video: Morrisons LBO ↗</a></li>
+</ul>
+
+<h1 id="merger-failures">3.11. Examples of Merger Failures</h1>
+<h3 id="cultural-clashes">Cultural and Management Clashes</h3>
+<p><strong>AOL–Time Warner (2000)</strong></p>
+<ul>
+  <li>Reason: clash of corporate cultures (fast-paced internet startup vs. traditional media).</li>
+  <li>Outcome: failed to realize synergies; the stock lost ~80% of its value within a few years.</li>
+</ul>
+<p><strong>Daimler-Benz–Chrysler (1998)</strong></p>
+<ul>
+  <li>Reason: cultural and managerial differences between German and U.S. operations.</li>
+  <li>Outcome: integration difficulties, brand misalignment; Chrysler was eventually sold.</li>
+</ul>
+<h3 id="synergy-overestimation">Overestimation of Synergies</h3>
+<p><strong>Quaker–Snapple (1994)</strong></p>
+<ul>
+  <li>Reason: overestimated brand synergies between Quaker Oats and Snapple.</li>
+  <li>Outcome: Snapple sold at a large loss within 3 years; integration costs underestimated.</li>
+</ul>
+<p><strong>HP–Compaq (2002)</strong></p>
+<ul>
+  <li>Reason: anticipated cost and revenue synergies were overestimated.</li>
+  <li>Outcome: the market remained skeptical; HP stock underperformed for years post-merger.</li>
+</ul>
+<h3 id="regulatory-challenges">Regulatory or Political Challenges</h3>
+<p><strong>GE–Honeywell (2001, blocked by the EU)</strong></p>
+<ul>
+  <li>Reason: the European Commission blocked the merger due to antitrust concerns.</li>
+  <li>Outcome: deal canceled despite U.S. approval.</li>
+</ul>
+<p><strong>Vodafone–Mannesmann (1999–2000, partial issues)</strong></p>
+<ul>
+  <li>Reason: complex cross-border regulation and governance disputes.</li>
+  <li>Outcome: massive legal and political challenges; though completed, they created friction.</li>
+</ul>
+<h3 id="market-shifts">Technological or Market Shifts</h3>
+<p><strong>Microsoft–Nokia (2013)</strong></p>
+<ul>
+  <li>Reason: the smartphone market evolved faster than expected; Windows Phone adoption failed.</li>
+  <li>Outcome: heavy write-downs and layoffs; Microsoft exited mobile hardware.</li>
+</ul>
+<p><strong>HP–Autonomy (2011)</strong></p>
+<ul>
+  <li>Reason: cloud computing and the software market evolved differently than HP anticipated.</li>
+  <li>Outcome: massive $8.8B write-down due to alleged misrepresentation and market misfit.</li>
+</ul>
+<h3 id="financial-miscalculations">Financial Miscalculations</h3>
+<p><strong>Bank of America–Countrywide (2008)</strong></p>
+<ul>
+  <li>Reason: underestimated mortgage risk during the subprime crisis.</li>
+  <li>Outcome: massive losses, lawsuits, and reputational damage.</li>
+</ul>
+<p><strong>Aetna–Humana (2015, blocked)</strong></p>
+<ul>
+  <li>Reason: regulatory concern over reduced competition in healthcare insurance.</li>
+  <li>Outcome: merger blocked by the U.S. DOJ; strategic plan wasted.</li>
+</ul>
+
+<h1 id="cournot">3.A. Cournot Model</h1>
+<h3 id="cournot-model">Model &amp; Assumptions</h3>
+<ul>
+  <li>Inverse demand: $P = a - bQ$, where $Q = q_1 + q_2 + \cdots + q_n$.</li>
+  <li>Firms $i = 1..n$ choose quantities $q_i$ simultaneously (quantity competition).</li>
+  <li>Each firm has constant marginal cost $MC_i$ (symmetric case: $MC_i = c$).</li>
+  <li>Profit of firm $i$: $\pi_i = (P - MC_i)\, q_i$.</li>
+  <li>Objective: each firm chooses $q_i$ to maximize $\pi_i$, taking rivals' quantities as given.</li>
+</ul>
+<h3 id="cournot-solution">Solution with n Symmetric Firms</h3>
+<p>Firm $i$ optimization (symmetric costs $c$): maximize
+$\pi_i = (a - bQ - c)\, q_i$ where $Q = q_i + Q_{-i}$ and $Q_{-i} = \sum_{j \neq i} q_j$.</p>
+<p>First order condition (FOC):</p>
+<div class="eq">$$\frac{d\pi_i}{dq_i} = a - b(q_i + Q_{-i}) - c - b q_i = 0
+\;\Rightarrow\; a - c - b Q_{-i} - 2 b q_i = 0$$</div>
+<p>Solve for the best response (BR):</p>
+<div class="eq">$$q_i = \frac{a - c - b Q_{-i}}{2b}$$</div>
+<p>In the symmetric Nash equilibrium all firms choose $q_i = q^*$, so $Q_{-i} = (n-1) q^*$.
+Plugging in:</p>
+<div class="eq">$$q^* = \frac{a - c - b(n-1)q^*}{2b}
+\;\Rightarrow\; b(n+1)q^* = a - c$$</div>
+<p>⇒ Equilibrium per-firm quantity:</p>
+<div class="eq">$$q^* = \frac{a - c}{b(n+1)}$$</div>
+<p>Total quantity:</p>
+<div class="eq">$$Q^* = n q^* = \frac{n(a-c)}{b(n+1)}$$</div>
+<p>Equilibrium price:</p>
+<div class="eq">$$P^* = a - bQ^* = \frac{a + nc}{n+1}$$</div>
+<p>Per-firm profit:</p>
+<div class="eq">$$\pi^* = (P^* - c)\, q^* = \frac{(a-c)^2}{b(n+1)^2}$$</div>
+<h3 id="cournot-special">Special Case: Choke Price a = 100, MC c = 0, b = 1</h3>
+<p>Plug $a = 100$, $c = 0$, $b = 1$ into the formulas above:</p>
+<ul>
+  <li>Per-firm quantity: $q^*(n) = \dfrac{100}{n+1}$</li>
+  <li>Total quantity: $Q^*(n) = \dfrac{100n}{n+1}$</li>
+  <li>Price: $P^*(n) = 100 - Q^* = \dfrac{100}{n+1}$</li>
+  <li>Per-firm profit (producer surplus per firm):
+      $\pi^*(n) = P^* \cdot q^* = \dfrac{10000}{(n+1)^2}$</li>
+  <li>Total industry profit: $\Pi_{total}(n) = n \cdot \pi^*(n) = \dfrac{10000\,n}{(n+1)^2}$</li>
+  <li>Consumer surplus (linear demand):
+      $CS = \tfrac{1}{2}(100 - P^*) \cdot Q^*$. Since $100 - P^* = \dfrac{100n}{n+1}$:
+      $$CS(n) = \frac{1}{2} \cdot \frac{100n}{n+1} \cdot \frac{100n}{n+1} = 5000 \cdot \frac{n^2}{(n+1)^2}$$</li>
+</ul>
+<h3 id="cournot-checks">Quick Checks / Limits</h3>
+<ul>
+  <li>$n = 1$ (monopoly): $q^* = 50$, $Q = 50$, $P = 50$, $\pi = 2500$, $CS = 1250$.</li>
+  <li>$n \to \infty$ (perfect competition limit): $P^* \to 0$, $Q^* \to 100$,
+      $CS \to \tfrac{1}{2} \cdot 100 \cdot 100 = 5000$ (max CS), $\pi \to 0$,
+      $\Pi_{total} \to 0$.</li>
+</ul>
+
+    </div>
+    <footer class="site-footer">
+      Business Taxes and Mergers &amp; Acquisitions · Dr. Matthijs Breugem · Nyenrode Business University ·
+      <a href="mailto:m.breugem@nyenrode.nl">m.breugem@nyenrode.nl</a>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

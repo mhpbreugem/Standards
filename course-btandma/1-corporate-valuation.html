@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. Corporate Valuation — Business Taxes and M&A</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <p class="site-title"><a href="index.html">Business Taxes and M&amp;A</a></p>
+    <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+    <nav aria-label="Course navigation">
+<ul>
+<li><a href="index.html">Intro</a></li>
+<li><a class="current" href="1-corporate-valuation.html">1. Corporate Valuation</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#financial-statements">Financial Statements</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#cost-of-capital">Cost of Capital</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#business-valuation">Business Valuation</a></li>
+<li><a href="2-business-taxes.html">2. Business Taxes</a></li>
+<li class="sub"><a href="2-business-taxes.html#business-taxes-nl">Business Taxes in NL</a></li>
+<li class="sub"><a href="2-business-taxes.html#global-taxes-ethics">Global Taxes &amp; Ethics</a></li>
+<li><a href="simulation.html">Simulation</a></li>
+<li><a href="3-ma.html">3. M&amp;A</a></li>
+<li><a href="solutions.html">Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1AKYgdZJKp82ACM8seIao74kd-YkLXqm6WpsDRqIO0C4/edit?usp=sharing" target="_blank" rel="noopener">Case I MENSAM</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1_UE7YuPjJm_5Q2ULqTCzkEnc_aRzioE3bMQl29XqypU/edit?usp=sharing" target="_blank" rel="noopener">Case II PINGGUO</a></li>
+<li class="group-label">Practice Material</li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1RaQt3MHQhDhOJccQmWXWr123S0y1-EudhYVnQRnYARo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1cI4_pOSx-J7PxYtdnIkaapqxz9mV8I_VAZ8dGdpHpuo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1TQ8Mklstw9So88s5jjLc1GtKm1LRlOWlB0c-oa1F334/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1PbVe_phB4sil8fT47a6y6RoDVMxHSNI5wu9qeYNd1vg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1UvmWn2306PM7io5_K8LZj2IIomTXO_YyPxxfIF4Zumg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1K08Mdif3W6gg2gpkGx_RgpxbOujEmFjGdyx_UzQjQE8/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1BmODT3ycJGjC6gt7Z8aGFt2gMJKeXoQJKlur7vl3bgQ/edit?usp=sharing" target="_blank" rel="noopener">Session 15 notes</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/forms/d/e/1FAIpQLScW44AQgo0uiu3OuEoFyzgQgUxs6cYB4H73xrgadxQdvSxgug/viewform?usp=dialog" target="_blank" rel="noopener">Huntar</a></li>
+<li class="sub"><a class="ext" href="https://forms.gle/ddbmNpf7eZy32ZJ48" target="_blank" rel="noopener">Gauta</a></li>
+</ul>
+    </nav>
+  </aside>
+  <main class="content">
+    <header class="hero">
+      <h1>1. Corporate Valuation</h1>
+      <p>Financial statements · Cost of capital · Business valuation</p>
+    </header>
+    <div class="page-inner">
+<p class="lead">The Corporate Valuation module introduces students to the foundational tools and
+methods used to assess business value, divided into the following parts:</p>
+<ul>
+  <li><strong>Financial statements analysis:</strong> We study the income statement, cash flow
+      statement, and balance sheet, which provide essential insights into profitability, liquidity,
+      and overall financial health. Understanding these statements equips students to interpret
+      performance and communicate financial information effectively.</li>
+  <li><strong>Cost of capital analysis:</strong> We cover scenarios without and with debt, tax
+      effects, and the use of the Capital Asset Pricing Model (CAPM) to estimate equity costs. The
+      Weighted Average Cost of Capital (WACC) provides a benchmark for evaluating projects.</li>
+  <li><strong>Valuation:</strong> focusing on cash-flow metrics like Free Cash Flow (FCF) and
+      investment appraisal techniques, emphasizing Net Present Value (NPV) and Internal Rate of
+      Return (IRR).</li>
+</ul>
+<p>We furthermore consider sensitivity to key assumptions and the importance of ignoring sunk costs
+to ensure robust, informed investment decisions. The valuation skills of this chapter form crucial
+basic knowledge for assessing targets and synergies in mergers and acquisitions.</p>
+
+<h1 id="financial-statements">Financial Statements</h1>
+<p>This chapter explores the foundational concepts of financial statements:</p>
+<ul>
+  <li><strong>Income Statement:</strong> Summarizes a company's financial performance over a
+      specific period, helping to assess profitability and identify areas for improvement.</li>
+  <li><strong>Cash Flow Statement:</strong> Tracks the movement of cash both into and out of the
+      firm, providing insights into liquidity and solvency.</li>
+  <li><strong>Balance Sheet:</strong> Provides a snapshot of a company's assets, liabilities, and
+      equity at a particular point in time, offering a comprehensive view of its financial health.</li>
+</ul>
+<p>Understanding these statements is essential for anyone involved in business, from entrepreneurs
+to investors to managers, as they provide a common language for communicating financial information
+and enable stakeholders to make informed decisions.</p>
+
+<h2 id="balance-sheet">1.1. Balance Sheet</h2>
+<p>The (financial) balance sheet provides a snapshot of a company's financial position at a
+specific point in time.</p>
+<ul>
+  <li><strong>Purpose:</strong> To offer a comprehensive view of the company's financial health and
+      its resources and obligations.</li>
+  <li><strong>Key principles:</strong>
+    <ul>
+      <li>Dual-aspect concept: Assets equal liabilities plus equity.</li>
+      <li>Historical cost principle: Assets are recorded at their original cost.</li>
+    </ul>
+  </li>
+  <li><strong>Components:</strong>
+    <ul>
+      <li>Assets (left): What the company owns (e.g., cash, accounts receivable, inventory,
+          property, plant, and equipment).</li>
+      <li>Liabilities (right): This includes both debt and equity, in addition to payables to
+          suppliers.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="case" id="mensam-intro">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM — Introduction</h2>
+  <p>You have decided to open a furniture manufacturing company in the beautiful and politically
+  stable country "Nuevo Rico." You are planning to produce pieces of high-end furniture with the
+  brand name "MENSAM" to serve the middle price segment of the local market. To start production,
+  you need to immediately install production equipment with a cost of $240k.</p>
+  <p>To help finance the business, you have contacted a group of investors (a mix of shareholders
+  and debt holders with an unknown proportion). Since you promised stellar returns, they agreed to
+  provide sufficient flexible funding (up to $300k). As an optimistic entrepreneur, you accept the
+  challenge and open the company.</p>
+  <p>This case is structured as follows: in this chapter, we will first prepare the financial
+  statements for the years that MENSAM will be in business. In the next chapters, we will compute
+  MENSAM's cost of capital and perform a project evaluation analysis, including considering risks
+  and opportunities.</p>
+  <p><strong>Start by preparing the initial (year 0) financial statements of MENSAM.</strong></p>
+</div>
+
+<h2 id="investment-depreciation">1.2. Investment and Depreciation</h2>
+<p><strong>Investment</strong></p>
+<ul>
+  <li>Costs are allocated over multiple accounting periods.</li>
+  <li>Acquisition cost paid upfront (capital expenditures or CAPEX).</li>
+  <li>Can be in tangible (such as machines) or intangible assets (such as patents).</li>
+</ul>
+<p><strong>Depreciation</strong></p>
+<ul>
+  <li>Accounting cost of using a fixed asset for the accounting period.</li>
+  <li>Accounting value (balance sheet item) of the asset tracked by:
+      Net Fixed Assets = Gross Fixed Assets − Accumulated Depreciation.</li>
+  <li>Depreciation is NOT a cash flow (CAPEX is a cash flow).</li>
+  <li>Linear depreciation: cost equally allocated over the asset lifetime.</li>
+  <li>Asset lifetime is defined by accounting standards.</li>
+  <li>Amortization: term for depreciation of intangible assets.</li>
+</ul>
+
+<div class="case" id="mensam-year1">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM — Year 1</h2>
+  <p>The following production and sales are estimated for year 1. Please make the three financial
+  statements accordingly.</p>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 1.1: Data for MENSAM year 1</caption>
+      <thead><tr><th>Item</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Raw material unit cost</td><td>$200</td></tr>
+        <tr><td>Fixed production costs</td><td>$20,000</td></tr>
+        <tr><td>Depreciation of equipment</td><td>$60,000</td></tr>
+        <tr><td>Production quantity</td><td>800</td></tr>
+        <tr><td>Sales quantity</td><td>800</td></tr>
+        <tr><td>Sales price</td><td>$450</td></tr>
+        <tr><td>Marketing fixed cost</td><td>$20,000</td></tr>
+        <tr><td>Corporate tax rate</td><td>50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 id="income-statement">1.3. Income Statement or P&amp;L</h2>
+<p>We next consider the income statement for internal use:</p>
+<p class="eq">Variable Margin = Sales − Variable Costs</p>
+<p class="eq">EBITDA = Variable Margin − Fixed Costs (excluding Depreciation)</p>
+<ul>
+  <li>Earnings Before Interest, Tax, Depreciation &amp; Amortization.</li>
+  <li>Performance measure of business units of different age.</li>
+</ul>
+<p class="eq">Operating Income (OI) = EBITDA − Depreciation</p>
+<ul>
+  <li>Profitability to shareholders, debt holders, and government.</li>
+  <li>Also known as Earnings Before Interest and Tax (EBIT).</li>
+</ul>
+<p class="eq">Net Operating Profit After Tax (NOPAT) = OI − Tax*</p>
+<ul>
+  <li>Tax* = OI × Tax Rate.</li>
+  <li>Equals Net Income for an unlevered (= zero debt) company.</li>
+</ul>
+<p><strong>Important:</strong> The above income statement is suitable for internal use (i.e., for
+operational managers) who do not know the debt structure of the company, and hence cannot compute
+the interest rate, and therefore the (true) taxes. We refer to Tax* as the tax level if the company
+had zero debt.</p>
+
+<div class="case" id="mensam-year2">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM — Year 2</h2>
+  <p>The following production and sales are estimated for year 2. In particular, sales will be lower
+  than the previous year but production will be maintained at the same level. Please make the three
+  financial statements accordingly.</p>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 1.2: Data for MENSAM year 2</caption>
+      <thead><tr><th>Item</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Raw material unit cost</td><td>$200</td></tr>
+        <tr><td>Fixed production costs</td><td>$20,000</td></tr>
+        <tr><td>Depreciation of equipment</td><td>$60,000</td></tr>
+        <tr><td>Production quantity</td><td>800</td></tr>
+        <tr><td>Sales quantity</td><td>600</td></tr>
+        <tr><td>Sales price</td><td>$450</td></tr>
+        <tr><td>Marketing fixed cost</td><td>$20,000</td></tr>
+        <tr><td>Corporate tax rate</td><td>50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 id="cash-flow-statement">1.4. Cash Flow Statement</h2>
+<p><strong>Operating Cash Flow</strong> (day-to-day activities of the company)</p>
+<ul><li>Examples: sales revenue, operating expenses, taxes.</li></ul>
+<p><strong>Investment Cash Flow</strong> (investment and sale of fixed assets)</p>
+<ul><li>Examples: acquisition or sale of tangible or intangible assets.</li></ul>
+<p><strong>Financing Cash Flow</strong> (cash from financing the company)</p>
+<ul><li>Examples: dividends, interest payment, equity issue, share buyback.</li></ul>
+<p class="eq">Free Cash Flow (FCF) = Operating CF + Investment CF</p>
+<ul>
+  <li>Summarizes the total firm cash flow available to investors.</li>
+  <li>FCF excludes tax benefits due to a levered capital structure.</li>
+</ul>
+
+<div class="case" id="mensam-year3">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM — Year 3</h2>
+  <p>The following production and sales are estimated for year 3. Specifically, sales are back to
+  the previous level and payment terms are being negotiated. Please make the three financial
+  statements accordingly.</p>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 1.3: Data for MENSAM year 3</caption>
+      <thead><tr><th>Item</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Raw material unit cost</td><td>$200</td></tr>
+        <tr><td>Fixed production costs</td><td>$20,000</td></tr>
+        <tr><td>Depreciation of equipment</td><td>$60,000</td></tr>
+        <tr><td>Production quantity</td><td>800</td></tr>
+        <tr><td>% raw mat. paid next year</td><td>50%</td></tr>
+        <tr><td>Sales quantity</td><td>800</td></tr>
+        <tr><td>Sales price</td><td>$450</td></tr>
+        <tr><td>Marketing fixed cost</td><td>$20,000</td></tr>
+        <tr><td>% sales paid next year</td><td>50%</td></tr>
+        <tr><td>Corporate tax rate</td><td>50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 id="wcr">1.5. Working Capital Requirement</h2>
+<p>Working Capital Requirement (WCR) represents a long-term need for cash to run daily operations
+and is defined as:</p>
+<div class="eq">$$\text{WCR} = \text{Current Assets} - \text{Current Liabilities}
+= (\text{Receivables} + \text{Inventories}) - \text{Payables}$$</div>
+<figure>
+  <svg viewBox="0 0 560 300" role="img" xmlns="http://www.w3.org/2000/svg" font-family="inherit" font-size="13"><rect x="90" y="40" width="150" height="94.3" rx="4" fill="var(--c-pos)"/><rect x="90" y="138.3" width="150" height="115.7" rx="4" fill="var(--c-pos)" opacity="0.55"/><text x="165.0" y="92.15" text-anchor="middle" fill="#fff" font-weight="600">Receivables</text><text x="165.0" y="199.15" text-anchor="middle" fill="#fff" font-weight="600">Inventories</text><rect x="330" y="40" width="150" height="126.39999999999998" rx="4" fill="var(--c-neg)"/><rect x="330" y="170.39999999999998" width="150" height="83.60000000000001" rx="4" fill="var(--ink-3)"/><text x="405.0" y="100.19999999999999" text-anchor="middle" fill="#fff" font-weight="700">WCR</text><text x="405.0" y="118.19999999999999" text-anchor="middle" fill="#fff" font-size="11">(financed long-term)</text><text x="405.0" y="215.2" text-anchor="middle" fill="#fff" font-weight="600">Payables</text><text x="165.0" y="284" text-anchor="middle" fill="var(--ink-2)">Operating current assets</text><text x="405.0" y="284" text-anchor="middle" fill="var(--ink-2)">Financing of those assets</text><text x="285.0" y="152.0" text-anchor="middle" fill="var(--ink-1)" font-size="22">=</text></svg>
+  <figcaption>Working capital requirement: the part of operating current assets not financed by
+  payables must be financed long-term.</figcaption>
+</figure>
+
+<h2 id="ocf-indirect">1.6. Operating Cash Flow — Indirect Method</h2>
+<p>Indirect method of computing operating cash flow:</p>
+<ul>
+  <li>Start from the income statement and adjust for non-cash items.</li>
+  <li>Typically preferred by companies as it is faster and simpler.</li>
+  <li>The indirect method is only used for operating cash flow.</li>
+</ul>
+<div class="eq">$$\text{OCF} = \text{EBITDA} - \Delta\text{WCR} - \text{Tax}$$</div>
+<ul>
+  <li>Alternatively: OCF = NOPAT + Depreciation − ΔWCR.</li>
+  <li>WCR contains information regarding non-cash items.</li>
+  <li>ΔWCR: change in WCR with respect to last year.</li>
+</ul>
+
+<div class="case" id="mensam-year4">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM — Year 4</h2>
+  <p>The following production and sales are estimated for (the final) year 4. Specifically, all
+  inventories are being sold. Please make the three financial statements accordingly.</p>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 1.4: Data for MENSAM year 4</caption>
+      <thead><tr><th>Item</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Raw material unit cost</td><td>$200</td></tr>
+        <tr><td>Fixed production costs</td><td>$20,000</td></tr>
+        <tr><td>Depreciation of equipment</td><td>$60,000</td></tr>
+        <tr><td>Production quantity</td><td>800</td></tr>
+        <tr><td>% raw mat. paid next year</td><td>50%</td></tr>
+        <tr><td>Sales quantity</td><td>1,000</td></tr>
+        <tr><td>Sales price</td><td>$450</td></tr>
+        <tr><td>Marketing fixed cost</td><td>$20,000</td></tr>
+        <tr><td>% sales paid next year</td><td>50%</td></tr>
+        <tr><td>Corporate tax rate</td><td>50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="summary">
+  <h2 id="summary-statements">Summary — Financial Statements</h2>
+  <p><strong>Income statement or P&amp;L</strong></p>
+  <ul>
+    <li>EBITDA = Sales − Operating Expenses (excl. Depreciation)</li>
+    <li>NOPAT = EBITDA − Depreciation − Tax (ignoring debt)</li>
+  </ul>
+  <p><strong>Cash-flow statement</strong></p>
+  <ul>
+    <li>OCF (indirect method) = EBITDA − ΔWCR − Tax</li>
+    <li>Free Cash Flow (FCF) = OCF + ICF</li>
+  </ul>
+  <p><strong>Balance sheet</strong></p>
+  <ul>
+    <li>Net Fixed Assets = Gross Fixed Assets − Accumulated Depreciation</li>
+    <li>WCR = Receivables + Inventory − Payables</li>
+  </ul>
+</div>
+
+<h1 id="cost-of-capital">Cost of Capital</h1>
+<p>This chapter explores the cost of capital, a vital tool for businesses to evaluate projects and
+make informed financial decisions. The chapter starts by analyzing the scenario of a company
+without debt, then gradually incorporates debt and its tax implications to provide a comprehensive
+understanding.</p>
+<ul>
+  <li>The Capital Asset Pricing Model (CAPM) is introduced to determine the cost of equity, which
+      is crucial for assessing the return required by investors.</li>
+  <li>The Weighted Average Cost of Capital (WACC) is calculated to represent the average hurdle
+      rate for projects and companies.</li>
+  <li>The discussion then extends to the impact of corporate taxes and (direct plus indirect)
+      bankruptcy costs on the cost of capital and firm value. The trade-off theory is examined,
+      which highlights the balance between the tax benefits of debt and the costs associated with
+      bankruptcy.</li>
+</ul>
+
+<h2 id="capm">1.6. CAPM &amp; Cost of Equity</h2>
+<p>We will compute the cost of equity ($k^e$) using the Capital Asset Pricing Model (CAPM), which
+states:</p>
+<div class="eq">$$k^e = E[R_i] = r + \beta_i \times MRP$$</div>
+<p>where:</p>
+<ul>
+  <li>$k^e$ is the cost of equity, which is identical to the cost of capital in case of zero debt.</li>
+  <li>$r$ is the riskless rate.</li>
+  <li>$E[R_i]$ is the expected return on stock $i$.</li>
+  <li>$E[R_m]$ is the expected return on the market portfolio.</li>
+  <li>$\beta_i$ is the beta of stock $i$, formally defined as
+      $\beta_i = \mathrm{Cov}(R_i, R_m)/\mathrm{Var}(R_m)$.</li>
+  <li>$MRP = E[R_m] - r$ is the market risk premium (the extra expected return investors require
+      for investing in the market rather than a riskless investment).</li>
+</ul>
+
+<h3 id="beta">Beta</h3>
+<p>$\beta$ determines the asset risk premium. It reflects a security's systematic risk, the
+undiversifiable risk tied to the overall market. It shows how a security's returns respond to
+market movements, indicating its contribution to a portfolio's systematic risk exposure:</p>
+<ul>
+  <li>$\beta &gt; 1$: asset riskier than the market portfolio, with higher expected return.</li>
+  <li>$\beta &lt; 1$: asset less risky than the market portfolio, with lower expected return.</li>
+  <li>$\beta = 0$: asset uncorrelated with the market, yielding zero risk premium.</li>
+  <li>$\beta &lt; 0$: asset negatively correlated with the market (this is rare). This asset is an
+      insurance against market risk and has a negative risk premium.</li>
+</ul>
+<div class="table-wrap">
+  <table class="data">
+    <caption>Table 2.1: Beta by industry. Source: Berk</caption>
+    <thead><tr><th>Industry</th><th>Beta</th><th>Industry</th><th>Beta</th></tr></thead>
+    <tbody>
+      <tr><td>Utilities</td><td>0.4</td><td>Hotels</td><td>1.1</td></tr>
+      <tr><td>Packed foods</td><td>0.5</td><td>Home building</td><td>1.2</td></tr>
+      <tr><td>Tobacco</td><td>0.5</td><td>Department stores</td><td>1.2</td></tr>
+      <tr><td>Food retail</td><td>0.6</td><td>Casinos</td><td>1.2</td></tr>
+      <tr><td>Gold</td><td>0.8</td><td>Auto parts</td><td>1.3</td></tr>
+      <tr><td>Pharma</td><td>0.8</td><td>Computer hardware</td><td>1.4</td></tr>
+      <tr><td>Restaurants</td><td>0.9</td><td>Apparel retail</td><td>1.6</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="cost-of-debt">1.7. Cost of Debt</h2>
+<ul>
+  <li>Companies can choose a mix of debt and equity financing.</li>
+  <li>A firm that has debt is <em>levered</em>; a firm without debt is <em>unlevered</em>.</li>
+</ul>
+<p>Debt differs from equity:</p>
+<ul>
+  <li>Debt can be held by banks or other investors.</li>
+  <li>The cost of debt (CoD or $k^d$) equals the interest rate.</li>
+  <li>Debt holders receive interest, but no dividends.</li>
+  <li>Debt holders need to be paid by the firm even if there is no profit.</li>
+  <li>Debt holders do not receive voting rights.</li>
+  <li>In case of bankruptcy, debt holders are paid first.</li>
+  <li>Interest payments are tax deductible (we study this later).</li>
+</ul>
+
+<h3 id="credit-spread">Credit Spread</h3>
+<p>The company cost of debt (CoD or $k^d$) excluding tax effects simply equals the interest rate of
+debt, and can be decomposed as follows:</p>
+<div class="eq">$$k^d = r + \text{credit spread}$$</div>
+<ul>
+  <li>The credit spread reflects the risk of default, both in terms of expected losses as well as
+      the timing of the default (correlation with the market).</li>
+  <li>In addition, the credit spread reflects the costs associated with bankruptcy (which we will
+      consider later on).</li>
+  <li>The credit spread is lower for more senior tranches.</li>
+</ul>
+<p>Tools to estimate the credit spread include:</p>
+<ul>
+  <li>Credit ratings attributed by credit rating agencies.</li>
+  <li>Credit default swap rates (insurance against the default of the bond).</li>
+  <li>CAPM (estimate the beta of debt). NB: not often used in practice.</li>
+  <li>Equity prices (distance to default using the Merton model; not in this course).</li>
+</ul>
+
+<h3 id="rating-agencies">Credit Rating Agencies</h3>
+<ul>
+  <li><strong>Risk assessment:</strong> Agencies evaluate debt issuers' financial health,
+      predicting their ability to repay obligations, influencing investor confidence.</li>
+  <li><strong>Market dominance:</strong> S&amp;P, Moody's, and Fitch control the majority of the
+      market, wielding substantial influence on global finance.</li>
+  <li><strong>Financial impact:</strong> Ratings directly affect borrowing costs and hence
+      investment decisions of a firm.</li>
+  <li><strong>Regulatory oversight:</strong> Agencies face scrutiny due to past crises, leading to
+      regulations aimed at transparency and conflict mitigation.</li>
+  <li><strong>Rating scale:</strong> Letter grades communicate creditworthiness, from low-risk
+      (AAA) investment to high-risk (C) speculation.</li>
+</ul>
+<div class="table-wrap">
+  <table class="data">
+    <caption>Table 2.2: Credit ratings &amp; historical defaults 1994–2010.
+    Source: S&amp;P; Citi Inv., Res. &amp; Analysis</caption>
+    <thead><tr><th>S&amp;P rating</th><th>PD 1 yr</th><th>PD 10 yr</th><th>Credit spread</th></tr></thead>
+    <tbody>
+      <tr><td>AAA</td><td>0.00%</td><td>0.71%</td><td>0.70%</td></tr>
+      <tr><td>AA</td><td>0.02%</td><td>0.91%</td><td>0.88%</td></tr>
+      <tr><td>A</td><td>0.06%</td><td>1.41%</td><td>1.22%</td></tr>
+      <tr><td>BBB</td><td>0.17%</td><td>3.23%</td><td>1.78%</td></tr>
+      <tr><td>BB</td><td>0.56%</td><td>11.53%</td><td>3.66%</td></tr>
+      <tr><td>B</td><td>3.60%</td><td>24.81%</td><td>5.11%</td></tr>
+      <tr><td>≤CCC</td><td>26.82%</td><td>50.71%</td><td>N/A</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="wacc">1.8. Cost of Capital</h2>
+<p>The company's cost of capital is a combination of the cost of debt and the cost of equity.
+Specifically, the weighted average cost of capital (WACC) represents the company's average "hurdle
+rate" for projects and is given by:</p>
+<div class="eq">$$\text{WACC} = L\, K^d + (1 - L)\, k^e$$</div>
+<p>where:</p>
+<ul>
+  <li>$D$ is the firm's market value of debt.</li>
+  <li>$E$ is the firm's market value of equity.</li>
+  <li>$L = D/(D+E)$ is the fraction of debt, or so-called "leverage" of the firm.</li>
+  <li>$K^d$ is the effective cost of debt, which incorporates the tax-saving effect:
+      $$K^d = k^d (1 - \tau)$$</li>
+</ul>
+
+<h3 id="corporate-taxes-effect">Effect of Corporate Taxes</h3>
+<p>Note that interest payments are tax deductible. On the external P&amp;L, the (true) tax is
+computed on EBIT minus interest expenses:</p>
+<div class="eq">$$\text{Tax} = \tau\, \text{EBT} = \tau\, (\text{EBIT} - k^d D)$$</div>
+<p>where:</p>
+<ul>
+  <li>Earnings before tax (EBT) = EBIT − interest expenses.</li>
+  <li>Interest expense = $k^d D$.</li>
+  <li>Net income (NI) = EBT − Tax.</li>
+</ul>
+<p>We reflect the tax deductibility of interest in the WACC by lowering the cost of debt (i.e., use
+the effective cost of debt, multiplying the interest rate by $(1-\tau)$ to reflect interest-related
+tax savings).</p>
+
+<div class="exercise" id="mensam-wacc">
+  <span class="kicker">Exercise</span>
+  <h2>MENSAM: Cost of Capital</h2>
+  <p>Compute the WACC of MENSAM using the following assumptions:</p>
+  <ul>
+    <li>MENSAM has a D/E ratio of 1.</li>
+    <li>The equity of MENSAM has a beta of 1.5.</li>
+    <li>The interest rate on debt is 10%. The debt is riskless.</li>
+    <li>The market risk premium is 10%.</li>
+  </ul>
+</div>
+
+<h2 id="tradeoff-theory">1.9. Trade-off Theory</h2>
+<p>Bankruptcy costs create loss of firm value for excessive levels of debt. The trade-off theory of
+capital structure states that a firm should take on debt, but not too much, since it increases the
+cost of financial distress.</p>
+
+<h3 id="bankruptcy-costs">Direct vs. Indirect Bankruptcy Costs</h3>
+<p><strong>Direct bankruptcy costs:</strong></p>
+<ul>
+  <li>Incurred in the process of selling the assets of a bankrupt firm.</li>
+  <li>Examples: lawyers, fire sales, accountants, etc.</li>
+</ul>
+<p><strong>Indirect bankruptcy costs:</strong></p>
+<ul>
+  <li>Costs involved as an indirect result of bankruptcy.</li>
+  <li>Could potentially be substantially larger than direct bankruptcy costs.</li>
+  <li>Examples: decrease in sales, loss of key employees, underinvestment, excessive risk taking,
+      excessive dividend payout.</li>
+</ul>
+
+<h3 id="tradeoff">Trade-off Theory</h3>
+<ul>
+  <li>Leverage is good since it reduces tax payments.</li>
+  <li>However, excessive leverage leads to bankruptcy costs.</li>
+  <li>Trade-off theory: the optimal debt level balances the two effects.</li>
+</ul>
+
+<h2 id="emerging-markets">1.10. Cost of Capital in Emerging Markets</h2>
+<p>The CAPM does not provide an accurate prediction for emerging markets:</p>
+<ul>
+  <li>Lack of global integration of the domestic or regional stock exchange.</li>
+  <li>High inflation or high risk of government default.</li>
+</ul>
+<p>The computation of a company's cost of equity is modified:</p>
+<div class="eq">$$k^e = E[R_i] = r_c + \beta_i \times MRP + CRP$$</div>
+<p>where:</p>
+<ul>
+  <li>$CRP$ is the country risk premium.</li>
+  <li>$r_c = r + \text{credit spread}$ is the interest rate in the country.</li>
+</ul>
+<p>Similarly, the higher cost of government bond default and inflation are added to the credit
+spread in the computation of the cost of debt.</p>
+<div class="table-wrap">
+  <table class="data">
+    <caption>Table 2.3: Credit ratings (Moody's), country &amp; market risk premia in various
+    countries (2023). Source:
+    <a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html">Damodaran,
+    NYU Stern</a></caption>
+    <thead><tr><th>Country</th><th>Rating</th><th>Tax</th><th>MRP</th><th>CRP</th><th>Spread</th></tr></thead>
+    <tbody>
+      <tr><td>France</td><td>Aa2</td><td>25%</td><td>6.8%</td><td>0.9%</td><td>0.6%</td></tr>
+      <tr><td>Germany</td><td>Aaa</td><td>30%</td><td>5.9%</td><td>0.0%</td><td>0.0%</td></tr>
+      <tr><td>Italy</td><td>Baa3</td><td>24%</td><td>9.7%</td><td>3.8%</td><td>2.7%</td></tr>
+      <tr><td>UK</td><td>Aa3</td><td>25%</td><td>7.0%</td><td>1.0%</td><td>1.0%</td></tr>
+      <tr><td>USA</td><td>Aaa</td><td>25%</td><td>5.9%</td><td>0.0%</td><td>0.0%</td></tr>
+      <tr><td>China</td><td>A1</td><td>25%</td><td>7.2%</td><td>1.2%</td><td>0.9%</td></tr>
+      <tr><td>Brazil</td><td>A1</td><td>25%</td><td>11.1%</td><td>5.2%</td><td>3.7%</td></tr>
+      <tr><td>DR Congo</td><td>B3</td><td>30%</td><td>17.1%</td><td>11.2%</td><td>8.0%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="summary">
+  <h2 id="summary-coc">Summary — Cost of Capital</h2>
+  <p><strong>Cost of equity</strong></p>
+  <ul>
+    <li>CAPM cost of equity: $k^e = E[R_i] = r + \beta_i \times MRP$</li>
+    <li>Emerging markets: $k^e = r_c + \beta_i \times MRP + CRP$</li>
+  </ul>
+  <p><strong>Leverage and cost of capital</strong></p>
+  <ul>
+    <li>Effective cost of debt: $K^d = k^d(1-\tau) = (r + \text{credit spread})(1-\tau)$</li>
+    <li>$\text{WACC} = L\, k^d (1-\tau) + (1-L)\, k^e$</li>
+  </ul>
+  <p><strong>Capital structure theories</strong></p>
+  <ul>
+    <li>Trade-off theory: balance the tax benefit against the bankruptcy cost of debt.</li>
+  </ul>
+</div>
+
+<h1 id="business-valuation">Business Valuation</h1>
+<p>This section examines project evaluation by comparing payoffs with costs to guide investment
+decisions.</p>
+<ul>
+  <li>The business' payoffs are assessed using Free Cash Flow (FCF).</li>
+  <li>The business' cost of funds is measured by the Weighted Average Cost of Capital (WACC). Since
+      project risk may differ from the firm's overall risk, the project-specific cost of capital
+      may vary from the firm's WACC.</li>
+  <li>To value projects or businesses, we combine the project's payoff and the project's cost in
+      one metric: cash-flow-based metrics are Net Present Value (NPV), Internal Rate of Return
+      (IRR), and the Discounted Payback Period.</li>
+</ul>
+<p>Sunk costs—expenses that cannot be recovered—should be ignored, while opportunity costs—the
+benefits foregone by choosing one project over another—must be factored in. Sensitivity analysis is
+crucial for assessing how changes in key assumptions, such as discount rates or revenue
+projections, impact project viability, helping firms make informed decisions under uncertainty.</p>
+
+<div class="case" id="mensam-review">
+  <span class="kicker">Case I</span>
+  <h2>MENSAM: Review of Statements</h2>
+  <p>We review the internal statements of MENSAM under the assumption that it maintains a D/E ratio
+  of 1.</p>
+
+  <h3>Income Statement</h3>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 3.1: Income statement (internal) of MENSAM</caption>
+      <thead><tr><th>Year</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+      <tbody>
+        <tr><td>Sales</td><td>360</td><td>270</td><td>360</td><td>450</td><td>0</td></tr>
+        <tr><td>−VC</td><td>−160</td><td>−120</td><td>−160</td><td>−200</td><td>0</td></tr>
+        <tr class="rule"><td>VCM</td><td>200</td><td>150</td><td>200</td><td>250</td><td>0</td></tr>
+        <tr><td>−FC</td><td>−40</td><td>−40</td><td>−40</td><td>−40</td><td>0</td></tr>
+        <tr class="rule"><td>EBITDA</td><td>160</td><td>110</td><td>160</td><td>210</td><td>0</td></tr>
+        <tr><td>−Depr.</td><td>−60</td><td>−60</td><td>−60</td><td>−60</td><td>0</td></tr>
+        <tr class="rule"><td>OI/EBIT</td><td>100</td><td>50</td><td>100</td><td>150</td><td>0</td></tr>
+        <tr><td>−Tax*</td><td>−50</td><td>−25</td><td>−50</td><td>−75</td><td>0</td></tr>
+        <tr class="rule"><td>NOPAT</td><td>50</td><td>25</td><td>50</td><td>75</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Cash Flow Statement</h3>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 3.2: Cash-flow statement of MENSAM</caption>
+      <thead><tr><th>Year</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+      <tbody>
+        <tr><td>EBITDA</td><td>0</td><td>160</td><td>110</td><td>160</td><td>210</td><td>0</td></tr>
+        <tr><td>−ΔWCR</td><td>0</td><td>0</td><td>−40</td><td>−100</td><td>−5</td><td>145</td></tr>
+        <tr><td>−Tax*</td><td>0</td><td>−50</td><td>−25</td><td>−50</td><td>−75</td><td>0</td></tr>
+        <tr class="rule"><td>OCF</td><td>0</td><td>110</td><td>45</td><td>10</td><td>130</td><td>145</td></tr>
+        <tr><td>ICF</td><td>−240</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr class="rule"><td>FCF</td><td>−240</td><td>110</td><td>45</td><td>10</td><td>130</td><td>145</td></tr>
+        <tr><td>Fin. CF</td><td>240</td><td>−110</td><td>−45</td><td>−10</td><td>−130</td><td>−145</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Managerial Balance Sheet</h3>
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Table 3.3: Managerial balance sheet of MENSAM. Values are rounded to integers.</caption>
+      <thead><tr><th>Year</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+      <tbody>
+        <tr><td>Net fixed assets</td><td>240</td><td>180</td><td>120</td><td>60</td><td>0</td></tr>
+        <tr><td>WCR</td><td>0</td><td>40</td><td>140</td><td>145</td><td>0</td></tr>
+        <tr class="rule"><td>Invested capital</td><td>240</td><td>180</td><td>160</td><td>200</td><td>145</td></tr>
+        <tr><td>Equity</td><td>120</td><td>90</td><td>80</td><td>100</td><td>73</td></tr>
+        <tr><td>Debt</td><td>120</td><td>90</td><td>80</td><td>100</td><td>73</td></tr>
+        <tr class="rule"><td>Capital employed</td><td>240</td><td>180</td><td>160</td><td>200</td><td>145</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 id="time-value">1.11. Time Value of Money</h2>
+<p>A dollar today is worth more than a dollar tomorrow due to the cost of capital and opportunity
+costs—it can be invested to earn returns, while future cash flows are discounted due to risk and
+inflation.</p>
+<p>The present value of $X_t$ received $t$ years from now:</p>
+<div class="eq">$$PV(X_t) = DF(t) \times X_t = \frac{X_t}{(1+r)^t},
+\qquad DF(t) = \frac{1}{(1+r)^t}$$</div>
+<p>where:</p>
+<ul>
+  <li>$DF(t)$ is the discount factor, which represents the present value of a dollar received $t$
+      years from now.</li>
+  <li>$r$ is the discount rate. For a project within a company, $r$ typically corresponds to the
+      WACC.</li>
+</ul>
+<div class="case">
+  <span class="kicker">Example</span>
+  <p>You consider buying a piece of land today for $95. Assume it is certain that you can sell the
+  land in 1 year for $100. The interest rate is 10%. Should you buy the land? There are two methods
+  to solve this:</p>
+  <ul>
+    <li>If you put your money in the bank account, you get $95 \times (1+10\%) = 104.5$, which is
+        larger than 100 (do not buy the land).</li>
+    <li>The $100 tomorrow is worth $100/(1+10\%) = 90.9$ dollars today. In other words:
+        $-PV(100) + 95 = -4.1 &lt; 0$ (do not buy the land).</li>
+  </ul>
+</div>
+
+<h2 id="npv">1.12. Net Present Value</h2>
+<p>We next evaluate a project based on cash flows. A business proposal will raise the firm's value
+if the present value (PV) of its discounted free cash flows is positive.</p>
+<p>Free cash flows of MENSAM:</p>
+<figure>
+  <svg viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg" font-family="inherit" font-size="13"><line x1="56" x2="664" y1="313.9" y2="313.9" stroke="var(--grid)" stroke-width="1"/><text x="48" y="317.9" text-anchor="end" fill="var(--ink-3)">-300</text><line x1="56" x2="664" y1="252.7" y2="252.7" stroke="var(--grid)" stroke-width="1"/><text x="48" y="256.7" text-anchor="end" fill="var(--ink-3)">-200</text><line x1="56" x2="664" y1="191.5" y2="191.5" stroke="var(--grid)" stroke-width="1"/><text x="48" y="195.5" text-anchor="end" fill="var(--ink-3)">-100</text><line x1="56" x2="664" y1="130.3" y2="130.3" stroke="var(--grid)" stroke-width="1"/><text x="48" y="134.3" text-anchor="end" fill="var(--ink-3)">0</text><line x1="56" x2="664" y1="69.1" y2="69.1" stroke="var(--grid)" stroke-width="1"/><text x="48" y="73.1" text-anchor="end" fill="var(--ink-3)">100</text><line x1="56" x2="664" y1="130.3" y2="130.3" stroke="var(--ink-3)" stroke-width="1.5"/><path d="M75.3,130.3 V273.2 Q75.3,277.2 79.3,277.2 H134.1 Q138.1,277.2 138.1,273.2 V130.3 Z" fill="var(--c-neg)"/><text x="106.7" y="293.2" text-anchor="middle" fill="var(--ink-2)">-240</text><text x="106.7" y="316.0" text-anchor="middle" fill="var(--ink-2)">0</text><path d="M176.6,130.3 V67.0 Q176.6,63.0 180.6,63.0 H235.4 Q239.4,63.0 239.4,67.0 V130.3 Z" fill="var(--c-pos)"/><text x="208.0" y="56.0" text-anchor="middle" fill="var(--ink-2)">110</text><text x="208.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">1</text><path d="M277.9,130.3 V106.8 Q277.9,102.8 281.9,102.8 H336.7 Q340.7,102.8 340.7,106.8 V130.3 Z" fill="var(--c-pos)"/><text x="309.3" y="95.8" text-anchor="middle" fill="var(--ink-2)">45</text><text x="309.3" y="316.0" text-anchor="middle" fill="var(--ink-2)">2</text><path d="M379.3,130.3 V128.2 Q379.3,124.2 383.3,124.2 H438.1 Q442.1,124.2 442.1,128.2 V130.3 Z" fill="var(--c-pos)"/><text x="410.7" y="117.2" text-anchor="middle" fill="var(--ink-2)">10</text><text x="410.7" y="316.0" text-anchor="middle" fill="var(--ink-2)">3</text><path d="M480.6,130.3 V54.7 Q480.6,50.7 484.6,50.7 H539.4 Q543.4,50.7 543.4,54.7 V130.3 Z" fill="var(--c-pos)"/><text x="512.0" y="43.7" text-anchor="middle" fill="var(--ink-2)">130</text><text x="512.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">4</text><path d="M581.9,130.3 V45.6 Q581.9,41.6 585.9,41.6 H640.7 Q644.7,41.6 644.7,45.6 V130.3 Z" fill="var(--c-pos)"/><text x="613.3" y="34.6" text-anchor="middle" fill="var(--ink-2)">145</text><text x="613.3" y="316.0" text-anchor="middle" fill="var(--ink-2)">5</text><text x="360.0" y="334" text-anchor="middle" fill="var(--ink-3)">Year</text></svg>
+  <figcaption>Figure 3.4: MENSAM free cash flow by year ($k). Recreated from the case data.</figcaption>
+</figure>
+<p>Problem: cash flows in the future cannot be compared to cash flows today! We need to express
+future dollars in today's dollars before summing them up.</p>
+<p>The Net Present Value (NPV) of a stream of free cash flows $X_1, X_2, \ldots, X_T$:</p>
+<div class="eq">$$NPV = \sum_t PV(X_t) = \sum_t DF(t) \times X_t = \sum_t \frac{X_t}{(1+r)^t}$$</div>
+<p>A project or business should be undertaken if:</p>
+<div class="eq">$$NPV &gt; 0$$</div>
+
+<div class="exercise" id="mensam-npv">
+  <span class="kicker">Exercise</span>
+  <h2>MENSAM: NPV</h2>
+  <ul>
+    <li>Compute the NPV of MENSAM using the WACC of 15% as a discount rate.</li>
+    <li>How does the NPV change if we instead use 25% as a discount rate?</li>
+    <li>For which discount rate is the NPV equal to zero (project breaks even)?</li>
+  </ul>
+</div>
+
+<h2 id="irr">1.13. Internal Rate of Return</h2>
+<p>The Internal Rate of Return (IRR) is the discount rate $r$ at which the project breaks even
+(i.e., has zero NPV):</p>
+<div class="eq">$$0 = \sum_t \frac{X_t}{(1+IRR)^t}$$</div>
+<p>A project should be undertaken if:</p>
+<div class="eq">$$IRR &gt; \text{Business Cost of Capital}$$</div>
+<ul>
+  <li>The cost of capital for a company is the WACC. If a company has multiple projects,
+      headquarters can decide to give different (risk- and strategy-dependent) targets for each
+      project.</li>
+  <li>This expression for IRR is solved numerically.</li>
+</ul>
+
+<h2 id="cash-curve">1.14. Cash Curve &amp; Payback Period</h2>
+<p>The cash curve represents the cumulative FCF of the project:</p>
+<ul>
+  <li>Provides visual intuition about the FCF timing of the project.</li>
+  <li>The deepest point in the curve equals the upfront or max cash out.</li>
+  <li>The Payback Period (PBP) refers to the number of years required to recover the project's
+      initial investment(s).</li>
+</ul>
+<figure>
+  <svg viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg" font-family="inherit" font-size="13"><line x1="56" x2="664" y1="304.3" y2="304.3" stroke="var(--grid)" stroke-width="1"/><text x="48" y="308.3" text-anchor="end" fill="var(--ink-3)">-300</text><line x1="56" x2="664" y1="252.5" y2="252.5" stroke="var(--grid)" stroke-width="1"/><text x="48" y="256.5" text-anchor="end" fill="var(--ink-3)">-200</text><line x1="56" x2="664" y1="200.7" y2="200.7" stroke="var(--grid)" stroke-width="1"/><text x="48" y="204.7" text-anchor="end" fill="var(--ink-3)">-100</text><line x1="56" x2="664" y1="148.9" y2="148.9" stroke="var(--grid)" stroke-width="1"/><text x="48" y="152.9" text-anchor="end" fill="var(--ink-3)">0</text><line x1="56" x2="664" y1="97.1" y2="97.1" stroke="var(--grid)" stroke-width="1"/><text x="48" y="101.1" text-anchor="end" fill="var(--ink-3)">100</text><line x1="56" x2="664" y1="45.3" y2="45.3" stroke="var(--grid)" stroke-width="1"/><text x="48" y="49.3" text-anchor="end" fill="var(--ink-3)">200</text><line x1="56" x2="664" y1="148.9" y2="148.9" stroke="var(--ink-3)" stroke-width="1.5"/><polyline points="56.0,273.2 177.6,216.2 299.2,192.9 420.8,187.8 542.4,120.4 664.0,45.3" fill="none" stroke="var(--c-pos)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="56.0" cy="273.2" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="56.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">0</text><circle cx="177.6" cy="216.2" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="177.6" y="316.0" text-anchor="middle" fill="var(--ink-2)">1</text><circle cx="299.2" cy="192.9" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="299.2" y="316.0" text-anchor="middle" fill="var(--ink-2)">2</text><circle cx="420.8" cy="187.8" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="420.8" y="316.0" text-anchor="middle" fill="var(--ink-2)">3</text><circle cx="542.4" cy="120.4" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="542.4" y="316.0" text-anchor="middle" fill="var(--ink-2)">4</text><circle cx="664.0" cy="45.3" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="664.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">5</text><text x="56.0" y="261.2" text-anchor="start" fill="var(--ink-1)" font-weight="600">Max cash out: −240</text><text x="664.0" y="33.3" text-anchor="end" fill="var(--ink-1)" font-weight="600">Final: +200</text><text x="360.0" y="334" text-anchor="middle" fill="var(--ink-3)">Year</text></svg>
+  <figcaption>Figure 3.5: MENSAM cash curve — cumulative FCF ($k). Recreated from the case data.</figcaption>
+</figure>
+<p>The discounted cash curve uses discounted FCF instead:</p>
+<ul>
+  <li>The discounted PBP takes into account the time value of money by discounting future cash
+      flows.</li>
+  <li>The final level of the discounted cash curve corresponds to the NPV.</li>
+</ul>
+<figure>
+  <svg viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg" font-family="inherit" font-size="13"><line x1="56" x2="664" y1="321.6" y2="321.6" stroke="var(--grid)" stroke-width="1"/><text x="48" y="325.6" text-anchor="end" fill="var(--ink-3)">-300</text><line x1="56" x2="664" y1="241.0" y2="241.0" stroke="var(--grid)" stroke-width="1"/><text x="48" y="245.0" text-anchor="end" fill="var(--ink-3)">-200</text><line x1="56" x2="664" y1="160.4" y2="160.4" stroke="var(--grid)" stroke-width="1"/><text x="48" y="164.4" text-anchor="end" fill="var(--ink-3)">-100</text><line x1="56" x2="664" y1="79.8" y2="79.8" stroke="var(--grid)" stroke-width="1"/><text x="48" y="83.8" text-anchor="end" fill="var(--ink-3)">0</text><line x1="56" x2="664" y1="79.8" y2="79.8" stroke="var(--ink-3)" stroke-width="1.5"/><polyline points="56.0,273.2 177.6,196.1 299.2,168.7 420.8,163.3 542.4,103.5 664.0,45.3" fill="none" stroke="var(--c-pos)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="56.0" cy="273.2" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="56.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">0</text><circle cx="177.6" cy="196.1" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="177.6" y="316.0" text-anchor="middle" fill="var(--ink-2)">1</text><circle cx="299.2" cy="168.7" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="299.2" y="316.0" text-anchor="middle" fill="var(--ink-2)">2</text><circle cx="420.8" cy="163.3" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="420.8" y="316.0" text-anchor="middle" fill="var(--ink-2)">3</text><circle cx="542.4" cy="103.5" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="542.4" y="316.0" text-anchor="middle" fill="var(--ink-2)">4</text><circle cx="664.0" cy="45.3" r="4.5" fill="var(--c-pos)" stroke="var(--bg)" stroke-width="2"/><text x="664.0" y="316.0" text-anchor="middle" fill="var(--ink-2)">5</text><text x="56.0" y="261.2" text-anchor="start" fill="var(--ink-1)" font-weight="600">−240</text><text x="664.0" y="33.3" text-anchor="end" fill="var(--ink-1)" font-weight="600">NPV ≈ 42.7</text><text x="360.0" y="334" text-anchor="middle" fill="var(--ink-3)">Year</text></svg>
+  <figcaption>Figure 3.6: MENSAM discounted cash curve at $r = 15\%$ ($k). Recreated from the case
+  data.</figcaption>
+</figure>
+
+<div class="case" id="pingguo">
+  <span class="kicker">Case II</span>
+  <h2>PINGGUO</h2>
+  <p>Pingguo, a famous East Asian producer of consumer electronics, considers expanding its product
+  range with one or two fantastic pieces of technology:</p>
+  <ul>
+    <li>The IPUT: a mid-range product.</li>
+    <li>The IPUT Pro: a high-end product (small luxury segment).</li>
+  </ul>
+  <p>The marketing department, impressed by the amazing design, estimates the IPUT can be sold for
+  500 and the IPUT Pro for 950. In addition, they estimate both products can be sold over a period
+  of 3 years after the start of production. Pingguo estimates that it does not need any inventories
+  for the production process.</p>
+  <p>The R&amp;D department estimates that the IPUT Pro takes one extra period to develop compared
+  to the IPUT.</p>
+  <p>The finance department realizes it should update the cost of capital estimate. Pingguo is
+  listed and its equity has a beta of 1.06. The company's capital structure is as follows:</p>
+  <ul>
+    <li>Equity: 40%</li>
+    <li>Riskless debt: 60%</li>
+  </ul>
+  <p>Pingguo maintains a constant capital structure. Moreover, a total maximum (upfront) of $600k
+  is available to finance both projects. 80% of invoices (both suppliers and clients) is settled in
+  cash, and the remainder is paid the following year. The tax rate is 20%, the market risk premium
+  is 6%, and the riskless rate is 5%.</p>
+  <p><strong>Compute the NPV, IRR and payback of the IPUT and the IPUT Pro. Which project(s) would
+  you recommend PINGGUO to undertake?</strong></p>
+  <ul class="resources">
+    <li><a href="https://docs.google.com/spreadsheets/d/1aKB7lwTqA5-kCaE-cUqahsIBsA1YAN2w7vcSKTbKJWw/edit?usp=sharing"
+           target="_blank" rel="noopener">PINGGUO Data ↗</a></li>
+  </ul>
+</div>
+
+<h2 id="sunk-opportunity">1.15. Sunk vs. Opportunity Costs</h2>
+<p>It is important to consider which costs to include in the business plan:</p>
+<p><strong>Sunk costs</strong></p>
+<ul>
+  <li>Costs that are identical across scenarios (including the outside option).</li>
+  <li>They could be paid or still have to be paid.</li>
+  <li>Do not consider sunk costs in the business plan!</li>
+</ul>
+<p><strong>Opportunity costs</strong></p>
+<ul>
+  <li>Lost benefit due to undertaking the project.</li>
+  <li>Could result in no cash flow when the project is undertaken.</li>
+  <li>Consider them as a cost in the business plan!</li>
+</ul>
+
+<h2 id="perpetuity">1.16. Valuing Perpetual Cash Flows</h2>
+<p>To value a cash flow in perpetuity with a growth rate $g$ and a discount rate $r$, we use the
+standard perpetuity formula. Specifically, the Net Present Value (NPV) of a perpetual stream of
+free cash flows $X_1, X_2, \ldots, X_\infty$:</p>
+<div class="eq">$$NPV = \sum_{t=1}^{\infty} \frac{X_t}{(1+r)^t} = \frac{X_1}{r - g}$$</div>
+<p>where $g$ is the growth rate and $r$ is the discount rate.</p>
+<p>In business planning, it is common to forecast free cash flows (FCF) explicitly for the first
+several years (up to year $N$) and then assume a perpetual, steadily growing cash flow after that.
+The present value of all cash flows from year $N{+}1$ onward is called the <em>terminal value</em>
+of the project.</p>
+<ul class="resources">
+  <li><a href="https://forms.gle/h4znd6Zpn29YY12S7" target="_blank" rel="noopener">Exercise: NPV Perpetual CF ↗</a></li>
+  <li><a href="https://forms.gle/2QHU9hQFgNcGT3HP7" target="_blank" rel="noopener">Case: KROZFYT ↗</a></li>
+</ul>
+
+<div class="summary">
+  <h2 id="summary-valuation">Summary — Business Valuation</h2>
+  <p><strong>Business valuation based on FCF</strong></p>
+  <ul>
+    <li>$NPV = \sum_t \frac{FCF_t}{(1+r)^t}$ &nbsp;($r$ = project cost of capital; check: $NPV &gt; 0$)</li>
+    <li>$0 = \sum_t \frac{FCF_t}{(1+IRR)^t}$ &nbsp;(check: $IRR &gt;$ project cost of capital)</li>
+  </ul>
+  <p><strong>Sunk and opportunity costs</strong></p>
+  <ul>
+    <li>Opportunity costs: lost benefit due to undertaking the project (do consider).</li>
+    <li>Sunk costs: costs identical across scenarios (don't consider).</li>
+  </ul>
+</div>
+
+    </div>
+    <footer class="site-footer">
+      Business Taxes and Mergers &amp; Acquisitions · Dr. Matthijs Breugem · Nyenrode Business University ·
+      <a href="mailto:m.breugem@nyenrode.nl">m.breugem@nyenrode.nl</a>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. Business Taxes — Business Taxes and M&A</title>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <p class="site-title"><a href="index.html">Business Taxes and M&amp;A</a></p>
+    <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+    <nav aria-label="Course navigation">
+<ul>
+<li><a href="index.html">Intro</a></li>
+<li><a href="1-corporate-valuation.html">1. Corporate Valuation</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#financial-statements">Financial Statements</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#cost-of-capital">Cost of Capital</a></li>
+<li class="sub"><a href="1-corporate-valuation.html#business-valuation">Business Valuation</a></li>
+<li><a class="current" href="2-business-taxes.html">2. Business Taxes</a></li>
+<li class="sub"><a href="2-business-taxes.html#business-taxes-nl">Business Taxes in NL</a></li>
+<li class="sub"><a href="2-business-taxes.html#global-taxes-ethics">Global Taxes &amp; Ethics</a></li>
+<li><a href="simulation.html">Simulation</a></li>
+<li><a href="3-ma.html">3. M&amp;A</a></li>
+<li><a href="solutions.html">Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1AKYgdZJKp82ACM8seIao74kd-YkLXqm6WpsDRqIO0C4/edit?usp=sharing" target="_blank" rel="noopener">Case I MENSAM</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1_UE7YuPjJm_5Q2ULqTCzkEnc_aRzioE3bMQl29XqypU/edit?usp=sharing" target="_blank" rel="noopener">Case II PINGGUO</a></li>
+<li class="group-label">Practice Material</li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1RaQt3MHQhDhOJccQmWXWr123S0y1-EudhYVnQRnYARo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1cI4_pOSx-J7PxYtdnIkaapqxz9mV8I_VAZ8dGdpHpuo/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 1 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1TQ8Mklstw9So88s5jjLc1GtKm1LRlOWlB0c-oa1F334/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1PbVe_phB4sil8fT47a6y6RoDVMxHSNI5wu9qeYNd1vg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 2 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1UvmWn2306PM7io5_K8LZj2IIomTXO_YyPxxfIF4Zumg/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/spreadsheets/d/1K08Mdif3W6gg2gpkGx_RgpxbOujEmFjGdyx_UzQjQE8/edit?usp=sharing" target="_blank" rel="noopener">Extra Case 3 – Solutions</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/document/d/1BmODT3ycJGjC6gt7Z8aGFt2gMJKeXoQJKlur7vl3bgQ/edit?usp=sharing" target="_blank" rel="noopener">Session 15 notes</a></li>
+<li class="sub"><a class="ext" href="https://docs.google.com/forms/d/e/1FAIpQLScW44AQgo0uiu3OuEoFyzgQgUxs6cYB4H73xrgadxQdvSxgug/viewform?usp=dialog" target="_blank" rel="noopener">Huntar</a></li>
+<li class="sub"><a class="ext" href="https://forms.gle/ddbmNpf7eZy32ZJ48" target="_blank" rel="noopener">Gauta</a></li>
+</ul>
+    </nav>
+  </aside>
+  <main class="content">
+    <header class="hero">
+      <h1>2. Business Taxation</h1>
+      <p>Business taxes in the Netherlands · Global taxation, avoidance &amp; ethics</p>
+    </header>
+    <div class="page-inner">
+<p class="lead">This section provides an introduction to the principles and practices of business
+taxation, both in the Netherlands and globally. It is structured into the following parts:</p>
+<ul>
+  <li><strong>Business taxation in the Netherlands:</strong> We explore the Dutch tax system for
+      legal entities (ZZP, BV, NV), including legal responsibilities and the personal taxation
+      scheme (Box 1, 2, 3). Payroll taxes, deductions, and fiscal incentives for self-employed
+      individuals are covered. Exercises include computing household tax and comparing tax outcomes
+      for ZZP vs BV, including the BV's compulsory manager salary.</li>
+  <li><strong>Global taxation, avoidance, evasion, and ethics:</strong> We explore how
+      international tax rules and business location affect tax outcomes. Key examples like
+      Starbucks and the Irish–Dutch sandwich illustrate the boundary between legal avoidance and
+      illegal evasion. Insights from Piketty and Saez highlight how tax policy influences
+      inequality and wealth concentration.</li>
+</ul>
+
+<h1 id="business-taxes-nl">Business Taxes in the Netherlands</h1>
+<p>The Netherlands offers a competitive and transparent tax environment designed to support real
+economic activity. In recent years, reforms have shifted the focus from being a tax-friendly
+conduit to promoting substance-based business operations.</p>
+<p>We consider four main business types: ZZP, VOF, BV, and NV, each with distinct legal and tax
+characteristics. Choosing the right form is a strategic decision that affects liability, tax
+obligations, and long-term planning.</p>
+<p><strong>Business structures:</strong></p>
+<ul>
+  <li><strong>Non-legal entities:</strong> ZZP (sole proprietor), VOF (general partnership),
+      Maatschap (professional collaboration) → no legal personality; owners are personally liable
+      for business debts.</li>
+  <li><strong>Legal entities:</strong> BV (private limited company), NV (public limited company)
+      → have legal personality; liability is limited to the capital invested.</li>
+</ul>
+<p>Understanding the Dutch tax system—including payroll taxes and the personal income tax boxes
+(Box 1, 2, 3)—is essential for navigating compliance and optimizing tax outcomes. We explore how
+these elements interact, especially when comparing tax strategies between ZZP and BV structures.</p>
+
+<h2 id="legal-entity">2.1. Legal Entity</h2>
+<p><strong>Legal entity ("Rechtspersoon"):</strong></p>
+<ul>
+  <li>A legal entity recognized by law as separate from its owners.</li>
+  <li>Can own assets, enter contracts, and be sued independently.</li>
+  <li>Offers legal and financial separation between business and personal affairs.</li>
+  <li><strong>Limited liability:</strong> owners are only liable up to the amount they invested.</li>
+</ul>
+<p><strong>Contrast with non-legal entities ("Natuurlijke Persoon"):</strong></p>
+<ul>
+  <li>Owners are personally liable for all business obligations.</li>
+  <li>No separation between personal and business assets.</li>
+</ul>
+
+<h2 id="business-types">2.2. Business Types in the Netherlands</h2>
+<h3 id="non-legal-entities">Non-Legal Entities ("Natuurlijke Persoon")</h3>
+<p><strong>ZZP (Sole Proprietorship / Eenmanszaak)</strong></p>
+<ul>
+  <li>"Zelfstandige zonder personeel" (≈ independent without employees).</li>
+  <li>In 2025, over 1.6 million registered self-employed individuals.</li>
+  <li>This is the most common business form in the Netherlands, especially among freelancers and
+      small entrepreneurs.</li>
+  <li>The owner is personally liable for all business debts and obligations.</li>
+</ul>
+<p><strong>VOF (General Partnership)</strong></p>
+<ul>
+  <li>"Vennootschap onder Firma" (≈ partnership under firm).</li>
+  <li>In 2025, around 170 thousand VOF registrations.</li>
+  <li>A business form where two or more individuals jointly operate a company under a shared name.
+      Common among small businesses and family-run enterprises.</li>
+  <li>All partners are jointly liable for the business's debts and obligations — meaning each
+      partner can be held responsible for the full amount.</li>
+</ul>
+<p><strong>Maatschap (Professional Collaboration)</strong></p>
+<ul>
+  <li>In 2025, around 32 thousand Maatschap registrations.</li>
+  <li>A business form where two or more individuals collaborate professionally, often in fields
+      like law, healthcare, or accounting.</li>
+  <li>Common among self-employed professionals who want to work together while maintaining
+      individual responsibility.</li>
+  <li>Partners are personally liable for their own actions and, in some cases, for shared
+      obligations — but unlike a VOF, liability is typically proportional to each partner's share
+      (except for tax liabilities, where every partner is fully responsible).</li>
+</ul>
+
+<h3 id="legal-entities">Legal Entities</h3>
+<p><strong>BV (Private Limited Liability Company)</strong></p>
+<ul>
+  <li>"Besloten Vennootschap" (≈ closed company).</li>
+  <li>In 2025, there are around 500 thousand active BV registrations in the Netherlands.</li>
+  <li>A BV is a legal entity with limited liability, commonly used by small to medium-sized
+      businesses and startups aiming for growth.</li>
+  <li>Shareholders are only liable up to the amount of their investment, and the company itself is
+      taxed separately under corporate income tax.</li>
+  <li>A BV requires a minimum director's salary and is subject to stricter administrative
+      obligations than a ZZP or VOF.</li>
+</ul>
+<p><strong>NV (Public Limited Liability Company)</strong></p>
+<ul>
+  <li>"Naamloze Vennootschap" (≈ nameless or anonymous corporation).</li>
+  <li>In 2025, around 900 NVs were registered in the Netherlands.</li>
+  <li>An NV is a legal entity primarily used for larger businesses, especially those seeking to
+      raise capital through public or private share issuance.</li>
+  <li>Ownership is divided into shares, which can be freely transferred.</li>
+  <li>Shareholders are not personally liable for the company's debts — liability is limited to the
+      amount invested.</li>
+  <li>Governance typically includes a board of directors and a supervisory board.</li>
+  <li>NVs are subject to stricter regulatory and reporting requirements than other business forms,
+      making them suitable for enterprises with significant scale or public interest.</li>
+</ul>
+
+<h2 id="personal-income-tax">2.3. Personal Income Tax in the Netherlands</h2>
+<p>Dutch income tax (as of 2025) consists of three parts or "boxes":</p>
+<h3 id="box1">Box 1</h3>
+<p>Income from work and home ownership.</p>
+<ul>
+  <li>First bracket: income up to €38,441 is taxed at 35.82%.</li>
+  <li>Second bracket: income between €38,441 and €76,817 is taxed at 37.48%.</li>
+  <li>Third bracket: income above €76,817 is taxed at 49.50%.</li>
+</ul>
+<h3 id="box2">Box 2</h3>
+<p>Income from substantial interest in a company (more than 5%).</p>
+<ul>
+  <li>First bracket: income up to €67,804 is taxed at 24.5%.</li>
+  <li>Second bracket: income above €67,804 is taxed at 31%.</li>
+</ul>
+<h3 id="box3">Box 3</h3>
+<p>Income from savings, stocks, bonds, second homes, and other assets not used for business or
+primary residence.</p>
+<ul>
+  <li>Flat tax rate of 36% on a fictitious return:
+    <ul>
+      <li>Money in the bank: 1.44% fictitious return.</li>
+      <li>Stocks: 5.88% fictitious return.</li>
+      <li>Bonds: 2.62% fictitious return.</li>
+    </ul>
+  </li>
+  <li>The first €57,684 of savings or investments is exempt from taxes.</li>
+</ul>
+<h3 id="tax-credits">Tax Credits</h3>
+<p><strong>General tax credit (Algemene Heffingskorting)</strong></p>
+<ul>
+  <li>The maximum credit is €3,068.</li>
+  <li>It starts to phase out once your total income (from Box 1, 2, and 3) exceeds €28,406.</li>
+  <li>The credit is reduced by 6.337% of the income above that threshold.</li>
+  <li>Once your income reaches €76,817, the credit is fully phased out.</li>
+  <li>This credit is available to all taxpayers and directly reduces the amount of tax owed.</li>
+</ul>
+<p><strong>Labor tax credit (Arbeidskorting)</strong></p>
+<ul>
+  <li>The maximum credit is €5,599.</li>
+  <li>It increases with income up to €43,071, encouraging work participation.</li>
+  <li>Above €43,071, the credit starts to phase out at a rate of 6.51%.</li>
+  <li>It is fully phased out at an income of €129,078.</li>
+  <li>This credit only applies to income from employment or business activities — not pensions or
+      passive income.</li>
+</ul>
+<p>Various other tax credits for small business are available (see next chapters).</p>
+<p><strong>Effective tax rates:</strong> Because of tax credits and other income-dependent
+subsidies, the effective tax levels are (very!) different from the Box 1 marginal tax rates, as can
+be seen in
+<a href="https://www.rijksoverheid.nl/binaries/rijksoverheid/documenten/rapporten/2024/09/17/tabellen-marginale-druk/tabellen-marginale-druk.pdf"
+target="_blank" rel="noopener">these tables from the Rijksoverheid</a>.</p>
+
+<h3 id="employer-costs">Employer Costs (Werkgeverskosten)</h3>
+<p>In addition to the gross salary (base wage paid to the employee), employers have to consider the
+following costs when hiring an employee.</p>
+<ul>
+  <li><strong>Social security contributions</strong> — the employer pays for employee insurance
+      (around 18% of gross wage), consisting of:
+    <ul>
+      <li>Zvw (healthcare employer's share): 6.51% of gross salary (up to a cap).</li>
+      <li>WW (unemployment insurance): 2.74% (for permanent contracts).</li>
+      <li>WIA / WAO (disability insurance): 8.47%.</li>
+      <li>Whk (Werkhervattingskas / sick pay): 1.33% on average.</li>
+      <li>Other social funds / AWF etc., variable (e.g., "AWF-laag/hoog", Aof).</li>
+    </ul>
+  </li>
+  <li><strong>Pension contributions</strong> — often partially paid by the employer.</li>
+  <li><strong>Holiday allowance</strong> — usually 8% of gross annual salary.</li>
+  <li><strong>Sick pay</strong> — the employer pays up to 2 years (minimum 70% of salary).</li>
+  <li><strong>Other benefits</strong> — e.g., travel allowance, training costs, bonuses.</li>
+</ul>
+<p>Total employer costs are usually 25–35% higher than gross salary.</p>
+
+<div class="exercise" id="ex-4-1">
+  <span class="kicker">Exercise 4.1</span>
+  <h2>Income Tax</h2>
+  <p>You're given the gross annual salary of an employee in the Netherlands. Assume:</p>
+  <ul>
+    <li>The income is only from employment (Box 1) — no income from Box 2 or Box 3.</li>
+    <li>Use 2025 tax brackets and tax credit rules.</li>
+    <li>Assume a flat employer cost of 30% of gross wage.</li>
+    <li>Ignore deductions (e.g., mortgage interest, healthcare allowance, etc.).</li>
+  </ul>
+  <p>Consider the following cases:</p>
+  <ul>
+    <li>Salary of €25,000 / year</li>
+    <li>Salary of €50,000 / year</li>
+    <li>Salary of €100,000 / year</li>
+  </ul>
+  <p>For each salary level, calculate the following:</p>
+  <ul>
+    <li>Total income tax owed after applying tax credits</li>
+    <li>Net income</li>
+    <li>Total cost to the employer</li>
+  </ul>
+  <p><a href="solutions.html#ex-4-1">→ Solution</a></p>
+</div>
+
+<h2 id="taxation-non-legal">2.4. Taxation of Non-Legal Entities (VOF / ZZP / Maatschap)</h2>
+<h3 id="non-legal-taxed">How Non-Legal Entities Are Taxed</h3>
+<ul>
+  <li>Entities like VOF, ZZP, and Maatschap are not separate legal entities.</li>
+  <li>Profits are taxed as personal income under Box 1:
+    <ul>
+      <li>35.82% up to €38,441</li>
+      <li>37.48% up to €76,817</li>
+      <li>49.5% above that</li>
+    </ul>
+  </li>
+  <li>Each partner/entrepreneur is taxed individually on their share of the profit.</li>
+  <li>The healthcare premium (Zvw) is paid personally at 5.32% (up to a capped income).</li>
+</ul>
+<h3 id="vat">VAT (BTW) and Business Status</h3>
+<ul>
+  <li>Most self-employed persons must charge VAT (BTW) on invoices:
+    <ul>
+      <li>Standard rate: 21%.</li>
+      <li>Reduced rates: 9% (food, books, repairs, transportation) or 0% (exports, international
+          transport).</li>
+    </ul>
+  </li>
+  <li>VAT must be declared via quarterly or annual returns.</li>
+  <li>Input VAT on business expenses can be deducted.</li>
+  <li>KOR (Kleineondernemersregeling, small business scheme) exempts VAT duties if revenue &lt;
+      €20,000/year.</li>
+  <li>Occasional income (e.g., a one-off freelance gig) is still taxable under Box 1, as "other
+      income," even without VAT duties or deductions.</li>
+</ul>
+<h3 id="entrepreneur-criteria">Who Qualifies as an Entrepreneur for Tax Purposes</h3>
+<p>The tax authority (Belastingdienst) defines an entrepreneur based on:</p>
+<ul>
+  <li>Having multiple clients</li>
+  <li>Working independently</li>
+  <li>Bearing risk</li>
+  <li>Aiming to make a profit</li>
+  <li>Having business presence (website, invoices, etc.)</li>
+</ul>
+<p><strong>Key requirement: Urencriterium (hour requirement)</strong></p>
+<ul>
+  <li>Must work 1,225+ hours/year on the business.</li>
+  <li>Must spend more time on the business than on other paid work.</li>
+</ul>
+<p>Without meeting this, you're not considered an entrepreneur for deductions — your income is
+taxed as regular income from other sources in Box 1 ("Resultaat uit overige werkzaamheden").</p>
+<h3 id="entrepreneur-deductions">Special Deductions for Entrepreneurs</h3>
+<p>If you're considered an entrepreneur for deductions you can claim:</p>
+<ul>
+  <li><strong>Zelfstandigenaftrek (self-employed deduction):</strong> fixed amount (~€5,030 in 2025).</li>
+  <li><strong>Startersaftrek (startup deduction):</strong> extra ~€2,470, for the first 3 out of 5
+      years as an entrepreneur.</li>
+  <li><strong>MKB-winstvrijstelling (SME exemption):</strong> 12.7% of profit after other
+      deductions is tax-free.</li>
+  <li>Lower contribution to social security: only need to pay 5.32% instead of 6.57% for Zvw
+      (healthcare share). No insurance for other social security.</li>
+</ul>
+<p>These deductions can reduce your taxable income significantly.</p>
+<h3 id="zzp-vs-employee">ZZP'ers vs Employees: Lower Costs, Less Security</h3>
+<ul>
+  <li><strong>Zvw (healthcare premium):</strong> employee — paid by employer (6.57%);
+      ZZP'er — paid by self (5.32%).</li>
+  <li><strong>Sick pay:</strong> employee — employer pays up to 2 years;
+      ZZP'er — must insure privately or go without.</li>
+  <li><strong>Disability insurance:</strong> employee — covered under WIA;
+      ZZP'er — private insurance (optional &amp; expensive).</li>
+  <li><strong>Unemployment benefit:</strong> employee — covered under WW;
+      ZZP'er — not insured unless arranged privately.</li>
+  <li><strong>Pension:</strong> employee — often partly paid by employer;
+      ZZP'er — must save independently.</li>
+  <li><strong>Paid holidays &amp; leave:</strong> employee — continued income;
+      ZZP'er — no income when not working.</li>
+</ul>
+
+<div class="exercise" id="ex-4-2">
+  <span class="kicker">Exercise 4.2</span>
+  <h2>ZZP Net Income</h2>
+  <p>You are a ZZP'er who is not a startup and invoices €100,000 (including 21% VAT) in a year. You
+  meet the hours criterion. You have no significant business expenses. What is your approximate net
+  income?</p>
+  <p><a href="solutions.html#ex-4-2">→ Solution</a></p>
+</div>
+
+<h2 id="taxation-bv">2.5. Taxation of Private Legal Entities (BV)</h2>
+<h3 id="bv-features">Legal &amp; Structural Features of a BV</h3>
+<ul>
+  <li><strong>Legal form:</strong> private limited company (Besloten Vennootschap).</li>
+  <li><strong>Separate legal entity:</strong> the BV owns assets and liabilities — not the individual.</li>
+  <li><strong>Limited liability:</strong> shareholders are not personally liable for company debts.</li>
+  <li><strong>Governance:</strong> at least one director (often the DGA,
+      Directeur-grootaandeelhouder — director-major shareholder).</li>
+  <li><strong>Start-up &amp; compliance:</strong> notarial deed required; Chamber of Commerce
+      registration; ongoing accounting &amp; reporting obligations.</li>
+</ul>
+<h3 id="bv-taxation">Taxation &amp; Income Structure</h3>
+<ul>
+  <li><strong>Corporate income tax (CIT, Vennootschapsbelasting):</strong>
+    <ul>
+      <li>19% on the first €200,000 profit.</li>
+      <li>25.8% on profit above €200,000 (2025 rates).</li>
+    </ul>
+  </li>
+  <li><strong>DGA salary (Box 1):</strong>
+    <ul>
+      <li>Mandatory "customary salary": €56,000 or market-based equivalent.</li>
+      <li>Income taxed in Box 1 (progressive rates).</li>
+      <li>Zvw (healthcare contribution) paid personally at 5.32%.</li>
+      <li>The DGA is not covered by WW/WIA (employee insurances).</li>
+    </ul>
+  </li>
+  <li><strong>Dividends (Box 2):</strong>
+    <ul>
+      <li>First €67,000 (per tax partner) → taxed at 24.5%.</li>
+      <li>Above €67,000 → taxed at 31%.</li>
+      <li>Dividends are optional — profit can be retained in the BV to defer Box 2 tax.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="bv-vs-zzp">Strategy: BV vs. ZZP — Break-even &amp; Profit Retention</h3>
+<ul>
+  <li><strong>A BV has higher fixed costs:</strong> compulsory salary, admin/accounting; no access
+      to ZZP tax credits like zelfstandigenaftrek.</li>
+  <li><strong>Break-even point ZZP vs BV:</strong> around €120,000–150,000 in annual revenue. Above
+      this, the BV structure may yield a lower total tax burden than a ZZP.</li>
+  <li><strong>Keeping profits in the BV:</strong> useful for deferring taxation and reinvesting;
+      you only pay Box 2 tax when dividends are paid; strategically advantageous for long-term
+      planning or capital buildup.</li>
+</ul>
+
+<div class="exercise" id="ex-4-3">
+  <span class="kicker">Exercise 4.3</span>
+  <h2>BV Net Income</h2>
+  <p>You own a BV that invoices €100,000 (including 21% VAT) in a year. The company has no debt and
+  pays all profits as dividends. Assume you pay a DGA salary of €56,000 with only 5.32% Zvw (no
+  other social security) paid as DGA. For simplicity, assume there are no significant costs to run
+  a BV. What is your approximate (personal) net income?</p>
+  <p><a href="solutions.html#ex-4-3">→ Solution</a></p>
+</div>
+
+<h2 id="taxation-nv">2.6. Taxation of Public Legal Entities (NV)</h2>
+<h3 id="nv-structure">Legal Structure &amp; Governance</h3>
+<p>NV (Naamloze Vennootschap) = Dutch public limited company.</p>
+<ul>
+  <li>Shares are freely transferable, often listed on a stock exchange.</li>
+  <li>Stricter governance than a BV:
+    <ul>
+      <li>Typically requires a two-tier board (management + supervisory).</li>
+      <li>An annual general shareholders' meeting is mandatory.</li>
+    </ul>
+  </li>
+  <li>Minimum share capital: €45,000 (vs. €0.01 for a BV).</li>
+  <li>Suitable for large companies seeking outside investors or a public listing.</li>
+</ul>
+<h3 id="nv-taxation">Taxation of NV Shares Depends on Ownership</h3>
+<p>If a shareholder owns <strong>less than 5%</strong>:</p>
+<ul>
+  <li>Shares fall under Box 3.</li>
+  <li>Fictitious return (2025) on stocks: 5.88%, taxed at 36%.</li>
+  <li>Effective tax ≈ 2.12% of portfolio value annually, regardless of actual dividends received.</li>
+</ul>
+<p>If a shareholder owns <strong>5% or more</strong>:</p>
+<ul>
+  <li>Dividends and capital gains are taxed in Box 2.</li>
+  <li>Based on actual income received.</li>
+</ul>
+<h3 id="nv-strategy">Strategic &amp; International Considerations</h3>
+<p><strong>Why choose an NV?</strong></p>
+<ul>
+  <li>Access to public capital markets.</li>
+  <li>Attract institutional investors.</li>
+  <li>Enhanced reputation &amp; transparency.</li>
+</ul>
+<p><strong>BV vs. NV:</strong></p>
+<ul>
+  <li>BV = flexible, private, lower admin costs.</li>
+  <li>NV = complex, public, higher credibility.</li>
+</ul>
+<p><strong>International equivalents:</strong></p>
+<ul>
+  <li>NV ≈ PLC (UK), AG (Germany), SA (France), SpA (Italy).</li>
+  <li>Not suitable for startups, due to capital requirements and governance complexity.</li>
+</ul>
+
+<div class="exercise" id="ex-4-4">
+  <span class="kicker">Exercise 4.4</span>
+  <h2>NV Net Income</h2>
+  <p>Consider an NV with 1M shares outstanding and with total yearly invoices of €100M (including
+  21% VAT). The company has no debt and pays all profits as dividends. Assume that there are fixed
+  costs of running an NV of €2M per year but that the NV has no other significant costs. Moreover,
+  assume the equity value equals 16 times the yearly NOPAT.</p>
+  <p>What is your approximate (personal) net income for the following cases:</p>
+  <ul>
+    <li>You own 1,000 shares</li>
+    <li>You own 100,000 shares</li>
+  </ul>
+  <p><a href="solutions.html#ex-4-4">→ Solution</a></p>
+</div>
+
+<div class="summary">
+  <h2 id="summary-nl">Summary — Business Taxes in NL</h2>
+  <p><strong>Small businesses (ZZP, Maatschap, VOF)</strong></p>
+  <ul>
+    <li>No legal entity: personal liability.</li>
+    <li>Taxation: Box 1 personal tax on income (up to 49.5%); self-employed deductions
+        (Zelfstandigenaftrek, MKB-winstvrijstelling).</li>
+    <li>Best for: small, low-revenue businesses.</li>
+  </ul>
+  <p><strong>BV (private limited company)</strong></p>
+  <ul>
+    <li>Legal entity: limited liability.</li>
+    <li>Taxation: corporate tax 19% on profits up to €200K, 25.8% above; personal Box 2 tax on
+        dividends from the BV (24.5% or 31%).</li>
+    <li>Best for: medium-sized companies.</li>
+  </ul>
+  <p><strong>NV (public limited company)</strong></p>
+  <ul>
+    <li>Legal entity: publicly traded, stricter governance.</li>
+    <li>Taxation: corporate tax same as BV; Box 2 personal tax on dividends (24.5%); Box 3 personal
+        tax on savings/investments (applies to personal assets like shares below 5% ownership).</li>
+    <li>Best for: large companies, capital market access.</li>
+  </ul>
+  <p><strong>Personal income taxation</strong></p>
+  <ul>
+    <li>Box 1: personal tax on earned income (between 35.82% and 49.5%).</li>
+    <li>Box 2: personal tax on dividends from substantial interest of more than 5% ownership
+        (24.5% or 31%).</li>
+    <li>Box 3: personal tax on savings/investments (less than 5% ownership), taxed at 36% on a
+        fictitious return (may apply to NV shares).</li>
+  </ul>
+</div>
+
+<h1 id="global-taxes-ethics">Global Taxation, Avoidance, Evasion, and Ethics</h1>
+<p>Global taxation affects how governments collect revenue and how companies decide where to do
+business. Over time, corporate taxes have developed from simple levies on trade into complex
+international systems meant to balance fairness, competitiveness, and economic growth. As tax
+rates have fallen and capital has become more mobile, countries increasingly compete to attract
+investment—often at the cost of tax equity.</p>
+<p>This section looks at how international tax rules and business structures determine where
+profits are recorded and taxed. It follows the historical evolution of income and corporate tax
+systems and examines today's debates on avoidance, evasion, and fairness in the global economy.</p>
+<p><strong>Key topics:</strong></p>
+<ul>
+  <li>History of taxation: from early income levies to modern global systems.</li>
+  <li>Purpose of corporate tax: funding public goods and maintaining fair contribution.</li>
+  <li>Global tax differences: comparing rates and approaches across regions.</li>
+  <li>Avoidance and evasion: strategies such as the "Double Irish with a Dutch Sandwich."</li>
+  <li>Reform and ethics: OECD, G20, and the 15% global minimum tax initiative.</li>
+</ul>
+<p>Understanding these mechanisms helps explain how tax policy influences business location, global
+profit distribution, and economic fairness.</p>
+
+<h2 id="tax-history">2.7. History of Income and Corporate Tax</h2>
+<h3 id="early-history">Early History of Income Tax</h3>
+<ul>
+  <li><strong>Ancient times:</strong> civilizations like Egypt and Rome taxed goods, land, or
+      people—not income.</li>
+  <li><strong>Middle Ages:</strong> European rulers taxed land and wealth; no formal income tax yet.</li>
+  <li><strong>17th century:</strong> England used temporary income-like taxes for war funding.</li>
+  <li><strong>1799 (England):</strong> Britain introduced income tax to fund the Napoleonic Wars.</li>
+  <li><strong>1803:</strong> income tax was repealed after the wars, later revived for other conflicts.</li>
+  <li><strong>1842 (England):</strong> a permanent income tax was set at 2.8% by Sir Robert Peel.</li>
+</ul>
+<h3 id="us-history">The U.S. History of Income and Corporate Tax</h3>
+<ul>
+  <li><strong>1861:</strong> Civil War-era income tax applied to incomes over $800.</li>
+  <li><strong>1872:</strong> repealed post-war; the U.S. relied on tariffs and excise taxes.</li>
+  <li><strong>1894:</strong> a new income tax law was passed, but ruled unconstitutional.</li>
+  <li><strong>1894:</strong> the Wilson–Gorman Act also introduced corporate tax—this stayed.</li>
+  <li><strong>1909:</strong> corporate tax introduced at 1% on profits over $5,000.</li>
+  <li><strong>1913:</strong> the 16th Amendment made federal income tax permanent.</li>
+  <li><strong>1917:</strong> WWI increased both personal and corporate tax rates.</li>
+  <li><strong>1930s:</strong> the Great Depression saw higher taxes on the wealthy and corporations.</li>
+  <li><strong>1940s (WWII):</strong> withholding began; personal and corporate taxes rose.</li>
+  <li><strong>1950s:</strong> corporate rates peaked at 52% during the post-war boom.</li>
+</ul>
+<h3 id="dutch-history">Dutch Income and Corporate Tax</h3>
+<ul>
+  <li><strong>1806:</strong> the Netherlands set up a national tax system under French rule, taxing
+      wealth and property.</li>
+  <li><strong>1893:</strong> introduced an income-based surtax, aimed at high earners with large
+      capital.</li>
+  <li><strong>1914:</strong> enacted a modern progressive income tax; rates rose with higher
+      earnings.</li>
+  <li><strong>1940:</strong> corporate income tax launched during the German occupation in WWII.</li>
+  <li><strong>1950s–1980s:</strong> top income tax peaked around 72%, corporate tax near 48%; later
+      reforms reduced both.</li>
+  <li><strong>2025:</strong> corporate tax is 19% (under €200K), 25.8% (above); income tax has 3
+      brackets.</li>
+</ul>
+<h3 id="modern-era">Modern Era</h3>
+<ul>
+  <li><strong>1970s–1980s:</strong> Western nations cut tax rates, promoting supply-side policy.</li>
+  <li><strong>1986 (U.S.):</strong> major tax reform cut the top personal rate to 28%, corporate to 34%.</li>
+  <li><strong>1990s–2000s:</strong> many countries cut corporate tax to attract business.</li>
+  <li><strong>2000s:</strong> the global race to lower corporate taxes continued.</li>
+  <li><strong>2017 (U.S.):</strong> the Trump tax reform cut corporate tax from 35% to 21%.</li>
+  <li><strong>2020s:</strong> the pandemic boosted spending; tax reform debates reignited.</li>
+  <li><strong>2021–present:</strong> the G7 agreed on a 15% global minimum corporate tax.</li>
+</ul>
+<figure class="placeholder">
+  <div class="frame">Figure 5.1: Top marginal income tax rates historically.<br>
+  Source: <a href="https://ourworldindata.org/taxation" target="_blank" rel="noopener">Our World in
+  Data / Oxford</a> — original image hosted on Google Sites; replace
+  <code>assets/images/fig-top-marginal-rates.png</code> with an export to display it here.</div>
+</figure>
+<figure class="placeholder">
+  <div class="frame">Figure 5.2: Corporate tax rates around the world.<br>
+  Source: <a href="https://taxfoundation.org/data/all/global/corporate-tax-rates-by-country-2023/"
+  target="_blank" rel="noopener">Tax Foundation / OECD</a> — original image hosted on Google Sites;
+  replace <code>assets/images/fig-corp-tax-world.png</code> with an export to display it here.</div>
+</figure>
+
+<h2 id="why-corporate-tax">2.8. Why Does Corporate Tax Exist?</h2>
+<p><strong>Reasons for existence:</strong></p>
+<ul>
+  <li><strong>Raises revenue:</strong> corporate tax funds public goods, infrastructure, and services.</li>
+  <li><strong>Fair share:</strong> firms benefit from state systems, so tax reflects shared
+      responsibility.</li>
+  <li><strong>Backstop:</strong> prevents rich individuals from avoiding personal taxes via
+      corporations.</li>
+  <li><strong>Targets excess profit:</strong> captures monopoly or rent-like profits without
+      harming investment.</li>
+  <li><strong>Improves oversight:</strong> tax rules promote transparency and better corporate
+      governance.</li>
+  <li><strong>Global fairness:</strong> helps limit profit shifting and maintains fair competition
+      between countries.</li>
+</ul>
+<p><strong>Corporate tax supports progressivity of income tax:</strong></p>
+<ul>
+  <li>High incomes often come from capital, not wages — especially among the very rich.</li>
+  <li>The wealthiest 10% hold most corporate equity, receiving profits through dividends and gains.</li>
+  <li>These gains are often deferred or taxed at lower rates than regular income.</li>
+  <li>As a result, effective personal tax rates drop at the very top of the income distribution.</li>
+  <li>In some cases, the top 0.1% pay lower rates than upper-middle-class wage earners.</li>
+  <li>Corporate taxes help close this gap by taxing profits before they reach shareholders.</li>
+  <li>This ensures the wealthy contribute proportionally, preserving tax system fairness.</li>
+</ul>
+<figure class="placeholder">
+  <div class="frame">Figure 5.3: Average tax rates by income group, USA decomposition.<br>
+  Source: <a href="https://gabriel-zucman.eu/" target="_blank" rel="noopener">G. Zucman</a> —
+  original image hosted on Google Sites; replace
+  <code>assets/images/fig-tax-by-income-zucman.png</code> with an export to display it here.</div>
+</figure>
+<figure class="placeholder">
+  <div class="frame">Figure 5.4: Average tax rates by income group, USA decomposition.<br>
+  Source: <a href="https://eml.berkeley.edu/~saez/" target="_blank" rel="noopener">E. Saez</a> —
+  original image hosted on Google Sites; replace
+  <code>assets/images/fig-tax-by-income-saez.png</code> with an export to display it here.</div>
+</figure>
+
+<h2 id="global-corporate-taxes">2.9. Global Corporate Taxes</h2>
+<h3 id="global-stats">Global Tax Statistics</h3>
+<ul>
+  <li>The global average statutory corporate income tax rate is about 23.45% (unweighted) and
+      ~25.67% when weighted by GDP, for 181 jurisdictions as of 2023.</li>
+  <li>By region (2023
+      <a href="https://taxfoundation.org/data/all/global/corporate-tax-rates-by-country-2023/"
+      target="_blank" rel="noopener">Tax Foundation data</a>):
+    <ul>
+      <li>Africa: ~27.37% average rate.</li>
+      <li>Asia: ~19.80% average rate.</li>
+      <li>Europe: ~19.92% average.</li>
+      <li>North America: ~25.46% average.</li>
+    </ul>
+  </li>
+  <li>Top statutory rates (2024): some of the highest rates globally include countries like Comoros
+      at 50%.</li>
+  <li>Bottom rates: many jurisdictions have very low or even 0% corporate tax rates (often smaller
+      or "off-shore" jurisdictions).</li>
+  <li>Revenue from corporate income tax (CIT) as a share of GDP in Europe: for example, in 2023
+      among 27 European countries, the simple average CIT revenue was ~3.5% of GDP.</li>
+</ul>
+<h3 id="country-particularities">Country Particularities</h3>
+<ul>
+  <li><strong>United States:</strong> the 2017 reform cut the federal rate from 35% to 21% to curb
+      profit shifting. Complex state taxes and tax havens still hinder enforcement.</li>
+  <li><strong>Ireland:</strong> a 12.5% corporate rate and favorable rulings attract tech and
+      pharma multinationals; profit shifting remains a concern.</li>
+  <li><strong>China:</strong> standard 25% rate, with lower rates for foreign investors and special
+      zones to spur development.</li>
+  <li><strong>Brazil:</strong> 34% statutory rate—among Latin America's highest—plus complex
+      compliance and turnover-based taxes increase the burden.</li>
+  <li><strong>Germany:</strong> 15% federal rate, but local trade taxes raise the total effective
+      rate to around 30%.</li>
+  <li><strong>Nigeria:</strong> 30% corporate rate plus oil and gas levies; the resource sector
+      dominates the tax base.</li>
+  <li><strong>Switzerland:</strong> cantonal rates range 11.5%–21%, offering attractive tax
+      treatment for multinationals.</li>
+</ul>
+<figure class="placeholder">
+  <div class="frame">Figure 5.5: Top marginal US state corporate taxes.<br>
+  Source: <a href="https://taxfoundation.org/" target="_blank" rel="noopener">Taxfoundation.org</a>
+  — original image hosted on Google Sites; replace
+  <code>assets/images/fig-us-state-corp-tax.png</code> with an export to display it here.</div>
+</figure>
+
+<h2 id="atypical-systems">2.10. Atypical Corporate Tax Systems</h2>
+<h3 id="turnover-tax">Tax on Revenue (Turnover Tax)</h3>
+<ul>
+  <li>Taxes total sales, ignoring profits or losses.</li>
+  <li>Simple to administer, hard to manipulate expenses.</li>
+  <li>Can burden unprofitable or low-margin firms.</li>
+  <li>Examples:
+    <ul>
+      <li>Pakistan: pays the higher of turnover or profit tax.</li>
+      <li>Brazil: "Simples Nacional" is partly turnover-based for small firms.</li>
+      <li>India and Hungary use turnover taxes in select sectors.</li>
+      <li>Italy's simplified VAT (IVA) taxes small business turnover, easing compliance.</li>
+      <li>US states (Washington, Ohio) impose gross receipts taxes alongside income taxes.</li>
+      <li>Digital services taxes (France, UK) target gross revenues.</li>
+      <li>Extractive industries are taxed on gross output or sales value.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="other-atypical">Other Atypical Corporate Tax Systems</h3>
+<ul>
+  <li><strong>Minimum / alternative minimum tax (AMT):</strong> ensures firms pay a minimum tax
+      despite deductions. Used in the US, India, South Africa to prevent zero-tax outcomes.</li>
+  <li><strong>Capital-based taxes:</strong> tax on net assets or capital stock, not profits.
+      Examples: Delaware franchise tax, France's former wealth tax. Provides stable revenue when
+      profits fluctuate.</li>
+  <li><strong>Flat-rate / presumptive regimes:</strong> small firms pay a fixed % of turnover or
+      flat fees. Examples: France's micro-entrepreneur, India's presumptive tax schemes. Simplifies
+      tax compliance, reduces evasion for micro-businesses.</li>
+  <li><strong>Industry-specific taxes:</strong> levies on production volume or revenue in certain
+      sectors. Examples: extractive royalties, bank levies, digital services taxes.</li>
+  <li><strong>Withholding taxes:</strong> taxes on cross-border dividends, interest, royalties.
+      Acts as an indirect tax on foreign income flows.</li>
+</ul>
+<figure class="placeholder">
+  <div class="frame">Figure 5.6: Gross receipts taxes in US states.<br>
+  Source: <a href="https://taxfoundation.org/" target="_blank" rel="noopener">Taxfoundation.org</a>
+  — original image hosted on Google Sites; replace
+  <code>assets/images/fig-gross-receipts.png</code> with an export to display it here.</div>
+</figure>
+
+<h2 id="evasion-vs-avoidance">2.11. Tax Evasion vs. Tax Avoidance</h2>
+<h3 id="tax-evasion">Tax Evasion</h3>
+<ul>
+  <li>Illegally hiding income, lying on returns, or not paying tax.</li>
+  <li>Examples: offshore accounts, fake invoices, underreporting income.</li>
+  <li>Clearly criminal and subject to audits, penalties, or prison.</li>
+  <li>More blatant than avoidance, but harder to detect in global cases.</li>
+</ul>
+<h3 id="tax-avoidance">Tax Avoidance</h3>
+<ul>
+  <li>Legal use of tax laws and loopholes to reduce what's owed.</li>
+  <li>Often framed as "efficient planning," but raises fairness concerns.</li>
+  <li>Stays within legal limits, but may violate the spirit of tax laws.</li>
+  <li>Common with multinationals shifting profits to low-tax countries.</li>
+  <li>Famous example: the Double Irish with a Dutch Sandwich — used by firms like Google, Apple,
+      and Facebook to avoid billions in taxes.</li>
+</ul>
+<h3 id="distinction-matters">Why the Distinction Matters</h3>
+<ul>
+  <li>Avoidance and evasion both weaken public revenue and trust.</li>
+  <li>Legal avoidance can mimic evasion's effects, especially at scale.</li>
+  <li>New international rules target aggressive avoidance (e.g., BEPS).</li>
+  <li>Without action, the burden shifts to honest taxpayers and workers.</li>
+</ul>
+
+<h2 id="double-irish">Example of Tax Avoidance: Double Irish with a Dutch Sandwich</h2>
+<p><strong>Setup.</strong> A U.S.-based tech company owns global IP. It sets up:</p>
+<ul>
+  <li><strong>Irish Co 1</strong> — sells to customers in Europe.</li>
+  <li><strong>Dutch Co</strong> — receives royalties from Ireland, passes them to Bermuda.</li>
+  <li><strong>Irish Co 2</strong> — owns the IP, but is tax resident in Bermuda (0% tax).</li>
+</ul>
+<ol>
+  <li><strong>Sales revenue from outside the US in Ireland:</strong> Irish Co 1 books €1,000
+      million in European sales.</li>
+  <li><strong>Royalties paid to Dutch Co:</strong> Irish Co 1 pays €900M in royalties to Dutch Co
+      (for use of the IP). This reduces its taxable profit to €100M → pays €12.5M tax in Ireland
+      (12.5%).</li>
+  <li><strong>Dutch Co charges a routing fee:</strong> Dutch Co keeps a 1% fee (a realistic
+      administrative cut): €900M × 1% = €9M retained. It transfers €891M to Irish Co 2 (in
+      Bermuda). Dutch Co may owe €1–2M in Dutch tax, depending on ruling/substance (or none, under
+      rulings).</li>
+  <li><strong>Final destination — Bermuda:</strong> Irish Co 2, tax resident in Bermuda, receives
+      €891M tax-free.</li>
+</ol>
+
+<h2 id="tax-havens">2.12. Tax Havens</h2>
+<h3 id="what-are-havens">What Are Tax Havens?</h3>
+<ul>
+  <li>Jurisdictions offering low or zero tax rates, financial secrecy, and lax regulation.</li>
+  <li>Commonly used by multinational firms and wealthy individuals to reduce taxes.</li>
+  <li>Often have little real economic activity, but serve as booking centers for profits.</li>
+  <li>Enable the routing of income, royalties, and gains to escape higher-tax countries.</li>
+</ul>
+<h3 id="how-used">How Are They Used?</h3>
+<ul>
+  <li>Facilitate large-scale tax avoidance and, at times, illegal tax evasion.</li>
+  <li>Multinationals exploit transfer pricing and profit shifting to shift profits.</li>
+  <li>Real business is often elsewhere—havens host only paper or shell companies.</li>
+  <li>Undermines public revenue and shifts tax burdens to smaller businesses and workers.</li>
+  <li>Pressures countries to lower their own tax rates, sparking a global "race to the bottom."</li>
+</ul>
+<h3 id="haven-scale">Global Scale and Consequences</h3>
+<ul>
+  <li>Around $850 billion in corporate profits are shifted to havens annually.</li>
+  <li>Leads to $117 billion in lost tax revenue worldwide each year.</li>
+  <li>Major havens include: Cayman Islands, BVI, Luxembourg, Ireland, Netherlands.</li>
+  <li>OECD and G20 reforms (like BEPS and the 15% global minimum tax) aim to curb abuse.</li>
+  <li>Despite progress, enforcement is uneven and some havens resist transparency.</li>
+</ul>
+
+<h2 id="parliamentary-hearing">Starbucks, Google, Amazon in the 2012 UK Parliamentary Hearing</h2>
+<p>The documentary <em>Taxodus</em> (2013) explores the issue of tax avoidance by major
+corporations like Starbucks, Google, and Amazon. These companies have faced criticism for paying
+very little tax in countries where they generate significant revenue, especially in the UK.</p>
+<p>In a 2012 UK parliamentary hearing, representatives from these companies discussed how they
+reduce their tax liabilities in the UK, despite benefiting greatly from the UK market. The hearing
+focused on the use of tax avoidance structures and the companies' minimal contributions to UK tax
+revenue.</p>
+<ul class="resources">
+  <li><a href="https://www.youtube.com/watch?v=tvlLO_pTmeY&amp;t=2017s" target="_blank"
+  rel="noopener">Taxodus Video ↗</a></li>
+</ul>
+
+<h2 id="addressing-evasion">2.13. Addressing Tax Evasion</h2>
+<h3 id="min-tax-ethics">Global Minimum Corporate Tax: Ethics &amp; Fairness</h3>
+<ul>
+  <li>Multinational firms shift profits to low- or zero-tax jurisdictions to minimize tax where the
+      real activity happens.</li>
+  <li>Though often legal, this raises ethical questions: firms benefit from public infrastructure,
+      rule of law, and skilled labor, without contributing fairly.</li>
+  <li>This weakens tax fairness, reduces revenue for public goods, and burdens those who cannot
+      avoid taxes (e.g., smaller firms, wage earners).</li>
+  <li>A global minimum tax aims to ensure companies pay at least a baseline share everywhere,
+      restoring equity in the system.</li>
+</ul>
+<h3 id="policy-design">Policy Design &amp; Global Coordination</h3>
+<ul>
+  <li>In 2021, 130+ countries agreed on a 15% global minimum tax, targeting multinationals with
+      revenues above €750 million.</li>
+  <li>It ensures that profits are taxed at least once, even if booked in tax havens.</li>
+  <li>The policy seeks to stop the "race to the bottom" in corporate tax rates that has weakened
+      national budgets.</li>
+  <li>Challenges remain: enforcement, loopholes, and resistance from low-tax jurisdictions.</li>
+  <li>In January 2025, President Trump signed a memorandum declaring that the "Global Tax Deal" has
+      "no force or effect" in the U.S., effectively withdrawing U.S. participation.</li>
+  <li>He directed the Treasury to explore protective measures against foreign tax rules seen as
+      unfair to American firms.</li>
+  <li>In June 2025, the G7 issued a statement endorsing a "side-by-side" system, under which
+      U.S.-parented groups would be excluded from certain rules (IIR / UTPR) because of existing
+      U.S. domestic tax rules.</li>
+  <li>Key challenges remain: enforcement consistency, loopholes, treaty conflicts, and resistance
+      from states unwilling to cede tax sovereignty.</li>
+  <li>Despite the U.S. withdrawal, many countries are pushing ahead with implementation — making
+      compatibility and coordination more complex.</li>
+</ul>
+
+<h2 id="repatriation">Repatriation — Double Irish with a Dutch Sandwich</h2>
+<p><strong>Where the profits stayed</strong></p>
+<ul>
+  <li>Profits from international sales were routed through Ireland and the Netherlands, ending up
+      in holding companies managed from Bermuda or other tax-neutral jurisdictions.</li>
+  <li>These holding companies were often Irish-registered but non-resident, meaning they paid 0%
+      corporate tax anywhere.</li>
+  <li>The money accumulated offshore — sometimes hundreds of billions of dollars — and was not
+      taxed in the U.S. until repatriated, due to older U.S. rules allowing tax deferral on foreign
+      earnings.</li>
+</ul>
+<p><strong>Changes to the rules</strong></p>
+<ul>
+  <li>Ireland closed the residency loophole (effective 2020), making all Irish-incorporated
+      entities tax-resident in Ireland.</li>
+  <li>The U.S. 2017 Tax Cuts and Jobs Act (TCJA) introduced:
+    <ul>
+      <li>A mandatory one-time repatriation tax on past foreign profits.</li>
+      <li>The GILTI regime, taxing ongoing foreign income.</li>
+      <li>An end to indefinite deferral of offshore earnings.</li>
+    </ul>
+  </li>
+  <li>This forced companies like Google and Apple to unwind the "Double Irish" structures between
+      2015–2020.</li>
+</ul>
+<p><strong>Repatriation and current situation</strong></p>
+<ul>
+  <li>The repatriation tax was set at 15.5% on cash and 8% on non-cash assets, payable over eight
+      years.</li>
+  <li>Firms such as Apple (≈$38B tax) and Google brought or deemed their profits back under this
+      system.</li>
+  <li>Today, most profits are booked and taxed in Ireland or other EU jurisdictions, at around
+      12.5–15%, and the OECD global minimum tax now limits the benefit of routing income through
+      zero-tax havens.</li>
+</ul>
+
+<div class="summary">
+  <h2 id="summary-global">Summary — Global Taxation</h2>
+  <p><strong>Global tax systems</strong></p>
+  <ul>
+    <li>Income and corporate taxes fund wars, services, and public welfare.</li>
+    <li>Corporate tax promotes fairness and limits excessive wealth concentration.</li>
+    <li>The average global corporate tax rate stands near 23.5% today.</li>
+    <li>Systems differ: turnover, minimum, and digital service taxes exist.</li>
+    <li>Reforms like BEPS and a 15% minimum tax aim to curb abuse.</li>
+    <li>These measures protect fair competition between global business jurisdictions.</li>
+  </ul>
+  <p><strong>Avoidance and ethics</strong></p>
+  <ul>
+    <li>Tax evasion hides income illegally; avoidance uses legal loopholes.</li>
+    <li>The "Double Irish" strategy shifted billions in untaxed profits offshore.</li>
+    <li>Tax havens cost nations about $117 billion in lost revenue yearly.</li>
+    <li>OECD and G20 reforms target global profit shifting by large firms.</li>
+    <li>Fair taxation ensures companies support society where they operate.</li>
+    <li>Ethical rules aim to balance competition and social responsibility.</li>
+  </ul>
+</div>
+
+    </div>
+    <footer class="site-footer">
+      Business Taxes and Mergers &amp; Acquisitions · Dr. Matthijs Breugem · Nyenrode Business University ·
+      <a href="mailto:m.breugem@nyenrode.nl">m.breugem@nyenrode.nl</a>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
